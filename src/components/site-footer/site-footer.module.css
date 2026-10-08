@@ -1,0 +1,33 @@
+.footer { background: var(--site-color-navy); color: var(--site-color-white); padding-top: 120px; }
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: center; gap: 64px; padding: 64px; border-radius: var(--site-radius-card); background: rgb(255 255 255 / 8%); }
+.intro strong { display: block; font-family: var(--site-font-latin); font-size: 48px; font-weight: 500; line-height: 1.3; }
+.intro p { max-width: 974px; margin: 20px 0 0; color: var(--site-color-ice); font-size: 24px; line-height: 1.5; }
+.actions { display: grid; gap: 32px; }
+.columns { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding: 118px 0 112px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--site-color-white); font-family: var(--site-font-latin); font-size: 36px; letter-spacing: -.16px; white-space: nowrap; }
+.logo { display: block; width: 56px; height: 56px; flex: none; }
+.identity small { display: block; margin: 8px 0 0 68px; color: var(--site-color-muted); font-family: var(--site-font-latin); font-size: 14px; letter-spacing: .06em; }
+.links { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; color: var(--site-color-ice); font-family: var(--site-font-latin); font-size: 20px; }
+.links h2 { margin: 0 0 10px; color: var(--site-color-white); font-family: var(--site-font-text); font-size: 16px; font-weight: 400; letter-spacing: .08em; }
+.links a:hover { color: var(--site-color-accent); }
+.legal { border-top: 1px solid var(--site-color-body); padding: 24px 0; color: var(--site-color-muted); font-size: 14px; text-align: center; }
+
+@media (max-width: 1200px) {
+  .intro { grid-template-columns: 1fr 280px; }
+  .columns { gap: 32px; }
+}
+
+@media (max-width: 700px) {
+  .footer { padding-top: 64px; }
+  .intro { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
+  .intro strong { font-size: 32px; }
+  .intro p { font-size: 17px; }
+  .actions { gap: 12px; }
+  .columns { grid-template-columns: 1fr 1fr; padding: 64px 0; }
+  .identity { grid-column: 1 / -1; }
+  .logo { width: 40px; height: 40px; }
+  .brand { font-size: 24px; }
+  .identity small { margin-left: 48px; font-size: 11px; }
+  .links { font-size: 15px; overflow-wrap: anywhere; }
+  .legal { font-size: 12px; }
+}
