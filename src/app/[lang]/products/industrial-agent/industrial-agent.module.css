@@ -1,0 +1,175 @@
+.page { color: var(--site-color-heading); }
+.hero { min-height: 500px; background: var(--site-color-ice); }
+.breadcrumb { padding-top: 16px; font-size: 14px; line-height: 20px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.breadcrumb a, .breadcrumb li[aria-hidden] { color: var(--site-color-muted); }
+.breadcrumb a:hover { color: var(--site-color-accent); }
+.breadcrumb li[aria-current] { color: var(--site-color-body); font-family: var(--site-font-latin); font-weight: 500; }
+.heroCopy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 633px); gap: 100px; margin-top: 92px; padding-bottom: 80px; }
+.heroCopy h1 { margin: 0; font-size: 64px; font-weight: 500; line-height: 88px; }
+.heroCopy h1 span { display: block; }
+.heroCopy p { margin: 0; color: var(--site-color-body); font-size: 24px; line-height: 40px; }
+.sectionTitle { margin: 0; font-size: 48px; font-weight: 500; line-height: 68px; }
+.features { position: relative; display: grid; grid-template-columns: minmax(0, 700fr) minmax(0, 922fr); gap: 98px; min-height: 1026px; padding-top: 280px; }
+.featureIntro { position: relative; z-index: 1; min-width: 0; padding-top: 114px; }
+.featureIntro p, .sectionIntro, .deploymentIntro p { margin: 36px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 36px; }
+.featureIntro p { width: max-content; max-width: 100%; }
+.watermark { position: absolute; z-index: 0; top: 622px; left: 0; color: rgb(20 40 74 / 5%); font-size: 160px; font-weight: 900; line-height: 220px; letter-spacing: .08em; pointer-events: none; }
+.featureGrid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 340fr) minmax(0, 420fr); column-gap: 162px; row-gap: 64px; align-content: start; }
+.feature { min-width: 0; }
+.featureIcon { display: grid; width: 88px; height: 88px; place-items: center; border-radius: 20px; background: var(--site-color-ice); }
+.featureIcon img { display: block; max-width: none; }
+.feature h3 { margin: 26px 0 12px; font-size: 32px; font-weight: 500; line-height: 48px; }
+.feature p { width: max-content; max-width: calc(100% + 4px); margin: 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.deployment { padding-top: 280px; }
+.deploymentCanvas { position: relative; min-height: 1334px; }
+.deploymentIntro { position: relative; z-index: 2; max-width: 624px; }
+.deploymentIntro p { max-width: 540px; }
+.interfaceImage { position: absolute; z-index: 1; top: 108px; left: 49.4186%; width: 44.4767%; aspect-ratio: 765 / 430; }
+/* Figma image exports include padding around the original shadows. */
+.interfaceImage img { position: absolute; top: -5.1163%; left: -1.4379%; display: block; width: 104.183%; max-width: none; height: auto; }
+.workflow { position: absolute; inset: 0; }
+.orbits { position: absolute; top: 264.83px; left: 6.0465%; width: 74.4265%; height: auto; }
+.feedbackOrbit { position: absolute; top: 1027.47px; left: 25.4651%; width: 35.5278%; height: auto; }
+.workflowStep { position: absolute; z-index: 2; width: 380px; }
+.inputStep { top: 530px; left: 18.8953%; }
+.executionStep { top: 581px; left: 49.3605%; width: 470px; }
+.feedbackStep { top: 1008px; left: 34.7093%; }
+.stepNumber { display: grid; width: 143px; height: 60px; place-items: center; border-radius: 35px; background: #e3eaf2; font-size: 20px; font-weight: 500; line-height: 29px; letter-spacing: .05em; }
+.executionStep .stepNumber { background: var(--site-color-accent); color: white; }
+.workflowStep h3 { margin: 0; font-size: 24px; font-weight: 500; line-height: 35px; letter-spacing: .05em; }
+.workflowStep p { margin: 2px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 29px; letter-spacing: .05em; }
+.workflowItem { margin-top: 15px; }
+.executionStep h3 { margin-top: 42px; letter-spacing: .08em; }
+.deploymentNote { position: absolute; right: 0; bottom: 0; margin: 0; color: var(--site-color-muted); font-size: 20px; line-height: 40px; }
+.applications { padding-top: 280px; }
+.applicationGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; margin-top: 88px; }
+.application { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.application h3 { margin: 0; font-size: 32px; font-weight: 500; line-height: 48px; }
+.application p { margin: 0; color: var(--site-color-muted); font-size: 20px; line-height: 40px; }
+.applicationImage { position: relative; aspect-ratio: 400 / 246; margin-top: 23px; }
+.applicationImage img { position: absolute; top: -2.439%; left: -.5%; display: block; width: 102%; max-width: none; height: auto; }
+.faq { padding-block: 280px; }
+.faqList { margin-top: 88px; }
+.faqItem { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 608px); align-items: center; gap: 120px; padding: 55px 0; }
+.faqItem:first-child { padding-top: 0; }
+.faqItem:last-child { padding-bottom: 0; }
+.faqItem:not(:last-child) { border-bottom: 2px solid #e3eaf2; }
+.faqItem h3 { margin: 0; font-size: 32px; font-weight: 400; line-height: 64px; }
+.faqItem p { margin: 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.cta { padding-top: 170px; background: var(--site-color-navy); color: white; }
+.ctaCard { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: center; gap: 64px; min-height: 370px; padding: 64px; border-radius: 28px; background: rgb(255 255 255 / 8%); }
+.ctaCard h2 { margin: 0; font-size: 48px; font-weight: 500; line-height: 64px; }
+.ctaCard p { min-height: 107px; margin: 32px 0 0; color: var(--site-color-ice); font-size: 24px; line-height: 36px; }
+.ctaActions { display: grid; gap: 34px; }
+.ctaActions button { min-height: 89px; border-style: solid; font-size: 28px; line-height: 32px; letter-spacing: .12em; cursor: default; }
+.ctaActions button:focus-visible { outline: 2px solid var(--site-color-accent); outline-offset: 4px; }
+/* This page supplies its design-specific CTA and retains the shared footer's brand and links. */
+:global(.site-content):has(.page) + :global(footer) { padding-top: 0; }
+:global(.site-content):has(.page) + :global(footer) > :global(.site-container) > :first-child { display: none; }
+:global(html[lang="en"]) .heroCopy h1 { font-size: 48px; line-height: 64px; }
+:global(html[lang="en"]) .feature h3, :global(html[lang="en"]) .application h3 { font-size: 28px; line-height: 40px; }
+:global(html[lang="en"]) .workflowStep { width: 400px; }
+:global(html[lang="en"]) .feedbackStep { width: 460px; }
+
+@media (max-width: 1600px) {
+  .heroCopy { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .heroCopy h1 { font-size: 52px; line-height: 72px; }
+  .heroCopy p { font-size: 22px; line-height: 36px; }
+  .features { gap: 64px; min-height: 0; padding-top: 200px; }
+  .featureIntro { padding-top: 80px; }
+  .featureGrid { column-gap: 48px; row-gap: 48px; }
+  .feature h3 { font-size: 28px; line-height: 40px; }
+  .watermark { top: 540px; font-size: 120px; line-height: 160px; }
+  .deployment { padding-top: 200px; }
+  .deploymentIntro { max-width: 48%; }
+  .workflowStep { width: 300px; }
+  .workflowStep h3 { font-size: 22px; }
+  .workflowStep p { font-size: 18px; line-height: 28px; }
+  :global(html[lang="en"]) .workflowStep { width: 300px; }
+  :global(html[lang="en"]) .feedbackStep { width: 380px; }
+  .applicationGrid { gap: 32px; }
+  .application h3 { font-size: 28px; line-height: 40px; }
+  .application p { font-size: 18px; line-height: 32px; }
+  .applications { padding-top: 200px; }
+  .faq { padding-block: 200px; }
+  .faqItem { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .faqItem h3 { font-size: 28px; line-height: 44px; }
+  .cta { padding-top: 120px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 330px; }
+  .ctaCard h2 { font-size: 40px; line-height: 56px; }
+  .ctaActions button { font-size: 24px; }
+}
+
+@media (max-width: 1200px) {
+  .hero { min-height: 0; }
+  .heroCopy { grid-template-columns: 1fr; gap: 32px; margin-top: 64px; padding-bottom: 64px; }
+  .heroCopy h1 { font-size: 48px; line-height: 64px; }
+  .heroCopy p { max-width: 760px; font-size: 20px; line-height: 36px; }
+  .sectionTitle { font-size: 36px; line-height: 52px; }
+  .features { grid-template-columns: minmax(0, 1fr); gap: 56px; padding-top: 120px; }
+  .featureIntro { padding-top: 0; }
+  .watermark { display: none; }
+  .featureGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+  .deployment { padding-top: 120px; }
+  .deploymentCanvas { min-height: 0; }
+  .deploymentIntro { max-width: 760px; }
+  .deploymentIntro p { max-width: 760px; }
+  .interfaceImage { position: relative; top: auto; left: auto; width: min(100%, 765px); margin-top: 56px; }
+  .workflow { position: relative; inset: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 56px; }
+  .orbits, .feedbackOrbit { display: none; }
+  .workflowStep, :global(html[lang="en"]) .workflowStep, :global(html[lang="en"]) .feedbackStep { position: static; width: auto; min-width: 0; }
+  .executionStep h3 { margin-top: 20px; }
+  .deploymentNote { position: static; margin-top: 40px; font-size: 18px; line-height: 32px; }
+  .applications { padding-top: 120px; }
+  .applicationGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 32px; margin-top: 56px; }
+  .faq { padding-block: 120px; }
+  .faqList { margin-top: 56px; }
+  .faqItem { gap: 32px; padding-block: 32px; }
+  .faqItem h3 { font-size: 24px; line-height: 36px; }
+  .faqItem p { font-size: 18px; }
+  .cta { padding-top: 100px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; padding: 40px; }
+  .ctaCard h2 { font-size: 32px; line-height: 44px; }
+  .ctaCard p { min-height: 0; font-size: 20px; line-height: 32px; }
+  .ctaActions { gap: 20px; }
+  .ctaActions button { min-height: 64px; font-size: 20px; letter-spacing: .05em; }
+}
+
+@media (max-width: 700px) {
+  .breadcrumb { font-size: 12px; }
+  .breadcrumb ol { gap: 8px; }
+  .heroCopy { margin-top: 48px; gap: 24px; padding-bottom: 48px; }
+  .heroCopy h1, :global(html[lang="en"]) .heroCopy h1 { font-size: clamp(28px, 7vw, 40px); line-height: 1.5; overflow-wrap: anywhere; }
+  .heroCopy p { font-size: 16px; line-height: 28px; }
+  .sectionTitle { font-size: 28px; line-height: 42px; }
+  .features, .deployment, .applications { padding-top: 80px; }
+  .features { gap: 40px; }
+  .featureIntro p, .deploymentIntro p, .sectionIntro { margin-top: 24px; font-size: 16px; line-height: 28px; }
+  .featureGrid { grid-template-columns: 1fr; gap: 32px; }
+  .featureIcon { width: 64px; height: 64px; border-radius: 16px; }
+  .feature h3, :global(html[lang="en"]) .feature h3 { margin-top: 20px; font-size: 22px; line-height: 34px; }
+  .feature p { font-size: 16px; line-height: 28px; }
+  .interfaceImage { margin-top: 40px; }
+  .workflow { grid-template-columns: 1fr; gap: 32px; margin-top: 40px; }
+  .stepNumber { width: 100px; height: 44px; font-size: 18px; }
+  .workflowStep h3 { font-size: 20px; line-height: 30px; }
+  .workflowStep p { font-size: 16px; line-height: 28px; letter-spacing: 0; }
+  .executionStep h3 { margin-top: 16px; letter-spacing: 0; }
+  .deploymentNote { font-size: 16px; line-height: 28px; }
+  .applicationGrid { grid-template-columns: 1fr; gap: 40px; margin-top: 40px; }
+  .application h3, :global(html[lang="en"]) .application h3 { font-size: 22px; line-height: 34px; }
+  .application p { font-size: 16px; line-height: 28px; }
+  .applicationImage { margin-top: 24px; }
+  .faq { padding-block: 80px; }
+  .faqList { margin-top: 40px; }
+  .faqItem { grid-template-columns: 1fr; gap: 16px; padding-block: 28px; }
+  .faqItem h3 { font-size: 20px; line-height: 32px; }
+  .faqItem p { font-size: 16px; line-height: 28px; }
+  .cta { padding-top: 64px; }
+  .ctaCard { grid-template-columns: 1fr; min-height: 0; gap: 32px; padding: 32px; }
+  .ctaCard h2 { font-size: 28px; line-height: 42px; }
+  .ctaCard p { margin-top: 20px; font-size: 17px; line-height: 28px; }
+  .ctaActions { gap: 12px; }
+  .ctaActions button { min-height: 56px; padding-inline: 16px; font-size: 18px; }
+}

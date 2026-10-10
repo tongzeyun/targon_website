@@ -19,7 +19,7 @@ export function HomeCarousel({ slides, lang }: { slides: readonly Slide[]; lang:
           <div className={styles.sceneTrack} style={{ transform: `translateX(-${active * 100}%)` }}>
             {slides.map((slide, index) => <article className={styles.sceneSlide} aria-hidden={active !== index} key={slide.name}>
               <div className={styles.sceneCopy}><h2>{slide.headline}</h2><p>{slide.description}</p></div>
-              <div className={styles.sceneImage} style={{ backgroundImage: `url("${slide.image}")` }} role="img" aria-label={slide.imageAlt} />
+              <div className={`site-bg-box ${styles.sceneImage}`} style={{ backgroundImage: `url("${slide.image}")` }} role="img" aria-label={slide.imageAlt} />
             </article>)}
           </div>
         </div>

@@ -6,6 +6,25 @@ import styles from "./home.module.css";
 
 type Props = { params: Promise<{ lang: string }> };
 
+const chainStepIcons = [
+  "/image/home-chain-needs.png", // 527:943
+  "/image/home-chain-ai-assistant.png", // 527:946
+  "/image/home-chain-model-calculation.png", // 527:951
+  "/image/home-chain-component-matching.png", // 527:954
+  "/image/home-chain-certification.png", // 527:932
+  "/image/home-chain-maintenance.png", // 527:966
+  "/image/home-chain-secondhand.png", // 527:958
+  "/image/home-chain-new-equipment.png", // 527:963
+] as const;
+
+const ecosystemImages = [
+  "/image/home-ecosystem-hardware.png", // 564:359
+  "/image/home-ecosystem-data.png", // 564:360
+  "/image/home-ecosystem-ai.png", // 565:382
+  "/image/home-ecosystem-model.png", // 565:368
+  "/image/home-ecosystem-services.png", // 565:379
+] as const;
+
 const copy = {
   zh: {
     title: "首页 | 探氩科技",
@@ -51,6 +70,12 @@ const copy = {
       ["AI 技术", "将大模型与实际业务任务结合"],
       ["工业计算", "以模型计算等技术能力支撑产业应用"],
       ["场景落地", "从 AI 对话进一步进入设备、企业和销售流程"],
+    ],
+    reasonsIcons: [
+      "/image/home-targon-1.png",
+      "/image/home-targon-2.png",
+      "/image/home-targon-3.png",
+      "/image/home-targon-4.png",
     ],
     ecosystemTitle: "从工业产品，到产业智能",
     ecosystemIntro: "TARGON 面向真空与半导体产业，连接工业硬件、边缘数据采集、AI 软件、专业模型计算与产业服务，形成覆盖设备、数据、计算与应用的产品与服务体系。",
@@ -101,6 +126,12 @@ const copy = {
       { name: "Smart Eye", headline: "AI at Work in Sales", description: "An AI sales platform from market insight to customer deals.", image: "/image/home-scene-smart-eye.png", imageAlt: "Smart Eye quotation interface" },
     ],
     reasonsTitle: "Why Targon?",
+    reasonsIcons: [
+      "/image/home-targon-1.png",
+      "/image/home-targon-2.png",
+      "/image/home-targon-3.png",
+      "/image/home-targon-4.png",
+    ],
     reasons: [
       ["Industry Knowledge", "Deep experience with vacuum and semiconductor applications"],
       ["AI Technology", "Connecting large models with real business tasks"],
@@ -132,7 +163,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <main className={styles.page}>
-      <section className={styles.hero} aria-labelledby="home-heading">
+      <section className={`site-bg-box ${styles.hero}`} aria-labelledby="home-heading">
         <div className={`site-container ${styles.heroContent}`}>
           <p data-aos="fade">{content.heroIntro}</p>
           <h1 id="home-heading" data-aos="fade">{content.heroTitle}</h1>
@@ -150,7 +181,7 @@ export default async function HomePage({ params }: Props) {
         <h3 className={styles.sectionTitle} data-aos="fade">{content.softwareTitle}</h3>
         <div className={styles.softwareGrid}>
           {content.software.map((product) => <article className={styles.softwareCard} data-product={product.image} key={product.name}>
-            <div className={styles.softwareImage} role="img" aria-label={product.name} />
+            <div className={`site-bg-box ${styles.softwareImage}`} role="img" aria-label={product.name} />
             <div className={styles.softwareCopy}><h4>{product.name}</h4><p>{product.description}</p><div className={styles.cardActions}><span className={styles.pill}>{product.type}</span><button type="button">{product.action}<span aria-hidden="true">→</span></button></div></div>
           </article>)}
         </div>
@@ -160,28 +191,46 @@ export default async function HomePage({ params }: Props) {
         <h2 id="hardware-heading" className={styles.sectionTitle} data-aos="fade">{content.hardwareTitle}</h2>
         <div className={styles.hardwarePanel}>
           <div className={styles.hardwareCopy}><h3 data-aos="fade">{content.hardwareHeadline}</h3><p data-aos="fade">{content.hardwareIntro}</p><button className={styles.textButton} type="button">{content.hardwareAction}<span aria-hidden="true">→</span></button><div className={styles.tags}>{content.hardwareTags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
-          <div className={`${styles.hardwareImage} ${styles.collectorImage}`} role="img" aria-label={content.collector}><span>{content.collector}</span></div>
-          <div className={`${styles.hardwareImage} ${styles.outgassingImage}`} role="img" aria-label={content.outgassing}><span>{content.outgassing}</span></div>
+          <div className={`site-bg-box ${styles.hardwareImage} ${styles.collectorImage}`} role="img" aria-label={content.collector}><span>{content.collector}</span></div>
+          <div className={`site-bg-box ${styles.hardwareImage} ${styles.outgassingImage}`} role="img" aria-label={content.outgassing}><span>{content.outgassing}</span></div>
         </div>
       </section>
 
       <section className={`site-container ${styles.chain}`} aria-labelledby="chain-heading">
-        <div className={styles.chainCopy}><h2 id="chain-heading" data-aos="fade">{content.chainTitle}</h2><p data-aos="fade">{content.chainIntro}</p><button className={styles.textButton} type="button">{content.chainAction}<span aria-hidden="true">→</span></button></div>
-        <ol className={styles.chainSteps}>{content.chainSteps.map((step, index) => <li key={step}><span className={styles.stepIcon} aria-hidden="true" /><span>{step}</span><small aria-hidden="true">{index < 3 || index === 7 ? "→" : "←"}</small></li>)}</ol>
+        <div className={styles.chainCopy}><h2 id="chain-heading" data-aos="fade">{content.chainTitle}</h2><p data-aos="fade">{content.chainIntro}</p><button className={styles.textButton} type="button">{content.chainAction}<img src="/image/home-chain-link-arrow.png" alt="" width="40" height="40" /></button></div>
+        <ol className={styles.chainSteps}>
+          {content.chainSteps.map((step, index) => (
+            <li key={step}>
+              <div className={styles.chainStepContent}>
+                <img className={styles.stepIcon} src={chainStepIcons[index]} alt="" width="72" height="72" />
+                <span>{step}</span>
+              </div>
+              {index % 4 !== 3 && <img className={styles.chainArrow} src={index < 4 ? "/image/home-chain-arrow-right.png" : "/image/home-chain-arrow-left.png"} alt="" width="64" height="64" />}
+            </li>
+          ))}
+        </ol>
       </section>
 
       <HomeCarousel slides={content.scenes} lang={lang} />
 
       <section className={`site-container ${styles.reasons}`} aria-labelledby="reasons-heading">
         <h2 id="reasons-heading" data-aos="fade">{content.reasonsTitle}</h2>
-        <div className={styles.reasonGrid}>{content.reasons.map(([title, description]) => <div key={title} data-aos="fade"><span className={styles.reasonIcon} aria-hidden="true" /><h3>{title}</h3><p>{description}</p></div>)}</div>
+        <div className={styles.reasonGrid}>{content.reasons.map(([title, description], index) => 
+          <div key={title} data-aos="fade">
+            <img className={styles.reasonIcon} src={content.reasonsIcons[index]} alt="" width="72" height="72" />
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </div>)}
+        </div>
       </section>
 
       <section className={`site-container ${styles.ecosystem}`} aria-labelledby="ecosystem-heading">
         <div className={styles.ecosystemIntro}><p data-aos="fade">TARGON</p><h2 id="ecosystem-heading" data-aos="fade">{content.ecosystemTitle}</h2><p data-aos="fade">{content.ecosystemIntro}</p></div>
         <div className={styles.ecosystemPanel}>
+          <img className={styles.ecosystemGlow} src="/image/home-ecosystem-glow.png" alt="" width="1063" height="672" />
+          <img className={styles.ecosystemOrbit} src="/image/home-ecosystem-orbit.png" alt="" width="1570" height="789" />
           <div className={styles.ecosystemCenter}><img src="/image/logo.svg" alt="" width="68" height="68" /><strong>TARGON</strong></div>
-          <div className={styles.ecosystemItems}>{content.ecosystem.map(([title, description], index) => <div className={styles.ecosystemItem} data-position={index} key={title}><span className={styles.ecosystemVisual} aria-hidden="true" /><div><h3>{title}</h3><p>{description}</p></div></div>)}</div>
+          <div className={styles.ecosystemItems}>{content.ecosystem.map(([title, description], index) => <div className={styles.ecosystemItem} data-position={index} key={title}><span className={styles.ecosystemVisual} aria-hidden="true"><img src={ecosystemImages[index]} alt="" width="118" height="118" /></span><div><h3>{title}</h3><p>{description}</p></div></div>)}</div>
         </div>
       </section>
     </main>

@@ -1,0 +1,188 @@
+.page { color: var(--site-color-heading); }
+.hero { min-height: 500px; background: var(--site-color-ice); }
+.breadcrumb { padding-top: 16px; font-size: 14px; line-height: 20px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.breadcrumb a, .breadcrumb li[aria-hidden] { color: var(--site-color-muted); }
+.breadcrumb a:hover { color: var(--site-color-accent); }
+.breadcrumb li[aria-current] { font-family: var(--site-font-latin); font-weight: 500; }
+.heroCopy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 633px); gap: 100px; margin-top: 92px; padding-bottom: 80px; }
+.heroCopy h1 { margin: 0; font-size: 64px; font-weight: 500; line-height: 88px; }
+.heroCopy h1 span, .sectionTitle span, .sectionIntro span, .application p span { display: block; }
+.heroCopy p { margin: 0; color: var(--site-color-body); font-size: 24px; line-height: 40px; }
+.sectionTitle { margin: 0; font-size: 48px; font-weight: 500; line-height: 68px; }
+.sectionIntro { margin: 36px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 36px; }
+.challenges { padding-top: 280px; }
+.challengeGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 50px; margin-top: 88px; }
+.challengeCard { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 480px; padding: 32px; border-radius: 28px; background: white; box-shadow: 3px -3px 12px rgb(20 40 74 / 12%); }
+.challengeCard h3 { margin: 0; font-size: 32px; font-weight: 500; line-height: 48px; letter-spacing: .08em; }
+.challengeQuestion { margin: 2px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 40px; letter-spacing: .08em; }
+.challengeBody { display: grid; flex: 1; margin-top: 24px; }
+.painCopy, .solutionPanel { grid-area: 1 / 1; font-size: 20px; line-height: 32px; letter-spacing: .08em; transition: opacity .3s ease, transform .3s ease, visibility .3s; }
+.painCopy { margin: 0; padding-bottom: 104px; color: var(--site-color-muted); }
+.painCopy strong { color: var(--site-color-body); font-weight: 500; }
+.solutionPanel { min-height: 334px; margin: 0 -32px -32px; padding: 32px 32px 136px; border-radius: 28px; background: var(--site-color-navy); color: white; opacity: 0; visibility: hidden; transform: translateY(12px); }
+.solutionPanel strong { font-weight: 500; }
+.challengeArrow { position: absolute; right: 32px; bottom: 32px; display: grid; width: 72px; height: 72px; place-items: center; padding: 0; border: 0; border-radius: 50%; background: #e3eaf2; cursor: pointer; }
+.challengeArrow img { display: block; transition: transform .3s ease; }
+.challengeArrow:focus-visible, .carouselArrow:focus-visible { outline: 2px solid var(--site-color-accent); outline-offset: 4px; }
+.challengeCard:is(:hover, :focus-within) .painCopy { opacity: 0; visibility: hidden; transform: translateY(-8px); }
+.challengeCard:is(:hover, :focus-within) .solutionPanel { opacity: 1; visibility: visible; transform: none; }
+.challengeCard:is(:hover, :focus-within) .challengeArrow img { transform: rotate(180deg); }
+.capabilities { padding-top: 280px; text-align: center; }
+.carousel { position: relative; margin-top: 88px; text-align: left; }
+.carouselCanvas { display: grid; grid-template-rows: minmax(0, 1fr); width: calc(100% - 252px); aspect-ratio: 1468 / 562; margin-inline: auto; overflow: hidden; border-radius: 28px; background: white; box-shadow: 6px -6px 16px rgb(20 40 74 / 8%); }
+.carouselSlide { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1000fr) minmax(0, 468fr); min-width: 0; min-height: 0; opacity: 0; visibility: hidden; transform: translateX(24px); transition: opacity .35s ease, transform .35s ease; pointer-events: none; }
+.carouselSlide[data-active="true"] { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+.carouselImage { min-width: 0; min-height: 0; height: 100%; overflow: hidden; border-radius: 28px; }
+.carouselImage img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.carouselImage img[data-top-aligned="true"] { object-position: center top; }
+.carouselCopy { align-self: center; min-width: 0; padding: 40px 24px 40px 40px; }
+.carouselCopy h3 { margin: 0; font-size: 40px; font-weight: 500; line-height: 56px; }
+.carouselCopy p { margin: 32px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 36px; }
+.carouselArrow { position: absolute; top: 50%; width: 78px; height: 78px; padding: 0; border: 0; border-radius: 50%; background: transparent; transform: translateY(-50%); cursor: pointer; transition: filter .2s ease; }
+.carouselArrow img { display: block; width: 100%; height: auto; }
+.carouselArrow:hover { filter: brightness(1.08); }
+.previousArrow { left: 0; }
+.nextArrow { right: 0; }
+.applications { padding-top: 280px; }
+.applicationGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; margin-top: 88px; }
+.application { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.application h3 { margin: 0; font-size: 32px; font-weight: 500; line-height: 48px; }
+.application p { margin: 12px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.applicationPhoto { position: relative; aspect-ratio: 400 / 246; margin: 23px 0 0; overflow: hidden; border-radius: 28px; box-shadow: 4px -4px 4px rgb(20 40 74 / 8%); }
+.applicationPhoto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Preserve the focal point of the portrait source in the landscape Figma crop. */
+.applicationPhoto[data-image="office"] img { object-position: center 35%; }
+.applicationPhoto figcaption { position: absolute; right: 0; bottom: 0; left: 0; min-height: 54px; padding: 11px 16px; background: var(--site-color-navy); color: white; font-size: 20px; line-height: 32px; text-align: center; }
+.faq { padding-block: 280px; }
+.faqList { margin-top: 88px; }
+.faqItem { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 690px); align-items: center; gap: 120px; padding: 55px 0; }
+.faqItem:first-child { padding-top: 0; }
+.faqItem:last-child { padding-bottom: 0; }
+.faqItem:not(:last-child) { border-bottom: 2px solid #e3eaf2; }
+.faqItem h3 { margin: 0; font-size: 32px; font-weight: 400; line-height: 64px; }
+.faqItem p { margin: 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.cta { padding-top: 170px; background: var(--site-color-navy); color: white; }
+.ctaCard { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: center; gap: 64px; min-height: 370px; padding: 64px; border-radius: 28px; background: rgb(255 255 255 / 8%); }
+.ctaCard h2 { margin: 0; font-size: 48px; font-weight: 500; line-height: 64px; }
+.ctaCard p { min-height: 107px; margin: 32px 0 0; color: var(--site-color-ice); font-size: 24px; line-height: 36px; }
+.ctaActions { display: grid; gap: 34px; }
+.ctaActions button { min-height: 89px; border-style: solid; font-size: 28px; line-height: 32px; letter-spacing: .12em; cursor: default; }
+.ctaActions button:focus-visible { outline: 2px solid var(--site-color-accent); outline-offset: 4px; }
+/* This page provides its own CTA and retains the shared footer's brand and links. */
+:global(.site-content):has(.page) + :global(footer) { padding-top: 0; }
+:global(.site-content):has(.page) + :global(footer) > :global(.site-container) > :first-child { display: none; }
+:global(html[lang="en"]) .heroCopy h1 { font-size: 48px; line-height: 64px; }
+:global(html[lang="en"]) .challengeCard h3 { font-size: 28px; line-height: 40px; letter-spacing: 0; }
+:global(html[lang="en"]) .challengeQuestion,
+:global(html[lang="en"]) .painCopy,
+:global(html[lang="en"]) .solutionPanel { letter-spacing: 0; }
+:global(html[lang="en"]) .application h3 { font-size: 28px; line-height: 40px; }
+:global(html[lang="en"]) .applicationPhoto figcaption { font-size: 16px; line-height: 32px; }
+
+@media (max-width: 1600px) {
+  .heroCopy { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .heroCopy h1 { font-size: 52px; line-height: 72px; }
+  .heroCopy p { font-size: 22px; line-height: 36px; }
+  .challenges, .capabilities, .applications { padding-top: 200px; }
+  .sectionTitle { font-size: 40px; line-height: 56px; }
+  .challengeGrid { gap: 32px; }
+  .challengeCard h3 { font-size: 28px; line-height: 40px; letter-spacing: 0; }
+  .challengeQuestion { font-size: 18px; line-height: 32px; letter-spacing: 0; }
+  .painCopy, .solutionPanel { font-size: 18px; line-height: 30px; letter-spacing: 0; }
+  .carouselCanvas { width: calc(100% - 180px); }
+  .carouselCopy { padding: 32px; }
+  .carouselCopy h3 { font-size: 32px; line-height: 44px; }
+  :global(html[lang="en"]) .carouselCopy h3 { font-size: 28px; line-height: 40px; }
+  .carouselCopy p { margin-top: 24px; font-size: 18px; line-height: 32px; }
+  .applicationGrid { gap: 32px; }
+  .application h3 { font-size: 28px; line-height: 40px; }
+  .application p { font-size: 18px; line-height: 32px; }
+  .applicationPhoto figcaption { font-size: 16px; line-height: 26px; }
+  .faq { padding-block: 200px; }
+  .faqItem { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .faqItem h3 { font-size: 28px; line-height: 44px; }
+  .cta { padding-top: 120px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 330px; }
+  .ctaCard h2 { font-size: 40px; line-height: 56px; }
+  .ctaActions button { font-size: 24px; }
+}
+
+@media (max-width: 1200px) {
+  .hero { min-height: 0; }
+  .heroCopy { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 64px; padding-bottom: 64px; }
+  .heroCopy h1 { font-size: 48px; line-height: 64px; }
+  .heroCopy p { max-width: 760px; font-size: 20px; line-height: 36px; }
+  .sectionTitle { font-size: 36px; line-height: 52px; }
+  .challenges, .capabilities, .applications { padding-top: 120px; }
+  .challengeGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 56px; }
+  .challengeCard { min-height: 0; }
+  .solutionPanel { min-height: 280px; }
+  .carousel { margin-top: 56px; padding-bottom: 80px; }
+  .carouselCanvas { width: min(100%, 900px); aspect-ratio: auto; }
+  .carouselSlide { grid-template-columns: minmax(0, 1fr); }
+  .carouselImage { aspect-ratio: 1000 / 562; height: auto; }
+  .carouselCopy { align-self: start; padding: 32px; }
+  .carouselArrow { top: auto; bottom: 0; width: 56px; height: 56px; transform: none; }
+  .previousArrow { left: calc(50% - 68px); }
+  .nextArrow { right: calc(50% - 68px); }
+  .applicationGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 32px; margin-top: 56px; }
+  .faq { padding-block: 120px; }
+  .faqList { margin-top: 56px; }
+  .faqItem { gap: 32px; padding-block: 32px; }
+  .faqItem h3 { font-size: 24px; line-height: 36px; }
+  .faqItem p { font-size: 18px; }
+  .cta { padding-top: 100px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; padding: 40px; }
+  .ctaCard h2 { font-size: 32px; line-height: 44px; }
+  .ctaCard p { min-height: 0; font-size: 20px; line-height: 32px; }
+  .ctaActions { gap: 20px; }
+  .ctaActions button { min-height: 64px; font-size: 20px; letter-spacing: .05em; }
+}
+
+@media (max-width: 700px) {
+  .breadcrumb { font-size: 12px; }
+  .breadcrumb ol { gap: 8px; }
+  .heroCopy { margin-top: 48px; gap: 24px; padding-bottom: 48px; }
+  .heroCopy h1, :global(html[lang="en"]) .heroCopy h1 { font-size: clamp(28px, 7vw, 40px); line-height: 1.5; overflow-wrap: anywhere; }
+  .heroCopy p { font-size: 16px; line-height: 28px; }
+  .sectionTitle { font-size: 28px; line-height: 42px; }
+  .sectionIntro { margin-top: 24px; font-size: 16px; line-height: 28px; }
+  .challenges, .capabilities, .applications { padding-top: 80px; }
+  .challengeGrid { margin-top: 40px; }
+  .challengeCard { padding: 24px; }
+  .challengeCard h3, :global(html[lang="en"]) .challengeCard h3 { font-size: 22px; line-height: 34px; }
+  .challengeQuestion { margin-top: 8px; font-size: 16px; line-height: 28px; }
+  .challengeBody { display: block; margin-top: 20px; }
+  .painCopy { padding-bottom: 0; font-size: 16px; line-height: 28px; }
+  .solutionPanel { min-height: 0; margin: 24px -24px -24px; padding: 24px; font-size: 16px; line-height: 28px; opacity: 1; visibility: visible; transform: none; }
+  .challengeCard:is(:hover, :focus-within) .painCopy { opacity: 1; visibility: visible; transform: none; }
+  .challengeArrow { display: none; }
+  .carousel { margin-top: 40px; padding-bottom: 72px; }
+  .carouselCopy { padding: 24px; }
+  .carouselCopy h3, :global(html[lang="en"]) .carouselCopy h3 { font-size: 24px; line-height: 36px; }
+  .carouselCopy p { margin-top: 20px; font-size: 16px; line-height: 28px; }
+  .carouselArrow { width: 48px; height: 48px; }
+  .previousArrow { left: calc(50% - 60px); }
+  .nextArrow { right: calc(50% - 60px); }
+  .applicationGrid { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 40px; }
+  .application h3, :global(html[lang="en"]) .application h3 { font-size: 22px; line-height: 34px; }
+  .application p { font-size: 16px; line-height: 28px; }
+  .applicationPhoto { margin-top: 24px; }
+  .applicationPhoto figcaption, :global(html[lang="en"]) .applicationPhoto figcaption { font-size: 14px; line-height: 22px; }
+  .faq { padding-block: 80px; }
+  .faqList { margin-top: 40px; }
+  .faqItem { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 28px; }
+  .faqItem h3 { font-size: 20px; line-height: 32px; }
+  .faqItem p { font-size: 16px; line-height: 28px; }
+  .cta { padding-top: 64px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 32px; padding: 32px; }
+  .ctaCard h2 { font-size: 28px; line-height: 42px; }
+  .ctaCard p { margin-top: 20px; font-size: 17px; line-height: 28px; }
+  .ctaActions { gap: 12px; }
+  .ctaActions button { min-height: 56px; padding-inline: 16px; font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .painCopy, .solutionPanel, .challengeArrow img, .carouselSlide { transition: none; transform: none; }
+}

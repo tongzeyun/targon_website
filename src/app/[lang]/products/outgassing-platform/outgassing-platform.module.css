@@ -1,0 +1,100 @@
+.page { color: var(--site-color-heading); }
+.hero { min-height: 500px; background: var(--site-color-ice); }
+.breadcrumb { padding-top: 16px; font-size: 14px; line-height: 20px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.breadcrumb a, .breadcrumb li[aria-hidden] { color: var(--site-color-muted); }
+.breadcrumb a:hover { color: var(--site-color-accent); }
+.breadcrumb li[aria-current] { font-weight: 500; }
+.heroCopy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 633px); gap: 100px; margin-top: 92px; padding-bottom: 80px; }
+.heroCopy h1 { margin: 0; font-size: 64px; font-weight: 500; line-height: 88px; }
+.heroCopy h1 span { display: block; }
+.heroCopy p { margin: 0; color: var(--site-color-body); font-size: 24px; line-height: 40px; }
+.sectionTitle { margin: 0; font-size: 48px; font-weight: 500; line-height: 68px; }
+.features { padding-top: 280px; }
+.featuresBody { display: grid; grid-template-columns: minmax(0, 720fr) minmax(0, 860fr); gap: 140px; min-height: 640px; margin-top: 88px; }
+.platformImage { position: relative; min-width: 0; aspect-ratio: 720 / 480; align-self: start; margin-top: 87px; }
+/* Preserve the Figma exports' shadows while aligning their visible image bounds. */
+.platformImage img { position: absolute; top: -3.125%; left: -1.25%; display: block; width: 103.3333%; max-width: none; height: auto; }
+.featureGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); justify-content: space-between; align-content: start; column-gap: 40px; row-gap: 68px; }
+.feature { min-width: 0; }
+.featureIcon { display: grid; width: 88px; height: 88px; place-items: center; border-radius: 20px; background: var(--site-color-ice); }
+.featureIcon img { display: block; width: 40px; height: 40px; }
+.feature h3 { margin: 26px 0 12px; font-size: 32px; font-weight: 500; line-height: 48px; }
+.feature p { margin: 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.applications { padding-top: 280px; }
+.applicationGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 170px; margin-top: 88px; }
+.application { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.application h3 { margin: 0 0 6px; font-size: 32px; font-weight: 500; line-height: 48px; }
+.application p { min-height: 64px; margin: 0; color: var(--site-color-muted); font-size: 20px; line-height: 32px; }
+.applicationImage { position: relative; aspect-ratio: 460 / 283; margin-top: 34px; }
+.applicationImage img { position: absolute; top: -3.8869%; left: -1.087%; display: block; width: 103.4783%; max-width: none; height: auto; }
+.parameters { padding-block: 280px; }
+.parameterTable { width: min(100%, 958px); margin-top: 88px; border-collapse: collapse; table-layout: fixed; }
+.parameterTable th { width: 70.7724%; font-size: 32px; font-weight: 400; line-height: 64px; text-align: left; }
+.parameterTable td { color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.parameterTable th, .parameterTable td { padding: 40px 0; vertical-align: middle; overflow-wrap: anywhere; }
+.parameterTable tr:first-child th, .parameterTable tr:first-child td { padding-top: 0; }
+.parameterTable tr:last-child th, .parameterTable tr:last-child td { padding-bottom: 0; }
+.parameterTable tr:not(:last-child) { border-bottom: 2px solid #e3eaf2; }
+:global(html[lang="en"]) .heroCopy h1 { font-size: 48px; line-height: 64px; }
+:global(html[lang="en"]) .feature h3,
+:global(html[lang="en"]) .application h3 { font-size: 28px; line-height: 40px; }
+:global(html[lang="en"]) .application p { min-height: 128px; }
+:global(html[lang="en"]) .parameterTable th { width: 55%; padding-right: 24px; }
+
+@media (max-width: 1600px) {
+  .heroCopy { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .heroCopy h1 { font-size: 52px; line-height: 72px; }
+  .heroCopy p { font-size: 22px; line-height: 36px; }
+  .featuresBody { gap: 80px; min-height: 0; }
+  .platformImage { align-self: center; margin-top: 0; }
+  .featureGrid { column-gap: 40px; row-gap: 48px; }
+  .feature h3, .application h3 { font-size: 28px; line-height: 40px; }
+  .applicationGrid { gap: 64px; }
+  .features, .applications { padding-top: 200px; }
+  .parameters { padding-block: 200px; }
+}
+
+@media (max-width: 1200px) {
+  .hero { min-height: 0; }
+  .heroCopy { grid-template-columns: 1fr; gap: 32px; margin-top: 64px; padding-bottom: 64px; }
+  .heroCopy h1 { font-size: 48px; line-height: 64px; }
+  .heroCopy p { max-width: 760px; font-size: 20px; line-height: 36px; }
+  .sectionTitle { font-size: 36px; line-height: 52px; }
+  .features, .applications { padding-top: 120px; }
+  .featuresBody { grid-template-columns: 1fr; gap: 56px; margin-top: 56px; }
+  .platformImage { width: min(100%, 720px); }
+  .featureGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+  .applicationGrid { gap: 32px; margin-top: 56px; }
+  .application h3, :global(html[lang="en"]) .application h3 { font-size: 24px; line-height: 36px; }
+  .application p { font-size: 18px; line-height: 32px; }
+  .applicationImage { margin-top: 32px; }
+  .parameters { padding-block: 120px; }
+  .parameterTable { margin-top: 56px; }
+  .parameterTable th { width: 55%; padding-right: 24px; font-size: 28px; line-height: 44px; }
+}
+
+@media (max-width: 700px) {
+  .breadcrumb { font-size: 12px; }
+  .breadcrumb ol { gap: 8px; }
+  .heroCopy { margin-top: 48px; gap: 24px; padding-bottom: 48px; }
+  .heroCopy h1, :global(html[lang="en"]) .heroCopy h1 { font-size: clamp(28px, 7vw, 40px); line-height: 1.5; overflow-wrap: anywhere; }
+  .heroCopy p { font-size: 16px; line-height: 28px; }
+  .sectionTitle { font-size: 28px; line-height: 42px; }
+  .features, .applications { padding-top: 80px; }
+  .featuresBody { margin-top: 40px; gap: 40px; }
+  .featureGrid { grid-template-columns: 1fr; gap: 32px; }
+  .featureIcon { width: 64px; height: 64px; border-radius: 16px; }
+  .featureIcon img { width: 32px; height: 32px; }
+  .feature h3, :global(html[lang="en"]) .feature h3 { margin-top: 20px; font-size: 22px; line-height: 34px; }
+  .feature p { font-size: 16px; line-height: 28px; }
+  .applicationGrid { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
+  .application h3, :global(html[lang="en"]) .application h3 { font-size: 22px; line-height: 34px; }
+  .application p, :global(html[lang="en"]) .application p { min-height: 0; font-size: 16px; line-height: 28px; }
+  .applicationImage { margin-top: 24px; }
+  .parameters { padding-block: 80px; }
+  .parameterTable { margin-top: 40px; }
+  .parameterTable th, :global(html[lang="en"]) .parameterTable th { width: 40%; padding-right: 16px; font-size: 18px; line-height: 30px; }
+  .parameterTable td { font-size: 16px; line-height: 28px; }
+  .parameterTable th, .parameterTable td { padding-block: 24px; }
+}

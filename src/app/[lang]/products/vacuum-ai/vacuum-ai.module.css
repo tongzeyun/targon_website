@@ -1,0 +1,192 @@
+.page { color: var(--site-color-heading); }
+.hero { min-height: 500px; background: var(--site-color-ice); }
+.breadcrumb { padding-top: 16px; font-size: 14px; line-height: 20px; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.breadcrumb a, .breadcrumb li[aria-hidden] { color: var(--site-color-muted); }
+.breadcrumb a:hover { color: var(--site-color-accent); }
+.breadcrumb li[aria-current] { font-family: var(--site-font-latin); font-weight: 500; }
+.heroCopy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 633px); gap: 100px; margin-top: 92px; padding-bottom: 80px; }
+.heroCopy h1 { margin: 0; font-size: 64px; font-weight: 500; line-height: 88px; }
+.heroCopy h1 span, .sectionIntro span { display: block; }
+.heroCopy p { margin: 0; color: var(--site-color-body); font-size: 24px; line-height: 40px; }
+.sectionTitle { margin: 0; font-size: 48px; font-weight: 500; line-height: 68px; }
+.sectionIntro { margin: 36px 0 0; color: var(--site-color-body); font-size: 20px; line-height: 36px; }
+.assistant { display: grid; grid-template-columns: minmax(0, 730fr) minmax(0, 900fr); align-items: center; gap: 90px; padding-top: 280px; }
+.assistantCopy { min-width: 0; }
+.assistantImage { position: relative; min-width: 0; aspect-ratio: 900 / 506; }
+/* Align image content while retaining the padding around the Figma exports' shadows. */
+.assistantImage img { position: absolute; top: -4.3478%; left: -1.1111%; display: block; width: 103.5556%; max-width: none; height: auto; }
+.modeling { padding-top: 266px; }
+.workflow { --flow-gap: 115px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--flow-gap); margin: 88px 0 0; padding: 0; list-style: none; }
+.workflow li { position: relative; min-width: 0; }
+.workflowStep { display: flex; align-items: center; justify-content: center; gap: 20px; height: 100%; min-height: 68px; padding: 15px 16px; border: 1.6px solid #e3eaf2; border-radius: 49px; font-size: 22px; font-weight: 500; line-height: 36px; }
+.workflowStep img { display: block; width: 32px; height: 32px; flex: none; }
+.workflowArrow { position: absolute; top: 50%; left: calc(100% + (var(--flow-gap) - 28px) / 2); width: 28px; height: 16px; transform: translateY(-50%); }
+.modelImages { display: grid; grid-template-columns: minmax(0, 960fr) minmax(0, 703fr); gap: 57px; margin-top: 88px; }
+.modelEditor, .modelResults { position: relative; min-width: 0; }
+.modelEditor { aspect-ratio: 960 / 540; }
+.modelResults { aspect-ratio: 703 / 540; }
+.modelEditor img, .modelResults img { position: absolute; top: -4.0741%; display: block; max-width: none; height: auto; }
+.modelEditor img { left: -1.0417%; width: 103.3333%; }
+.modelResults img { left: -1.4225%; width: 104.5519%; }
+.selection, .services, .value { padding-top: 280px; }
+.caseCard { display: grid; grid-template-columns: minmax(0, 664fr) minmax(0, 860fr); align-items: start; gap: 68px; min-height: 612px; margin-top: 88px; padding: 64px; border-radius: 28px; background: white; box-shadow: 3px -2px 12px rgb(20 40 74 / 12%); }
+.caseCopy { min-width: 0; }
+.caseLabel { margin: 0; color: #737373; font-size: 14px; line-height: 24px; }
+.caseCopy h3 { margin: 43px 0 0; font-size: 32px; font-weight: 500; line-height: 48px; }
+.caseDescription { margin: 40px 0 0; color: var(--site-color-body); font-size: 16px; line-height: 32px; }
+.caseImage { display: block; width: 100%; height: auto; border-radius: 28px; }
+.caseFeatures { display: grid; grid-template-columns: repeat(3, minmax(0, 154px)); justify-content: space-between; gap: 24px; margin-top: 93px; text-align: center; }
+.caseFeatures img { display: block; margin-inline: auto; }
+.caseFeatures h4 { margin: 12px 0 0; font-size: 16px; font-weight: 400; line-height: 32px; }
+.caseFeatures p { margin: 0; color: var(--site-color-muted); font-size: 14px; line-height: 24px; }
+.serviceGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin-top: 88px; }
+.serviceCard { min-width: 0; min-height: 416px; overflow: hidden; border-radius: 28px; box-shadow: inset 0 0 0 1px #d4d4d4; }
+.serviceImage { position: relative; aspect-ratio: 406 / 246; }
+.serviceImage img { position: absolute; top: 0; left: -.9852%; display: block; width: 101.9704%; max-width: none; height: auto; }
+.serviceImage .usedOverlay { top: 11.3821%; left: 0; width: 100%; }
+.serviceBody { padding: 16px 24px 18px; }
+.serviceBody h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 36px; }
+.serviceBody p { min-height: 84px; max-width: 304px; margin: 16px 0 0; color: var(--site-color-body); font-size: 16px; line-height: 30px; }
+.categories { position: relative; min-height: 292px; margin-top: 88px; }
+.categories h3 { position: absolute; top: 0; left: 0; margin: 0; color: var(--site-color-body); font-size: 20px; font-weight: 400; line-height: 36px; }
+.categoryList { display: flex; flex-wrap: wrap; justify-content: center; gap: 78px 0; width: min(100%, 1030px); margin: 0 auto; padding: 8px 0 0; list-style: none; }
+.categoryList li { width: 206px; min-width: 0; text-align: center; }
+.categoryList img { display: block; margin-inline: auto; }
+.categoryList span { display: block; margin-top: 6px; font-size: 16px; font-weight: 500; line-height: 26px; }
+.valueGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 260px; margin-top: 124px; text-align: center; }
+.valueGrid article { min-width: 0; }
+.valueGrid img { display: block; margin-inline: auto; }
+.valueGrid h3 { margin: 32px 0 0; font-size: 24px; font-weight: 500; line-height: 40px; }
+.valueGrid p { width: max-content; max-width: calc(100% + 4px); margin: 32px auto 0; color: var(--site-color-body); font-size: 20px; line-height: 40px; }
+.faq { padding-block: 280px; }
+.faqList { margin-top: 88px; }
+.faqItem { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 690px); align-items: center; gap: 120px; padding: 55px 0; }
+.faqItem:first-child { padding-top: 0; }
+.faqItem:last-child { padding-bottom: 0; }
+.faqItem:not(:last-child) { border-bottom: 2px solid #e3eaf2; }
+.faqItem h3 { margin: 0; font-size: 32px; font-weight: 400; line-height: 64px; }
+.faqItem p { margin: 0; color: var(--site-color-body); font-size: 20px; line-height: 32px; }
+.cta { padding-top: 170px; background: var(--site-color-navy); color: white; }
+.ctaCard { display: grid; grid-template-columns: minmax(0, 1fr) 430px; align-items: center; gap: 64px; min-height: 370px; padding: 64px; border-radius: 28px; background: rgb(255 255 255 / 8%); }
+.ctaCard h2 { margin: 0; font-size: 48px; font-weight: 500; line-height: 64px; }
+.ctaCard p { min-height: 107px; margin: 32px 0 0; color: var(--site-color-ice); font-size: 24px; line-height: 36px; }
+.ctaActions { display: grid; gap: 34px; }
+.ctaActions button { min-height: 89px; border-style: solid; font-size: 28px; line-height: 32px; letter-spacing: .12em; cursor: default; }
+.ctaActions button:focus-visible { outline: 2px solid var(--site-color-accent); outline-offset: 4px; }
+/* Use this page's CTA while preserving the shared footer's brand and links. */
+:global(.site-content):has(.page) + :global(footer) { padding-top: 0; }
+:global(.site-content):has(.page) + :global(footer) > :global(.site-container) > :first-child { display: none; }
+:global(html[lang="en"]) .heroCopy h1 { font-size: 48px; line-height: 64px; }
+:global(html[lang="en"]) .workflowStep { gap: 12px; font-size: 18px; line-height: 28px; }
+:global(html[lang="en"]) .categories h3 { max-width: 280px; }
+
+@media (max-width: 1600px) {
+  .heroCopy { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .heroCopy h1 { font-size: 52px; line-height: 72px; }
+  .heroCopy p { font-size: 22px; line-height: 36px; }
+  .assistant { gap: 64px; padding-top: 200px; }
+  .sectionTitle { font-size: 40px; line-height: 56px; }
+  .modeling { padding-top: 200px; }
+  .workflow { --flow-gap: 48px; margin-top: 64px; }
+  .workflowStep { gap: 12px; font-size: 20px; }
+  .modelImages { gap: 40px; margin-top: 64px; }
+  .selection, .services, .value { padding-top: 200px; }
+  .caseCard { gap: 40px; margin-top: 64px; padding: 40px; min-height: 0; }
+  .caseCopy h3 { margin-top: 28px; font-size: 28px; line-height: 40px; }
+  .caseDescription { margin-top: 24px; }
+  .caseFeatures { margin-top: 48px; }
+  .serviceGrid { gap: 24px; margin-top: 64px; }
+  .serviceBody { padding-inline: 20px; }
+  .categories { margin-top: 64px; }
+  .categories h3 { position: static; margin-bottom: 32px; }
+  .valueGrid { gap: 64px; margin-top: 88px; }
+  .faq { padding-block: 200px; }
+  .faqItem { grid-template-columns: minmax(0, 1fr) minmax(0, 40%); gap: 64px; }
+  .faqItem h3 { font-size: 28px; line-height: 44px; }
+  .cta { padding-top: 120px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 330px; }
+  .ctaCard h2 { font-size: 40px; line-height: 56px; }
+  .ctaActions button { font-size: 24px; }
+}
+
+@media (max-width: 1200px) {
+  .hero { min-height: 0; }
+  .heroCopy { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 64px; padding-bottom: 64px; }
+  .heroCopy h1 { font-size: 48px; line-height: 64px; }
+  .heroCopy p { max-width: 760px; font-size: 20px; line-height: 36px; }
+  .sectionTitle { font-size: 36px; line-height: 52px; }
+  .assistant { grid-template-columns: minmax(0, 1fr); gap: 56px; padding-top: 120px; }
+  .assistantImage { width: min(100%, 900px); }
+  .modeling, .selection, .services, .value { padding-top: 120px; }
+  .workflow { --flow-gap: 32px; margin-top: 56px; }
+  .workflowStep { flex-direction: column; gap: 8px; padding-inline: 12px; font-size: 18px; line-height: 28px; text-align: center; }
+  .modelImages { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 56px; }
+  .modelResults { width: min(100%, 703px); }
+  .caseCard { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 56px; }
+  .caseFeatures { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .serviceGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 56px; }
+  .serviceCard { min-height: 0; }
+  .serviceBody p { max-width: none; }
+  .categories { min-height: 0; margin-top: 56px; }
+  .categoryList { gap: 48px 0; }
+  .categoryList li { width: 20%; }
+  .valueGrid { gap: 40px; margin-top: 56px; }
+  .valueGrid p { font-size: 18px; line-height: 32px; }
+  .faq { padding-block: 120px; }
+  .faqList { margin-top: 56px; }
+  .faqItem { gap: 32px; padding-block: 32px; }
+  .faqItem h3 { font-size: 24px; line-height: 36px; }
+  .faqItem p { font-size: 18px; }
+  .cta { padding-top: 100px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; padding: 40px; }
+  .ctaCard h2 { font-size: 32px; line-height: 44px; }
+  .ctaCard p { min-height: 0; font-size: 20px; line-height: 32px; }
+  .ctaActions { gap: 20px; }
+  .ctaActions button { min-height: 64px; font-size: 20px; letter-spacing: .05em; }
+}
+
+@media (max-width: 700px) {
+  .breadcrumb { font-size: 12px; }
+  .breadcrumb ol { gap: 8px; }
+  .heroCopy { margin-top: 48px; gap: 24px; padding-bottom: 48px; }
+  .heroCopy h1, :global(html[lang="en"]) .heroCopy h1 { font-size: clamp(28px, 7vw, 40px); line-height: 1.5; overflow-wrap: anywhere; }
+  .heroCopy p { font-size: 16px; line-height: 28px; }
+  .sectionTitle { font-size: 28px; line-height: 42px; }
+  .sectionIntro { margin-top: 24px; font-size: 16px; line-height: 28px; }
+  .assistant { gap: 40px; padding-top: 80px; }
+  .modeling, .selection, .services, .value { padding-top: 80px; }
+  .workflow { grid-template-columns: minmax(0, 1fr); margin-top: 40px; }
+  .workflowStep { flex-direction: row; padding: 15px 20px; font-size: 18px; line-height: 28px; }
+  .workflowArrow { top: calc(100% + 8px); left: calc(50% - 14px); transform: rotate(90deg); }
+  .modelImages { margin-top: 40px; }
+  .caseCard { gap: 32px; margin-top: 40px; padding: 24px; }
+  .caseCopy h3 { margin-top: 24px; font-size: 22px; line-height: 34px; }
+  .caseDescription { font-size: 16px; line-height: 28px; }
+  .caseFeatures { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 32px; }
+  .caseFeatures h4 { font-size: 18px; line-height: 30px; }
+  .caseFeatures p { font-size: 16px; line-height: 28px; }
+  .caseImage { border-radius: 16px; }
+  .serviceGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 40px; }
+  .serviceBody p { min-height: 0; }
+  .categories { margin-top: 40px; }
+  .categories h3 { font-size: 18px; line-height: 28px; }
+  .categoryList { gap: 32px 0; padding: 0; }
+  .categoryList li { width: 50%; padding-inline: 8px; }
+  .categoryList img { width: 48px; height: 48px; }
+  .categoryList span { font-size: 14px; line-height: 22px; }
+  .valueGrid { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 40px; }
+  .valueGrid h3 { margin-top: 24px; font-size: 22px; line-height: 34px; }
+  .valueGrid p { max-width: 100%; margin-top: 16px; font-size: 16px; line-height: 28px; }
+  .faq { padding-block: 80px; }
+  .faqList { margin-top: 40px; }
+  .faqItem { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 28px; }
+  .faqItem h3 { font-size: 20px; line-height: 32px; }
+  .faqItem p { font-size: 16px; line-height: 28px; }
+  .cta { padding-top: 64px; }
+  .ctaCard { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 32px; padding: 32px; }
+  .ctaCard h2 { font-size: 28px; line-height: 42px; }
+  .ctaCard p { margin-top: 20px; font-size: 17px; line-height: 28px; }
+  .ctaActions { gap: 12px; }
+  .ctaActions button { min-height: 56px; padding-inline: 16px; font-size: 18px; }
+}

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Locale } from "@/lib/locales";
 import styles from "./products.module.css";
 
-type Product = { title: string; description: string };
+type Product = { slug: string; title: string; description: string; image: string };
 
 type Props = {
   items: Product[];
@@ -25,13 +26,13 @@ export function SoftwareCarousel({ items, lang, viewProduct }: Props) {
 
           return (
             <article className={styles.softwareCard} data-position={position} data-wrap={wraps} aria-hidden={position !== "active"} key={item.title}>
-              <div className={styles.softwareVisual} aria-hidden="true" />
+              <div className={styles.softwareVisual}><img src={item.image} alt={lang === "zh" ? `${item.title} 软件界面` : `${item.title} software interface`} width="898" height="464" /></div>
               <div className={styles.softwareBody}>
                 <h3 data-aos="fade">{item.title}</h3>
                 <p data-aos="fade">{item.description}</p>
-                <button className="site-button site-button--primary" type="button" tabIndex={position === "active" ? 0 : -1}>
+                <Link className={`site-button site-button--primary ${styles.productLink}`} href={`/${lang}/products/${item.slug}`} tabIndex={position === "active" ? 0 : -1}>
                   {viewProduct}
-                </button>
+                </Link>
               </div>
             </article>
           );

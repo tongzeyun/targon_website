@@ -1,7 +1,8 @@
 .page { overflow: hidden; }
 
-.hero { min-height: min(50vw, 960px); background: #0a101a; color: #fff; }
-.heroInner { display: flex; min-height: inherit; flex-direction: column; justify-content: center; position: relative; }
+.hero { position: relative; min-height: min(50.2083vw, 964px); background-color: #0a101a; background-image: url("/image/products-hero-background.png"); background-repeat: no-repeat; color: #fff; }
+.heroOrb { position: absolute; top: min(3.59375vw, 69px); left: 50%; width: min(36.9792vw, 710px); height: auto; transform: translateX(-50%); pointer-events: none; }
+.heroInner { display: flex; min-height: inherit; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
 .heroCopy { margin: auto 0; text-align: center; }
 .heroCopy p { max-width: 810px; margin: 0 auto 76px; font-size: 18px; line-height: 1.8; }
 .heroCopy h1 { margin: 0; font-size: clamp(40px, 4.25vw, 82px); font-weight: 500; letter-spacing: .16em; line-height: 1.35; }
@@ -24,12 +25,13 @@
 .softwareCard[data-position="active"] { z-index: 2; transform: translateX(-50%) scale(1); opacity: 1; }
 .softwareCard[data-position="previous"] { z-index: 1; transform: translateX(calc(-50% - var(--side-shift))) scale(.76); opacity: 1; }
 .softwareCard[data-position="next"] { z-index: 1; transform: translateX(calc(-50% + var(--side-shift))) scale(.76); opacity: 1; }
-.softwareVisual { height: 470px; }
+.softwareVisual { height: 470px; padding: 16px 16px 0; }
+.softwareVisual img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .softwareBody { padding: 52px 62px 64px; }
 .softwareBody h3 { margin: 0; font-family: var(--site-font-latin); font-size: 42px; font-weight: 500; line-height: 1.25; }
 .softwareBody h3::after { content: ""; display: block; width: 24px; height: 2px; margin: 18px 0 32px; background: #c6d4e2; }
 .softwareBody p { max-width: 790px; margin: 0 0 30px; color: var(--site-color-body); font-size: 21px; line-height: 1.8; }
-.softwareBody button { min-width: 244px; border: 0; cursor: default; }
+.productLink { min-width: 244px; border: 0; }
 .carouselArrow { position: absolute; z-index: 3; top: 50%; display: grid; width: 40px; height: 48px; place-items: center; padding: 0; border: 0; background: transparent; cursor: pointer; transform: translate(-50%, -50%); }
 .previousArrow { left: calc(50% - var(--half-card) - 70px); }
 .nextArrow { left: calc(50% + var(--half-card) + 70px); }
@@ -43,11 +45,12 @@
 .hardware > h2::after { margin-left: 0; }
 .hardwareCards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 72px; }
 .hardwareCard { min-width: 0; }
-.hardwareVisual { position: relative; z-index: 1; width: calc(100% - 64px); aspect-ratio: 1; margin: 0 auto; border-radius: 28px; background: #f3f8fc; }
+.hardwareVisual { position: relative; z-index: 1; width: calc(100% - 64px); max-width: 396px; aspect-ratio: 396 / 416; margin: 0 auto; }
+.hardwareVisual img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .hardwareBody { min-height: 486px; margin-top: -230px; padding: 274px 32px 44px; border: 2px solid #e6e9ed; border-radius: 28px; box-shadow: 0 0 12px rgb(20 40 74 / 7%); }
 .hardwareBody h3 { margin: 0 0 20px; font-size: 25px; font-weight: 500; line-height: 1.4; }
 .hardwareBody p { min-height: 126px; margin: 0 0 24px; color: var(--site-color-body); font-size: 17px; line-height: 1.6; }
-.arrowButton { display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; padding: 0 0 5px; border: 0; border-radius: 50%; background: #5b9bff; color: #fff; font-family: Arial, sans-serif; font-size: 42px; font-weight: 200; line-height: 1; cursor: default; }
+.arrowButton { display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; padding: 0 0 5px; border: 0; border-radius: 50%; background: #5b9bff; color: #fff; font-family: Arial, sans-serif; font-size: 42px; font-weight: 200; line-height: 1; }
 .moreHardware { margin: 90px 0 0; color: var(--site-color-body); font-size: 20px; }
 
 @media (max-width: 1400px) {
@@ -72,6 +75,7 @@
 
 @media (max-width: 900px) {
   .hero { min-height: 650px; }
+  .heroOrb { top: 32px; width: min(90vw, 710px); }
   .heroCopy p { margin-bottom: 48px; }
   .heroProducts { gap: 18px; padding-bottom: 56px; font-size: 15px; }
   .software { padding: 110px var(--site-gutter) 150px; }
@@ -102,7 +106,7 @@
   .softwareBody { padding: 26px; }
   .softwareBody h3 { font-size: 25px; }
   .softwareBody p { font-size: 15px; }
-  .softwareBody button { min-width: 0; min-height: 44px; padding: 8px 24px; font-size: 15px; }
+  .productLink { min-width: 0; min-height: 44px; padding: 8px 24px; font-size: 15px; }
   .hardware { padding-bottom: 100px; }
   .hardware > h2 { margin-bottom: 42px; }
   .hardwareVisual { max-height: none; }

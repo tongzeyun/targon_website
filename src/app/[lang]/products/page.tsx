@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/locales";
 import { SoftwareCarousel } from "./software-carousel";
 import styles from "./products.module.css";
 
 type Props = { params: Promise<{ lang: string }> };
+
+const hardwareProducts = [
+  { slug: "outgassing-platform", image: "/image/products-outgassing-platform.png" },
+  { slug: "edge-collector", image: "/image/products-edge-collector.png" },
+  { slug: "pump-gauge-controller", image: "/image/products-pump-gauge-controller.png" },
+] as const;
 
 const copy = {
   zh: {
@@ -62,7 +69,8 @@ export default async function ProductsPage({ params }: Props) {
 
   return (
     <main className={styles.page}>
-      <section className={styles.hero} aria-labelledby="products-heading">
+      <section className={`site-bg-box ${styles.hero}`} aria-labelledby="products-heading">
+        <img className={styles.heroOrb} src="/image/products-hero-orb.png" alt="" aria-hidden="true" width="710" height="710" />
         <div className={`site-container ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
             <p data-aos="fade">{content.heroIntro}</p>
@@ -80,9 +88,9 @@ export default async function ProductsPage({ params }: Props) {
           lang={lang}
           viewProduct={content.viewProduct}
           items={[
-            { title: "Enterprise Brain", description: content.software.brain },
-            { title: "Vacuum AI", description: content.software.vacuum },
-            { title: "Local Industrial Agent", description: content.software.agent },
+            { slug: "enterprise-brain", title: "Enterprise Brain", description: content.software.brain, image: "/image/products-enterprise-brain.png" },
+            { slug: "vacuum-ai", title: "Vacuum AI", description: content.software.vacuum, image: "/image/products-vacuum-ai.png" },
+            { slug: "industrial-agent", title: "Local Industrial Agent", description: content.software.agent, image: "/image/products-industrial-agent.png" },
           ]}
         />
       </section>
@@ -90,12 +98,12 @@ export default async function ProductsPage({ params }: Props) {
       <section className={`site-container ${styles.hardware}`} aria-labelledby="hardware-heading">
         <h2 id="hardware-heading" className="site-section-title" data-aos="fade">{content.hardwareTitle}</h2>
         <div className={styles.hardwareCards}>
-          {content.hardware.map((product) => (
+          {content.hardware.map((product, index) => (
             <article className={styles.hardwareCard} key={product.title}>
-              <div className={styles.hardwareVisual} aria-hidden="true" />
+              <div className={styles.hardwareVisual}><img src={hardwareProducts[index].image} alt={product.title} width="396" height="416" /></div>
               <div className={styles.hardwareBody}>
                 <h3 data-aos="fade">{product.title}</h3><p data-aos="fade">{product.description}</p>
-                <button className={styles.arrowButton} type="button" aria-label={`${content.viewProduct}: ${product.title}`}><span aria-hidden="true">›</span></button>
+                <Link className={styles.arrowButton} href={`/${lang}/products/${hardwareProducts[index].slug}`} aria-label={`${content.viewProduct}: ${product.title}`}><span aria-hidden="true">›</span></Link>
               </div>
             </article>
           ))}
