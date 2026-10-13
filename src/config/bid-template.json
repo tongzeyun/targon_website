@@ -1,0 +1,4064 @@
+{
+  "templateId": "system:authority-docx:3e748d2ba12b12d8",
+  "source": "system_default",
+  "sections": [
+    {
+      "sectionId": "section:1",
+      "title": "投标文件",
+      "nodes": [
+        {
+          "nodeId": "p-0001",
+          "type": "static",
+          "text": "正本"
+        },
+        {
+          "nodeId": "p-0005",
+          "type": "static",
+          "text": "投 标 文 件"
+        },
+        {
+          "nodeId": "p-0009",
+          "type": "static",
+          "text": "项目名称："
+        },
+        {
+          "nodeId": "p-0010",
+          "type": "static",
+          "text": "项目编号："
+        },
+        {
+          "nodeId": "p-0016",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "p-0017",
+          "type": "static",
+          "text": "投标人地址："
+        },
+        {
+          "nodeId": "p-0018",
+          "type": "static",
+          "text": "日 期："
+        },
+        {
+          "nodeId": "p-0019",
+          "type": "static",
+          "text": "索 引 表"
+        },
+        {
+          "nodeId": "t-0001",
+          "type": "table",
+          "tableId": "table:document-index",
+          "columns": [
+            {
+              "columnId": "t-0001:c-01",
+              "key": "t-0001:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 11
+            },
+            {
+              "columnId": "t-0001:c-02",
+              "key": "t-0001:c-02",
+              "title": "投标文件构成内容",
+              "description": "表格列：投标文件构成内容",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 73
+            },
+            {
+              "columnId": "t-0001:c-03",
+              "key": "t-0001:c-03",
+              "title": "所在页码",
+              "description": "表格列：所在页码",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 16
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "投标文件构成内容"
+                },
+                {
+                  "text": "所在页码"
+                }
+              ]
+            }
+          ],
+          "minRows": 35,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "break-0020",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0021",
+          "type": "static",
+          "text": "目 录"
+        },
+        {
+          "nodeId": "break-0023",
+          "type": "page_break"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0024",
+      "title": "一、投标书",
+      "nodes": [
+        {
+          "nodeId": "p-0026",
+          "type": "static",
+          "text": "致："
+        },
+        {
+          "nodeId": "p-0028",
+          "type": "static",
+          "text": "根据贵方为(招标文件中的项目名称及项目编号)项目招标采购货物及服务的投标邀请,签字代表(被授权投标人)经正式授权并代表投标人（投标单位名称及注册地址）提交下述文件"
+        },
+        {
+          "nodeId": "p-0029",
+          "type": "static",
+          "text": "1. 提供投标须知规定的全部投标文件：包括正本1份，副本4份。"
+        },
+        {
+          "nodeId": "p-0030",
+          "type": "static",
+          "text": "2. 以形式出具的投标保证金，金额为人民币（投标保证金金额）元。"
+        },
+        {
+          "nodeId": "p-0031",
+          "type": "static",
+          "text": "在此，签字代表宣布同意如下："
+        },
+        {
+          "nodeId": "p-0032",
+          "type": "static",
+          "text": "（1） 所附投标价格表中规定的应提交和交付的货物投标总价为（投标总价）。"
+        },
+        {
+          "nodeId": "p-0033",
+          "type": "static",
+          "text": "（2） 我方将按招标文件的规定履行合同责任和义务。"
+        },
+        {
+          "nodeId": "p-0034",
+          "type": "static",
+          "text": "（3） 我方已详细审查全部招标文件，包括第 /号（如果有的话）。我方完全理解并同意放弃对这方面有不明及误解的权力。"
+        },
+        {
+          "nodeId": "p-0035",
+          "type": "static",
+          "text": "（4） 本投标有效期为自开标日起 90 个日历日。"
+        },
+        {
+          "nodeId": "p-0036",
+          "type": "static",
+          "text": "（5） 在规定的开标时间后，我方保证遵守招标文件中有关保证金的规定。"
+        },
+        {
+          "nodeId": "p-0037",
+          "type": "static",
+          "text": "（6） 根据投标人须知第1条规定，我方承诺，与买方聘请的为此项目提供咨询服务的公司及任何附属机构均无关联，我方不是买方的附属机构。"
+        },
+        {
+          "nodeId": "p-0038",
+          "type": "static",
+          "text": "（7） 我方同意提供按照贵方可能要求的与其投标有关的一切数据或资料，完全理解贵方不一定接受最低价的投标或收到的任何投标。"
+        },
+        {
+          "nodeId": "p-0039",
+          "type": "static",
+          "text": "（8） 我方承诺本次投标的价格未低于成本价，若有疑义，我方可提供相应的证明材料。"
+        },
+        {
+          "nodeId": "p-0040",
+          "type": "static",
+          "text": "（9） 我方已充分理解贵方关于投标报价不得低于成本价的相关规定，并清楚若违反相关规定将导致废标的严重后果。"
+        },
+        {
+          "nodeId": "p-0042",
+          "type": "static",
+          "text": "与本投标有关的一切正式往来信函请寄："
+        },
+        {
+          "nodeId": "p-0044",
+          "type": "static",
+          "text": "地址 ： 传 真： /"
+        },
+        {
+          "nodeId": "p-0045",
+          "type": "static",
+          "text": "电话 ： 电子函件："
+        },
+        {
+          "nodeId": "p-0047",
+          "type": "static",
+          "text": "投标人授权代表签字"
+        },
+        {
+          "nodeId": "p-0048",
+          "type": "static",
+          "text": "投标人名称"
+        },
+        {
+          "nodeId": "p-0050",
+          "type": "static",
+          "text": "开户名全称"
+        },
+        {
+          "nodeId": "p-0051",
+          "type": "static",
+          "text": "开户银行"
+        },
+        {
+          "nodeId": "p-0052",
+          "type": "static",
+          "text": "银行帐号"
+        },
+        {
+          "nodeId": "p-0053",
+          "type": "static",
+          "text": "投标人公章"
+        },
+        {
+          "nodeId": "break-0054",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0054",
+          "type": "static",
+          "text": "日期"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0055",
+      "title": "二、投标一览表",
+      "nodes": [
+        {
+          "nodeId": "p-0057",
+          "type": "static",
+          "text": "招标编号："
+        },
+        {
+          "nodeId": "p-0058",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "t-0002",
+          "type": "table",
+          "tableId": "table:t-0002",
+          "columns": [
+            {
+              "columnId": "t-0002:c-01",
+              "key": "t-0002:c-01",
+              "title": "包号",
+              "description": "表格列：包号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 6
+            },
+            {
+              "columnId": "t-0002:c-02",
+              "key": "t-0002:c-02",
+              "title": "货物名称",
+              "description": "表格列：货物名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 14
+            },
+            {
+              "columnId": "t-0002:c-03",
+              "key": "t-0002:c-03",
+              "title": "数量",
+              "description": "表格列：数量",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 8
+            },
+            {
+              "columnId": "t-0002:c-04",
+              "key": "t-0002:c-04",
+              "title": "价格条件",
+              "description": "表格列：价格条件",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 10
+            },
+            {
+              "columnId": "t-0002:c-05",
+              "key": "t-0002:c-05",
+              "title": "投标币种",
+              "description": "表格列：投标币种",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0002:c-06",
+              "key": "t-0002:c-06",
+              "title": "投标总价",
+              "description": "表格列：投标总价",
+              "valueType": "string",
+              "sourcePolicy": "manual",
+              "required": true,
+              "width": 14
+            },
+            {
+              "columnId": "t-0002:c-07",
+              "key": "t-0002:c-07",
+              "title": "交货期",
+              "description": "表格列：交货期",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 13
+            },
+            {
+              "columnId": "t-0002:c-08",
+              "key": "t-0002:c-08",
+              "title": "投标保证金（有/无）",
+              "description": "表格列：投标保证金（有/无）",
+              "valueType": "string",
+              "sourcePolicy": "manual",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0002:c-09",
+              "key": "t-0002:c-09",
+              "title": "投标声明",
+              "description": "表格列：投标声明",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 11
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "包号"
+                },
+                {
+                  "text": "货物名称"
+                },
+                {
+                  "text": "数量"
+                },
+                {
+                  "text": "价格条件"
+                },
+                {
+                  "text": "投标币种"
+                },
+                {
+                  "text": "投标总价"
+                },
+                {
+                  "text": "交货期"
+                },
+                {
+                  "text": "投标保证金（有/无）"
+                },
+                {
+                  "text": "投标声明"
+                }
+              ]
+            }
+          ],
+          "minRows": 1,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0062",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "p-0063",
+          "type": "static",
+          "text": "投标人授权代表(签字):"
+        },
+        {
+          "nodeId": "p-0065",
+          "type": "static",
+          "text": "日期："
+        },
+        {
+          "nodeId": "p-0068",
+          "type": "static",
+          "text": "注："
+        },
+        {
+          "nodeId": "p-0069",
+          "type": "static",
+          "text": "1、本表按包填写；"
+        },
+        {
+          "nodeId": "p-0070",
+          "type": "static",
+          "text": "2、招标文件明确要求的内容无需在投标声明中填写；"
+        },
+        {
+          "nodeId": "p-0071",
+          "type": "static",
+          "text": "3、投标人如有在投标文件投标报价表中未注明的进一步折扣和声明应在本表中填写，开标时未予宣读的声明，评标时不予考虑；"
+        },
+        {
+          "nodeId": "p-0072",
+          "type": "static",
+          "text": "4、开标一览表应按第二册“资料表”的规定密封递交；"
+        },
+        {
+          "nodeId": "break-0073",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0073",
+          "type": "static",
+          "text": "5、本表中投标价格应与投标分项报价表中对应包号的投标总价一致。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0074",
+      "title": "三、投标分项报价表",
+      "nodes": [
+        {
+          "nodeId": "break-0075",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0075",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "break-0076",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0076",
+          "type": "static",
+          "text": "招标编号/包号："
+        },
+        {
+          "nodeId": "break-0077",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0077",
+          "type": "static",
+          "text": "货币币种： 单位： 元"
+        },
+        {
+          "nodeId": "t-0003",
+          "type": "table",
+          "tableId": "table:t-0003",
+          "columns": [
+            {
+              "columnId": "t-0003:c-01",
+              "key": "t-0003:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            },
+            {
+              "columnId": "t-0003:c-02",
+              "key": "t-0003:c-02",
+              "title": "名称",
+              "description": "表格列：名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 21
+            },
+            {
+              "columnId": "t-0003:c-03",
+              "key": "t-0003:c-03",
+              "title": "主要规格型号/描述",
+              "description": "表格列：主要规格型号/描述",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 13
+            },
+            {
+              "columnId": "t-0003:c-04",
+              "key": "t-0003:c-04",
+              "title": "数量",
+              "description": "表格列：数量",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 6
+            },
+            {
+              "columnId": "t-0003:c-05",
+              "key": "t-0003:c-05",
+              "title": "制造商名称",
+              "description": "表格列：制造商名称",
+              "valueType": "string",
+              "sourcePolicy": "company",
+              "required": true,
+              "width": 20
+            },
+            {
+              "columnId": "t-0003:c-06",
+              "key": "t-0003:c-06",
+              "title": "单价",
+              "description": "表格列：单价",
+              "valueType": "string",
+              "sourcePolicy": "manual",
+              "required": true,
+              "width": 16
+            },
+            {
+              "columnId": "t-0003:c-07",
+              "key": "t-0003:c-07",
+              "title": "合计",
+              "description": "表格列：合计",
+              "valueType": "string",
+              "sourcePolicy": "manual",
+              "required": true,
+              "width": 16
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "名称"
+                },
+                {
+                  "text": "主要规格型号/描述"
+                },
+                {
+                  "text": "数量"
+                },
+                {
+                  "text": "制造商名称"
+                },
+                {
+                  "text": "单价"
+                },
+                {
+                  "text": "合计"
+                }
+              ]
+            }
+          ],
+          "minRows": 9,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0079",
+          "type": "static",
+          "text": "投标人授权代表签字"
+        },
+        {
+          "nodeId": "p-0080",
+          "type": "static",
+          "text": "投标人名称(盖章):"
+        },
+        {
+          "nodeId": "p-0082",
+          "type": "static",
+          "text": "日期："
+        },
+        {
+          "nodeId": "p-0084",
+          "type": "static",
+          "text": "注:"
+        },
+        {
+          "nodeId": "p-0085",
+          "type": "static",
+          "text": "1、本表按包填写并按第二册“资料表”的规定进行报价；"
+        },
+        {
+          "nodeId": "p-0086",
+          "type": "static",
+          "text": "2、如果按单价计算的结果与总价不一致,以单价为准修正总价。"
+        },
+        {
+          "nodeId": "p-0087",
+          "type": "static",
+          "text": "3、如果不提供详细分项报价将视为没有实质性响应招标文件。"
+        },
+        {
+          "nodeId": "break-0088",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0088",
+          "type": "static",
+          "text": "4、上述各项的详细分项报价，投标人可另页描述。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0089",
+      "title": "四、货物说明一览表",
+      "nodes": [
+        {
+          "nodeId": "p-0091",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "p-0093",
+          "type": "static",
+          "text": "招标编号/包号："
+        },
+        {
+          "nodeId": "t-0004",
+          "type": "table",
+          "tableId": "table:t-0004",
+          "columns": [
+            {
+              "columnId": "t-0004:c-01",
+              "key": "t-0004:c-01",
+              "title": "货物名称",
+              "description": "表格列：货物名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 13
+            },
+            {
+              "columnId": "t-0004:c-02",
+              "key": "t-0004:c-02",
+              "title": "制造商名称",
+              "description": "表格列：制造商名称",
+              "valueType": "string",
+              "sourcePolicy": "company",
+              "required": true,
+              "width": 17
+            },
+            {
+              "columnId": "t-0004:c-03",
+              "key": "t-0004:c-03",
+              "title": "主要规格",
+              "description": "表格列：主要规格",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 17
+            },
+            {
+              "columnId": "t-0004:c-04",
+              "key": "t-0004:c-04",
+              "title": "数量",
+              "description": "表格列：数量",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 10
+            },
+            {
+              "columnId": "t-0004:c-05",
+              "key": "t-0004:c-05",
+              "title": "交货期",
+              "description": "表格列：交货期",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 13
+            },
+            {
+              "columnId": "t-0004:c-06",
+              "key": "t-0004:c-06",
+              "title": "交货地点",
+              "description": "表格列：交货地点",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 18
+            },
+            {
+              "columnId": "t-0004:c-07",
+              "key": "t-0004:c-07",
+              "title": "备注",
+              "description": "表格列：备注",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "货物名称"
+                },
+                {
+                  "text": "制造商名称"
+                },
+                {
+                  "text": "主要规格"
+                },
+                {
+                  "text": "数量"
+                },
+                {
+                  "text": "交货期"
+                },
+                {
+                  "text": "交货地点"
+                },
+                {
+                  "text": "备注"
+                }
+              ]
+            }
+          ],
+          "minRows": 1,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0096",
+          "type": "static",
+          "text": "投标人授权代表签字:"
+        },
+        {
+          "nodeId": "p-0097",
+          "type": "static",
+          "text": "投标人名称(盖章):"
+        },
+        {
+          "nodeId": "p-0099",
+          "type": "static",
+          "text": "日期："
+        },
+        {
+          "nodeId": "p-0102",
+          "type": "static",
+          "text": "注："
+        },
+        {
+          "nodeId": "p-0103",
+          "type": "static",
+          "text": "本表按包填写"
+        },
+        {
+          "nodeId": "break-0104",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0104",
+          "type": "static",
+          "text": "若投标人所投货物为小型微型企业产品，应在备注栏标明，同时提供中小企业声明函。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0105",
+      "title": "五、技术需求逐条应答表",
+      "nodes": [
+        {
+          "nodeId": "p-0107",
+          "type": "static",
+          "text": "招标编号："
+        },
+        {
+          "nodeId": "p-0109",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "p-0111",
+          "type": "static",
+          "text": "所投包号："
+        },
+        {
+          "nodeId": "t-0005",
+          "type": "table",
+          "tableId": "table:t-0005",
+          "columns": [
+            {
+              "columnId": "t-0005:c-01",
+              "key": "t-0005:c-01",
+              "title": "招标文件技术需求条目编号及所要求内容",
+              "description": "表格列：招标文件技术需求条目编号及所要求内容",
+              "valueType": "string",
+              "sourcePolicy": "tender",
+              "required": true,
+              "width": 38,
+              "readOnly": true
+            },
+            {
+              "columnId": "t-0005:c-02",
+              "key": "t-0005:c-02",
+              "title": "投标文件应答内容",
+              "description": "表格列：投标文件应答内容",
+              "valueType": "string",
+              "sourcePolicy": "generated",
+              "required": true,
+              "width": 37
+            },
+            {
+              "columnId": "t-0005:c-03",
+              "key": "t-0005:c-03",
+              "title": "相关技术证明文件中的描述在投标文件中的具体页码",
+              "description": "表格列：相关技术证明文件中的描述在投标文件中的具体页码",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 13
+            },
+            {
+              "columnId": "t-0005:c-04",
+              "key": "t-0005:c-04",
+              "title": "偏离说明（无偏离，正/负偏离及偏离情况）",
+              "description": "表格列：偏离说明（无偏离，正/负偏离及偏离情况）",
+              "valueType": "string",
+              "sourcePolicy": "generated",
+              "required": true,
+              "width": 12
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "招标文件技术需求条目编号及所要求内容"
+                },
+                {
+                  "text": "投标文件应答内容"
+                },
+                {
+                  "text": "相关技术证明文件中的描述在投标文件中的具体页码"
+                },
+                {
+                  "text": "偏离说明（无偏离，正/负偏离及偏离情况）"
+                }
+              ]
+            }
+          ],
+          "minRows": 50,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0114",
+          "type": "static",
+          "text": "投标人授权代表签字:"
+        },
+        {
+          "nodeId": "p-0115",
+          "type": "static",
+          "text": "投标人名称(盖章):"
+        },
+        {
+          "nodeId": "p-0117",
+          "type": "static",
+          "text": "日期："
+        },
+        {
+          "nodeId": "p-0119",
+          "type": "static",
+          "text": "注："
+        },
+        {
+          "nodeId": "p-0120",
+          "type": "static",
+          "text": "1、本表须针对招标文件技术规格书逐条应答；"
+        },
+        {
+          "nodeId": "p-0121",
+          "type": "static",
+          "text": "2、所应答的技术条款应有具体内容，不能简单复制招标文件内容，或全部响应仅以“符合、满足”应答；"
+        },
+        {
+          "nodeId": "break-0122",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0122",
+          "type": "static",
+          "text": "3、无论正负偏离均须对偏离情况作具体说明。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0123",
+      "title": "六、商务条款偏离表",
+      "nodes": [
+        {
+          "nodeId": "p-0125",
+          "type": "static",
+          "text": "招标编号："
+        },
+        {
+          "nodeId": "p-0127",
+          "type": "static",
+          "text": "投标人名称："
+        },
+        {
+          "nodeId": "p-0129",
+          "type": "static",
+          "text": "所投包号："
+        },
+        {
+          "nodeId": "t-0006",
+          "type": "table",
+          "tableId": "table:t-0006",
+          "columns": [
+            {
+              "columnId": "t-0006:c-01",
+              "key": "t-0006:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 6
+            },
+            {
+              "columnId": "t-0006:c-02",
+              "key": "t-0006:c-02",
+              "title": "招标文件内容条目号",
+              "description": "表格列：招标文件内容条目号",
+              "valueType": "string",
+              "sourcePolicy": "tender",
+              "required": true,
+              "width": 12,
+              "readOnly": true
+            },
+            {
+              "columnId": "t-0006:c-03",
+              "key": "t-0006:c-03",
+              "title": "招标文件要求",
+              "description": "表格列：招标文件要求",
+              "valueType": "string",
+              "sourcePolicy": "tender",
+              "required": true,
+              "width": 39,
+              "readOnly": true
+            },
+            {
+              "columnId": "t-0006:c-04",
+              "key": "t-0006:c-04",
+              "title": "投标文件响应",
+              "description": "表格列：投标文件响应",
+              "valueType": "string",
+              "sourcePolicy": "generated",
+              "required": true,
+              "width": 32
+            },
+            {
+              "columnId": "t-0006:c-05",
+              "key": "t-0006:c-05",
+              "title": "偏离说明",
+              "description": "表格列：偏离说明",
+              "valueType": "string",
+              "sourcePolicy": "generated",
+              "required": true,
+              "width": 10
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "招标文件内容条目号"
+                },
+                {
+                  "text": "招标文件要求"
+                },
+                {
+                  "text": "投标文件响应"
+                },
+                {
+                  "text": "偏离说明"
+                }
+              ]
+            }
+          ],
+          "minRows": 15,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0132",
+          "type": "static",
+          "text": "投标人授权代表签字:"
+        },
+        {
+          "nodeId": "p-0133",
+          "type": "static",
+          "text": "投标人名称(盖章):"
+        },
+        {
+          "nodeId": "p-0135",
+          "type": "static",
+          "text": "日期："
+        },
+        {
+          "nodeId": "p-0137",
+          "type": "static",
+          "text": "注："
+        },
+        {
+          "nodeId": "p-0138",
+          "type": "static",
+          "text": "1、商务偏离表主要针对招标文件采购需求中商务条款要求（包括招标文件中交货期、交货地点、付款条件、质保期、售后服务等要求）填写；"
+        },
+        {
+          "nodeId": "p-0139",
+          "type": "static",
+          "text": "2、对招标文件有任何偏离应列明，并标明“其他无偏离”；"
+        },
+        {
+          "nodeId": "break-0140",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0140",
+          "type": "static",
+          "text": "3、对招标文件无偏离应标明“全部无偏离”。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0141",
+      "title": "七、资格证明文件",
+      "nodes": [
+        {
+          "nodeId": "p-0144",
+          "type": "static",
+          "text": "*7-1 营业执照（复印件，加盖公章，投标人必须提供）"
+        },
+        {
+          "nodeId": "p-0145",
+          "type": "static",
+          "text": "7-2 税务登记证书（复印件，加盖公章）"
+        },
+        {
+          "nodeId": "p-0146",
+          "type": "static",
+          "text": "*7-3 法定代表人或单位负责人授权书（统一格式，投标人必须提供）"
+        },
+        {
+          "nodeId": "p-0147",
+          "type": "static",
+          "text": "7-4 制造厂家的资格声明"
+        },
+        {
+          "nodeId": "p-0148",
+          "type": "static",
+          "text": "7-5 投标人（作为制造厂家的经销代理）的资格声明"
+        },
+        {
+          "nodeId": "p-0149",
+          "type": "static",
+          "text": "7-6 国家法律法规要求的资质证明文件"
+        },
+        {
+          "nodeId": "p-0150",
+          "type": "static",
+          "text": "*7-7 制造厂家的授权书（统一格式，如果投标人提供的货物不是投标人自己制造的，则必须提供，进口货物适用）"
+        },
+        {
+          "nodeId": "p-0151",
+          "type": "static",
+          "text": "*7-8 银行出具的资信证明文件或会计师事务所出具的上一年度财务审计报告（投标人必须提供，但由专业担保机构已出具投标担保函的除外）"
+        },
+        {
+          "nodeId": "p-0152",
+          "type": "static",
+          "text": "*7-9 依法缴纳税收的记录（提供投标截止日期之前12个月内任何一期纳税记录复印件并加盖公章，个人所得税除外）（自行编写无效）（依法免税的供应商，须提供相应文件证明其依法免税）"
+        },
+        {
+          "nodeId": "p-0153",
+          "type": "static",
+          "text": "*7-10依法缴纳社会保障资金的记录（提供投标截止日期之前12个月内任何一期缴费记录复印件并加盖公章）（自行编写无效）（依法不需要缴纳社会保障资金的供应商，须提供相应文件证明其依法不需要缴纳社会保障资金）"
+        },
+        {
+          "nodeId": "p-0154",
+          "type": "static",
+          "text": "*7-11参加政府采购活动前三年内，在经营活动中没有重大违法记录声明。（格式自拟，加盖公章）"
+        },
+        {
+          "nodeId": "p-0155",
+          "type": "static",
+          "text": "*7-12具有良好商业信誉和健全财务会计制度的财务状况的承诺（格式自拟，加盖公章）"
+        },
+        {
+          "nodeId": "p-0156",
+          "type": "static",
+          "text": "*7-13具有履行合同所必需的设备和专业技术能力的承诺（格式自拟，加盖公章）"
+        },
+        {
+          "nodeId": "p-0157",
+          "type": "static",
+          "text": "*7-14 联合体协议书原件（联合体投标时提供）"
+        },
+        {
+          "nodeId": "p-0158",
+          "type": "static",
+          "text": "*7-15 投标人提供“控股股东名称、控股企业的名称和存在管理、被管理关系的单位名称且不存在以上有关联关系单位同时参加同一项目投标的说明”（格式自拟，加盖公章）"
+        },
+        {
+          "nodeId": "p-0159",
+          "type": "static",
+          "text": "*7-16 投标人提供未为本项目提供整体设计、规范编制或者项目管理、监理、检测等服务的声明（格式自拟，加盖公章）"
+        },
+        {
+          "nodeId": "p-0160",
+          "type": "static",
+          "text": "*7-17拟分包情况说明及分包意向协议原件（允许分包的投标时提供）"
+        },
+        {
+          "nodeId": "break-0161",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0161",
+          "type": "static",
+          "text": "7-18招标文件要求或投标人认为必要的其它内容（如：质量认证、荣誉证书等）"
+        },
+        {
+          "nodeId": "p-0162",
+          "type": "static",
+          "text": "（一）营业执照"
+        },
+        {
+          "nodeId": "break-0163",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0164",
+          "type": "static",
+          "text": "（二）税务登记证书"
+        },
+        {
+          "nodeId": "break-0165",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0166",
+          "type": "static",
+          "text": "（三）法定代表人授权书"
+        },
+        {
+          "nodeId": "p-0168",
+          "type": "static",
+          "text": "本授权书声明：注册于（中国）的（投标人名称）的在下面签字的（法人名称）代表本公司授权（投标人名称）的在下面签字的（被授权人）为本公司的合法代理人，就（项目名称及项目编号）的投标，以本公司名义处理一切与之有关的事务。"
+        },
+        {
+          "nodeId": "p-0170",
+          "type": "static",
+          "text": "本授权书于 年 月 日签字生效,特此声明。"
+        },
+        {
+          "nodeId": "p-0172",
+          "type": "static",
+          "text": "法定代表人签字或印章"
+        },
+        {
+          "nodeId": "p-0173",
+          "type": "static",
+          "text": "被授权人签字"
+        },
+        {
+          "nodeId": "p-0174",
+          "type": "static",
+          "text": "公司盖章："
+        },
+        {
+          "nodeId": "p-0176",
+          "type": "static",
+          "text": "附："
+        },
+        {
+          "nodeId": "p-0177",
+          "type": "static",
+          "text": "被授权人姓名："
+        },
+        {
+          "nodeId": "p-0178",
+          "type": "static",
+          "text": "职　　　务："
+        },
+        {
+          "nodeId": "p-0179",
+          "type": "static",
+          "text": "详细通讯地址："
+        },
+        {
+          "nodeId": "p-0180",
+          "type": "static",
+          "text": "邮 政 编 码："
+        },
+        {
+          "nodeId": "p-0181",
+          "type": "static",
+          "text": "传　　　真："
+        },
+        {
+          "nodeId": "p-0182",
+          "type": "static",
+          "text": "电　　　话："
+        },
+        {
+          "nodeId": "break-0183",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0184",
+          "type": "static",
+          "text": "（四）制造厂家的资格声明"
+        },
+        {
+          "nodeId": "p-0186",
+          "type": "static",
+          "text": "1、名称及概况："
+        },
+        {
+          "nodeId": "p-0187",
+          "type": "static",
+          "text": "(1)制造厂家名称："
+        },
+        {
+          "nodeId": "p-0188",
+          "type": "static",
+          "text": "(2)地址及邮编："
+        },
+        {
+          "nodeId": "p-0189",
+          "type": "static",
+          "text": "(3)成立和注册日期："
+        },
+        {
+          "nodeId": "p-0190",
+          "type": "static",
+          "text": "(4)主管部门："
+        },
+        {
+          "nodeId": "p-0191",
+          "type": "static",
+          "text": "(5)企业性质："
+        },
+        {
+          "nodeId": "p-0192",
+          "type": "static",
+          "text": "(6)法人代表："
+        },
+        {
+          "nodeId": "p-0193",
+          "type": "static",
+          "text": "(7)职员人数："
+        },
+        {
+          "nodeId": "p-0194",
+          "type": "static",
+          "text": "一般工人："
+        },
+        {
+          "nodeId": "p-0195",
+          "type": "static",
+          "text": "技术人员："
+        },
+        {
+          "nodeId": "p-0196",
+          "type": "static",
+          "text": "(8)近期资产负债表(到 年月 日止)"
+        },
+        {
+          "nodeId": "p-0197",
+          "type": "static",
+          "text": "(1)固定资产："
+        },
+        {
+          "nodeId": "p-0198",
+          "type": "static",
+          "text": "原值："
+        },
+        {
+          "nodeId": "p-0199",
+          "type": "static",
+          "text": "净值："
+        },
+        {
+          "nodeId": "p-0200",
+          "type": "static",
+          "text": "(2)流动资金："
+        },
+        {
+          "nodeId": "p-0201",
+          "type": "static",
+          "text": "(3)长期负债："
+        },
+        {
+          "nodeId": "p-0202",
+          "type": "static",
+          "text": "(4)短期负债："
+        },
+        {
+          "nodeId": "p-0203",
+          "type": "static",
+          "text": "(5)资金来源"
+        },
+        {
+          "nodeId": "p-0204",
+          "type": "static",
+          "text": "自有资金："
+        },
+        {
+          "nodeId": "p-0205",
+          "type": "static",
+          "text": "银行贷款："
+        },
+        {
+          "nodeId": "p-0206",
+          "type": "static",
+          "text": "(6)资金类型： 人民币"
+        },
+        {
+          "nodeId": "p-0207",
+          "type": "static",
+          "text": "生产资金："
+        },
+        {
+          "nodeId": "p-0208",
+          "type": "static",
+          "text": "非生产资金："
+        },
+        {
+          "nodeId": "p-0209",
+          "type": "static",
+          "text": "2、（1)关于制造投标货物的设施及其它情况："
+        },
+        {
+          "nodeId": "p-0210",
+          "type": "static",
+          "text": "工厂名称地址　　 生产的项目　　　　 年生产能力　　　 职工人数"
+        },
+        {
+          "nodeId": "p-0213",
+          "type": "static",
+          "text": "(2)本制造厂不生产，而须从其它制造厂购买的主要零部件"
+        },
+        {
+          "nodeId": "p-0214",
+          "type": "static",
+          "text": "制造厂家名称和地址　　　　　主要零部件名称"
+        },
+        {
+          "nodeId": "p-0215",
+          "type": "static",
+          "text": "/ 　　　　　　 　　 /"
+        },
+        {
+          "nodeId": "p-0216",
+          "type": "static",
+          "text": "/ 　　　　　　　　 /"
+        },
+        {
+          "nodeId": "p-0217",
+          "type": "static",
+          "text": "3、制造厂家生产此投标货物的历史(年数)："
+        },
+        {
+          "nodeId": "p-0219",
+          "type": "static",
+          "text": "4、近三年投标货物（相同型号）销售业绩（包括国内外）清单："
+        },
+        {
+          "nodeId": "p-0220",
+          "type": "static",
+          "text": "包括产品型号、销售时间、用户名称、地址及联系方式等"
+        },
+        {
+          "nodeId": "t-0007",
+          "type": "table",
+          "tableId": "table:t-0007",
+          "columns": [
+            {
+              "columnId": "t-0007:c-01",
+              "key": "t-0007:c-01",
+              "title": "型号",
+              "description": "表格列：型号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            },
+            {
+              "columnId": "t-0007:c-02",
+              "key": "t-0007:c-02",
+              "title": "产品名称",
+              "description": "表格列：产品名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0007:c-03",
+              "key": "t-0007:c-03",
+              "title": "具体内容",
+              "description": "表格列：具体内容",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 16
+            },
+            {
+              "columnId": "t-0007:c-04",
+              "key": "t-0007:c-04",
+              "title": "销售时间",
+              "description": "表格列：销售时间",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 9
+            },
+            {
+              "columnId": "t-0007:c-05",
+              "key": "t-0007:c-05",
+              "title": "用户名称",
+              "description": "表格列：用户名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0007:c-06",
+              "key": "t-0007:c-06",
+              "title": "地址",
+              "description": "表格列：地址",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 10
+            },
+            {
+              "columnId": "t-0007:c-07",
+              "key": "t-0007:c-07",
+              "title": "用户联系人",
+              "description": "表格列：用户联系人",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 9
+            },
+            {
+              "columnId": "t-0007:c-08",
+              "key": "t-0007:c-08",
+              "title": "联系电话",
+              "description": "表格列：联系电话",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 18
+            },
+            {
+              "columnId": "t-0007:c-09",
+              "key": "t-0007:c-09",
+              "title": "备注",
+              "description": "表格列：备注",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "型号"
+                },
+                {
+                  "text": "产品名称"
+                },
+                {
+                  "text": "具体内容"
+                },
+                {
+                  "text": "销售时间"
+                },
+                {
+                  "text": "用户名称"
+                },
+                {
+                  "text": "地址"
+                },
+                {
+                  "text": "用户联系人"
+                },
+                {
+                  "text": "联系电话"
+                },
+                {
+                  "text": "备注"
+                }
+              ]
+            }
+          ],
+          "minRows": 4,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0221",
+          "type": "static",
+          "text": "5、近三年的年营业额："
+        },
+        {
+          "nodeId": "p-0222",
+          "type": "static",
+          "text": "年份　　　　 　国内　　　　 　 出口　　　　 　总额"
+        },
+        {
+          "nodeId": "p-0224",
+          "type": "static",
+          "text": "6、易损件供应商的名称和地址："
+        },
+        {
+          "nodeId": "p-0225",
+          "type": "static",
+          "text": "部件名称　　　　　　　　　　供应商"
+        },
+        {
+          "nodeId": "p-0226",
+          "type": "static",
+          "text": "无 　　　　　　　　 无"
+        },
+        {
+          "nodeId": "p-0227",
+          "type": "static",
+          "text": "7、有关开户银行的名称和地址："
+        },
+        {
+          "nodeId": "p-0228",
+          "type": "static",
+          "text": "8、其他情况： 无"
+        },
+        {
+          "nodeId": "p-0229",
+          "type": "static",
+          "text": "兹证明上述声明是真实、正确的，并提供了全部能提供的资料和数据，我们同意遵照贵方要求出示有关证明文件。"
+        },
+        {
+          "nodeId": "p-0231",
+          "type": "static",
+          "text": "日期： 年 月 日"
+        },
+        {
+          "nodeId": "p-0232",
+          "type": "static",
+          "text": "制造商名称："
+        },
+        {
+          "nodeId": "p-0233",
+          "type": "static",
+          "text": "投标人授权代表(签字)："
+        },
+        {
+          "nodeId": "p-0234",
+          "type": "static",
+          "text": "投标人授权代表的职务： 　　电话号："
+        },
+        {
+          "nodeId": "break-0235",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0235",
+          "type": "static",
+          "text": "制造商盖章： 　　传真号："
+        },
+        {
+          "nodeId": "p-0236",
+          "type": "static",
+          "text": "（五）投标人(作为制造厂家的经销代理)的资格声明"
+        },
+        {
+          "nodeId": "break-0238",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0238",
+          "type": "static",
+          "text": "（投标人为经销商时，除了填写附件7-5外，还要填写附件7-4）"
+        },
+        {
+          "nodeId": "break-0239",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0240",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0240",
+          "type": "static",
+          "text": "1、名称及概况："
+        },
+        {
+          "nodeId": "break-0241",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0241",
+          "type": "field",
+          "fieldId": "field:p-0241",
+          "label": "(1)投标人名称",
+          "description": "模板字段：1投标人名称",
+          "originalText": "(1)投标人名称：_______________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0242",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0242",
+          "type": "field",
+          "fieldId": "field:p-0242",
+          "label": "(2)地址及邮编",
+          "description": "模板字段：2地址及邮编",
+          "originalText": "(2)地址及邮编：_______________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0243",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0243",
+          "type": "field",
+          "fieldId": "field:p-0243",
+          "label": "(3)成立和注册日期",
+          "description": "模板字段：3成立和注册日期",
+          "originalText": "(3)成立和注册日期：___________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0244",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0244",
+          "type": "field",
+          "fieldId": "field:p-0244",
+          "label": "(4)主管部门",
+          "description": "模板字段：4主管部门",
+          "originalText": "(4)主管部门：_________________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0245",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0245",
+          "type": "field",
+          "fieldId": "field:p-0245",
+          "label": "(5)公司性质",
+          "description": "模板字段：5公司性质",
+          "originalText": "(5)公司性质：_________________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0246",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0246",
+          "type": "field",
+          "fieldId": "field:p-0246",
+          "label": "(6)法人代表",
+          "description": "模板字段：6法人代表",
+          "originalText": "(6)法人代表：_________________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0247",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0247",
+          "type": "field",
+          "fieldId": "field:p-0247",
+          "label": "(7)职员人数",
+          "description": "模板字段：7职员人数",
+          "originalText": "(7)职员人数：_________________________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0248",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0248",
+          "type": "field",
+          "fieldId": "field:p-0248",
+          "label": "(8)近期资产负债表(到",
+          "description": "模板字段：8近期资产负债表到",
+          "originalText": "(8)近期资产负债表(到________年____月____日止)",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0249",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0249",
+          "type": "field",
+          "fieldId": "field:p-0249",
+          "label": "〈1〉固定资产",
+          "description": "模板字段：〈1〉固定资产",
+          "originalText": "〈1〉固定资产：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0250",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0250",
+          "type": "field",
+          "fieldId": "field:p-0250",
+          "label": "原值",
+          "description": "模板字段：原值",
+          "originalText": "原值：______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0251",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0251",
+          "type": "field",
+          "fieldId": "field:p-0251",
+          "label": "净值",
+          "description": "模板字段：净值",
+          "originalText": "净值：______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0252",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0252",
+          "type": "field",
+          "fieldId": "field:p-0252",
+          "label": "〈2〉流动资金",
+          "description": "模板字段：〈2〉流动资金",
+          "originalText": "〈2〉流动资金：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0253",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0253",
+          "type": "field",
+          "fieldId": "field:p-0253",
+          "label": "〈3〉长期负债",
+          "description": "模板字段：〈3〉长期负债",
+          "originalText": "〈3〉长期负债：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0254",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0254",
+          "type": "field",
+          "fieldId": "field:p-0254",
+          "label": "〈4〉短期负债",
+          "description": "模板字段：〈4〉短期负债",
+          "originalText": "〈4〉短期负债：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0255",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0255",
+          "type": "static",
+          "text": "〈5〉资金来源："
+        },
+        {
+          "nodeId": "break-0256",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0256",
+          "type": "field",
+          "fieldId": "field:p-0256",
+          "label": "自有资金",
+          "description": "模板字段：自有资金",
+          "originalText": "自有资金：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0257",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0257",
+          "type": "field",
+          "fieldId": "field:p-0257",
+          "label": "银行贷款",
+          "description": "模板字段：银行贷款",
+          "originalText": "银行贷款：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0258",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0258",
+          "type": "field",
+          "fieldId": "field:p-0258",
+          "label": "〈6〉资金类型",
+          "description": "模板字段：〈6〉资金类型",
+          "originalText": "〈6〉资金类型：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0259",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0259",
+          "type": "field",
+          "fieldId": "field:p-0259",
+          "label": "商业性",
+          "description": "模板字段：商业性",
+          "originalText": "商业性：____________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0260",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0260",
+          "type": "field",
+          "fieldId": "field:p-0260",
+          "label": "非商业性",
+          "description": "模板字段：非商业性",
+          "originalText": "非商业性：__________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0261",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0261",
+          "type": "static",
+          "text": "2、最近三年的年度总营业额：（ 年 月- 年 月）"
+        },
+        {
+          "nodeId": "break-0262",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0262",
+          "type": "static",
+          "text": "年份　　　　　国内　　　　　出口　　　　　总额"
+        },
+        {
+          "nodeId": "break-0263",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0263",
+          "type": "field",
+          "fieldId": "field:p-0263",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "__________　　 ___________　　___________　　___________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0264",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0264",
+          "type": "field",
+          "fieldId": "field:p-0264",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "__________　　 ___________　　___________　　___________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0265",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0265",
+          "type": "static",
+          "text": "3、最近三年投标货物主要销售给国内及国外用户名称及地址：（ 年 月- 年 月）"
+        },
+        {
+          "nodeId": "break-0266",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0266",
+          "type": "static",
+          "text": "名称和地址　　　　　　　销售的项目和数量"
+        },
+        {
+          "nodeId": "break-0267",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0267",
+          "type": "static",
+          "text": "(1)出口销售："
+        },
+        {
+          "nodeId": "break-0268",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0268",
+          "type": "field",
+          "fieldId": "field:p-0268",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0269",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0269",
+          "type": "field",
+          "fieldId": "field:p-0269",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0270",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0270",
+          "type": "field",
+          "fieldId": "field:p-0270",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0271",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0271",
+          "type": "static",
+          "text": "(2)国内销售："
+        },
+        {
+          "nodeId": "break-0272",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0272",
+          "type": "field",
+          "fieldId": "field:p-0272",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0273",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0273",
+          "type": "field",
+          "fieldId": "field:p-0273",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0274",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0274",
+          "type": "field",
+          "fieldId": "field:p-0274",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_________________　　　　_______________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0275",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0275",
+          "type": "static",
+          "text": "4、同意为投标人制造投标货物的制造厂并附有制造厂的资格声明："
+        },
+        {
+          "nodeId": "break-0276",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0276",
+          "type": "static",
+          "text": "制造厂名称和地址　　　　　制造项目和数量"
+        },
+        {
+          "nodeId": "break-0277",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0277",
+          "type": "field",
+          "fieldId": "field:p-0277",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_____________________　_____________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0278",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0278",
+          "type": "field",
+          "fieldId": "field:p-0278",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_____________________　_____________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0279",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0279",
+          "type": "static",
+          "text": "5、须由其它制造厂家供应和制造的部件(如果有的话)："
+        },
+        {
+          "nodeId": "break-0280",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0280",
+          "type": "static",
+          "text": "制造厂名称和地址　　　　　　制造项目"
+        },
+        {
+          "nodeId": "break-0281",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0281",
+          "type": "field",
+          "fieldId": "field:p-0281",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_____________________　_______________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0282",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0282",
+          "type": "field",
+          "fieldId": "field:p-0282",
+          "label": "待填写字段",
+          "description": "模板字段：待填写字段",
+          "originalText": "_____________________　_______________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0283",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0283",
+          "type": "static",
+          "text": "6、最近三年中与各经销商成交的此种投标货物(如果有的话)："
+        },
+        {
+          "nodeId": "break-0284",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0284",
+          "type": "field",
+          "fieldId": "field:p-0284",
+          "label": "合同号",
+          "description": "模板字段：合同号",
+          "originalText": "合同号：___________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0285",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0285",
+          "type": "field",
+          "fieldId": "field:p-0285",
+          "label": "签字日期",
+          "description": "模板字段：签字日期",
+          "originalText": "签字日期：_________________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0286",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0286",
+          "type": "field",
+          "fieldId": "field:p-0286",
+          "label": "产品名称",
+          "description": "模板字段：产品名称",
+          "originalText": "产品名称：_________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0287",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0287",
+          "type": "field",
+          "fieldId": "field:p-0287",
+          "label": "数量",
+          "description": "模板字段：数量",
+          "originalText": "数量：_____________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0288",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0288",
+          "type": "field",
+          "fieldId": "field:p-0288",
+          "label": "合同金额",
+          "description": "模板字段：合同金额",
+          "originalText": "合同金额___________________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0289",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0289",
+          "type": "field",
+          "fieldId": "field:p-0289",
+          "label": "7、有关开户银行的名称和地址",
+          "description": "模板字段：7、有关开户银行的名称和地址",
+          "originalText": "7、有关开户银行的名称和地址：_____________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0290",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0290",
+          "type": "static",
+          "text": "8、投标人认为需要声明的其他情况"
+        },
+        {
+          "nodeId": "break-0291",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0291",
+          "type": "static",
+          "text": "兹证明上述声明是真实、正确的，并提供了全部能提供的资料和数据，我们同意遵照贵方要求出示有关证明文件。"
+        },
+        {
+          "nodeId": "break-0292",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0293",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0293",
+          "type": "field",
+          "fieldId": "field:p-0293",
+          "label": "日期",
+          "description": "模板字段：日期",
+          "originalText": "日期：__________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0294",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0294",
+          "type": "field",
+          "fieldId": "field:p-0294",
+          "label": "投标人授权代表(签字)",
+          "description": "模板字段：投标人授权代表签字",
+          "originalText": "投标人授权代表(签字)：________________________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0295",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0295",
+          "type": "field",
+          "fieldId": "field:p-0295",
+          "label": "投标人授权代表的职务",
+          "description": "模板字段：投标人授权代表的职务",
+          "originalText": "投标人授权代表的职务：________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0296",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0296",
+          "type": "field",
+          "fieldId": "field:p-0296",
+          "label": "电话号",
+          "description": "模板字段：电话号",
+          "originalText": "电话号：________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0297",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0297",
+          "type": "field",
+          "fieldId": "field:p-0297",
+          "label": "传真号",
+          "description": "模板字段：传真号",
+          "originalText": "传真号：________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0298",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0298",
+          "type": "field",
+          "fieldId": "field:p-0298",
+          "label": "公章",
+          "description": "模板字段：公章",
+          "originalText": "公章：__________________________________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0299",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0300",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0301",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0302",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "break-0303",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0304",
+          "type": "static",
+          "text": "（六）国家法律法规要求的资质证明文件"
+        },
+        {
+          "nodeId": "break-0306",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0306",
+          "type": "static",
+          "text": "无"
+        },
+        {
+          "nodeId": "p-0307",
+          "type": "static",
+          "text": "（七）制造厂家的授权书"
+        },
+        {
+          "nodeId": "p-0309",
+          "type": "static",
+          "text": "致：东方国际招标有限责任公司"
+        },
+        {
+          "nodeId": "p-0311",
+          "type": "static",
+          "text": "我们（制造商名称）是按（国家名称）法律成立的一家制造商，主要营业地点设在（制造商地址）。兹指派按（国家名称）的法律正式成立的，主要营业地点设在（经销商地址）的（经销商名称）作为我方真正的合法的代理人进行下列有效的活动："
+        },
+        {
+          "nodeId": "p-0313",
+          "type": "static",
+          "text": "代表我方办理贵方第　　（招标编号）　　号投标邀请第　　（包号）号要求提供的由我方制造的货物的有关事宜，并对我方具有约束力。"
+        },
+        {
+          "nodeId": "p-0314",
+          "type": "static",
+          "text": "（2）作为制造商，我方保证以投标合作者来约束自己，并对该投标共同和分别承担招标文件中所规定的义务。"
+        },
+        {
+          "nodeId": "p-0315",
+          "type": "static",
+          "text": "（3）我方兹授予　　（经销商名称）　　全权办理和履行上述我方为完成上述各点所必须的事宜，具有替换或撤销的全权。兹确认　　（经销商名称）　　或其正式授权代表依此合法地办理一切事宜。"
+        },
+        {
+          "nodeId": "p-0316",
+          "type": "static",
+          "text": "（4）　我方于　　　年　　　月　　　日签署本文件，　　（经销商名称）　　于"
+        },
+        {
+          "nodeId": "p-0317",
+          "type": "static",
+          "text": "年　　　月　　　日接受此件，以此为证。"
+        },
+        {
+          "nodeId": "p-0321",
+          "type": "field",
+          "fieldId": "field:p-0321",
+          "label": "制造商名称（盖章）",
+          "description": "模板字段：制造商名称盖章",
+          "originalText": "制造商名称（盖章）______________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "p-0322",
+          "type": "field",
+          "fieldId": "field:p-0322",
+          "label": "签字人职务和部门",
+          "description": "模板字段：签字人职务和部门",
+          "originalText": "签字人职务和部门________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "p-0323",
+          "type": "field",
+          "fieldId": "field:p-0323",
+          "label": "签字人姓名",
+          "description": "模板字段：签字人姓名",
+          "originalText": "签字人姓名______________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "p-0324",
+          "type": "field",
+          "fieldId": "field:p-0324",
+          "label": "签字人签名",
+          "description": "模板字段：签字人签名",
+          "originalText": "签字人签名______________________",
+          "valueType": "string",
+          "sourcePolicy": "manual",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "break-0329",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0330",
+          "type": "static",
+          "text": "（八）银行出具的资信证明文件或会计师事务所出具的上一年度财务审计报告"
+        },
+        {
+          "nodeId": "p-0331",
+          "type": "static",
+          "text": "（由专业担保机构已出具投标担保函的投标人无需提供）"
+        },
+        {
+          "nodeId": "p-0332",
+          "type": "static",
+          "text": "说明："
+        },
+        {
+          "nodeId": "p-0333",
+          "type": "static",
+          "text": "1、投标人要求提供银行资信证明或会计师事务所出具的上一年度财务审计报告。银行资信证明可提供原件，也可提供开户银行在开标日前三个月内开具资信证明的复印件。若提供的是复印件，采购人和采购代理机构保留审核原件的权利。"
+        },
+        {
+          "nodeId": "p-0334",
+          "type": "static",
+          "text": "2、银行资信证明应能说明该投标人与银行之间业务往来正常，企业信誉良好等。"
+        },
+        {
+          "nodeId": "break-0335",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0336",
+          "type": "static",
+          "text": "（九）依法缴纳税收的记录"
+        },
+        {
+          "nodeId": "break-0337",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0338",
+          "type": "static",
+          "text": "（十）依法缴纳社会保障资金的记录"
+        },
+        {
+          "nodeId": "break-0339",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0340",
+          "type": "static",
+          "text": "（十一）参加政府采购活动前三年内，在经营活动中没有重大违法记录声明"
+        },
+        {
+          "nodeId": "p-0342",
+          "type": "static",
+          "text": "致： （采购人名称）"
+        },
+        {
+          "nodeId": "p-0343",
+          "type": "static",
+          "text": "我方（）是按（）法律成立的一家制造商，主要营业地点设在（）。"
+        },
+        {
+          "nodeId": "p-0344",
+          "type": "static",
+          "text": "我方在此声明：我们近三年内在经营活动中没有重大违法记录，无利用不正当竞争手段骗取中标，无重大经济刑事案件，未因自身的任何违约、违法或违反商业道德的行为而导致合同解除或作为被告败诉。"
+        },
+        {
+          "nodeId": "p-0346",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0349",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0350",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0350",
+          "type": "static",
+          "text": "日 期： 年 月 日"
+        },
+        {
+          "nodeId": "p-0351",
+          "type": "static",
+          "text": "（十二）具有良好商业信誉和健全财务会计制度的财务状况的承诺"
+        },
+        {
+          "nodeId": "p-0353",
+          "type": "static",
+          "text": "致： （采购人名称）"
+        },
+        {
+          "nodeId": "p-0354",
+          "type": "static",
+          "text": "我方（）是按（）法律成立的一家制造商，主要营业地点设在（）。"
+        },
+        {
+          "nodeId": "p-0355",
+          "type": "static",
+          "text": "我方在此声明：我们具有良好商业信誉和健全财务会计制度的财务状况。"
+        },
+        {
+          "nodeId": "p-0357",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0360",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0361",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0361",
+          "type": "static",
+          "text": "日 期： 年 月 日"
+        },
+        {
+          "nodeId": "p-0362",
+          "type": "static",
+          "text": "（十三）具有履行合同所必需的设备和专业技术能力的承诺"
+        },
+        {
+          "nodeId": "p-0364",
+          "type": "static",
+          "text": "致： （采购人名称）"
+        },
+        {
+          "nodeId": "p-0365",
+          "type": "static",
+          "text": "我方（）是按（）法律成立的一家制造商，主要营业地点设在（）。"
+        },
+        {
+          "nodeId": "p-0366",
+          "type": "static",
+          "text": "我方在此声明：我们具有履行合同所必需的设备和专业技术能力。"
+        },
+        {
+          "nodeId": "p-0368",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0371",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "p-0372",
+          "type": "static",
+          "text": "日 期： 年 月 日"
+        },
+        {
+          "nodeId": "break-0373",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0374",
+          "type": "static",
+          "text": "（十四）联合体协议书原件"
+        },
+        {
+          "nodeId": "p-0375",
+          "type": "static",
+          "text": "联合体协议书"
+        },
+        {
+          "nodeId": "p-0378",
+          "type": "static",
+          "text": "（所有成员单位名称）自愿组成 （联合体名称）联合体，共同参加 （项目名称） 投标。现就联合体投标事宜订立如下协议。"
+        },
+        {
+          "nodeId": "p-0379",
+          "type": "static",
+          "text": "1、 （某成员单位名称）为 （联合体名称）牵头人。"
+        },
+        {
+          "nodeId": "p-0380",
+          "type": "static",
+          "text": "2、联合体牵头人合法代表联合体各成员负责本招标项目投标文件编制和合同谈判活动，并代表联合体提交和接收相关的资料、信息及指示，并处理与之有关的一切事务，负责合同实施阶段的主办、组织和协调工作。"
+        },
+        {
+          "nodeId": "p-0381",
+          "type": "static",
+          "text": "3、联合体将严格按照招标文件的各项要求，递交投标文件，履行合同，并对外承担连带责任。"
+        },
+        {
+          "nodeId": "p-0382",
+          "type": "static",
+          "text": "4、联合体各成员单位内部的职责分工如下："
+        },
+        {
+          "nodeId": "p-0383",
+          "type": "static",
+          "text": "（成员单位名称及职责分工）"
+        },
+        {
+          "nodeId": "p-0385",
+          "type": "static",
+          "text": "5、本协议书自签署之日起生效，合同履行完毕后自动失效。"
+        },
+        {
+          "nodeId": "p-0386",
+          "type": "static",
+          "text": "6、本协议书一式 份，联合体成员和采购人各执一份。"
+        },
+        {
+          "nodeId": "p-0387",
+          "type": "static",
+          "text": "注：本协议书由委托代理人签字的，应附法定代表人签字的授权委托书。"
+        },
+        {
+          "nodeId": "p-0390",
+          "type": "static",
+          "text": "牵头人名称： （盖单位章）"
+        },
+        {
+          "nodeId": "p-0391",
+          "type": "static",
+          "text": "法定代表人或其委托代理人： （签字）"
+        },
+        {
+          "nodeId": "p-0392",
+          "type": "static",
+          "text": "成员一名称： （盖单位章）"
+        },
+        {
+          "nodeId": "p-0393",
+          "type": "static",
+          "text": "法定代表人或其委托代理人： （签字）"
+        },
+        {
+          "nodeId": "p-0394",
+          "type": "static",
+          "text": "成员二名称： （盖单位章）"
+        },
+        {
+          "nodeId": "p-0395",
+          "type": "static",
+          "text": "法定代表人或其委托代理人： （签字）"
+        },
+        {
+          "nodeId": "p-0396",
+          "type": "static",
+          "text": "……"
+        },
+        {
+          "nodeId": "p-0397",
+          "type": "static",
+          "text": "年 月 日"
+        },
+        {
+          "nodeId": "break-0401",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0401",
+          "type": "static",
+          "text": "我公司不是联合体投标，此项不适用"
+        },
+        {
+          "nodeId": "p-0402",
+          "type": "static",
+          "text": "（十五）投标人提供“控股股东名称、控股企业的名称和存在管理、被管理关系的单位名称且不存在以上有关联关系单位同时参加同一项目投标的说明”"
+        },
+        {
+          "nodeId": "p-0404",
+          "type": "static",
+          "text": "我方声明，与我方存在单位负责人与我方为同一人或者与我方存在直接控股、管理关系情况的其他供应商如下："
+        },
+        {
+          "nodeId": "t-0008",
+          "type": "table",
+          "tableId": "table:t-0008",
+          "columns": [
+            {
+              "columnId": "t-0008:c-01",
+              "key": "t-0008:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0008:c-02",
+              "key": "t-0008:c-02",
+              "title": "供应商名称",
+              "description": "表格列：供应商名称",
+              "valueType": "string",
+              "sourcePolicy": "company",
+              "required": true,
+              "width": 42
+            },
+            {
+              "columnId": "t-0008:c-03",
+              "key": "t-0008:c-03",
+              "title": "相互关系",
+              "description": "表格列：相互关系",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 46
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "供应商名称"
+                },
+                {
+                  "text": "相互关系"
+                }
+              ]
+            }
+          ],
+          "minRows": 1,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0406",
+          "type": "static",
+          "text": "不存在以上有关联关系单位同时参加同一项目投标。"
+        },
+        {
+          "nodeId": "p-0408",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0411",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0412",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0412",
+          "type": "static",
+          "text": "日 期： 年月日"
+        },
+        {
+          "nodeId": "p-0413",
+          "type": "static",
+          "text": "（十六）投标人提供未为本项目提供整体设计、规范编制或者项目管理、监理、检测等服务的声明"
+        },
+        {
+          "nodeId": "p-0415",
+          "type": "static",
+          "text": "致： （采购人名称）"
+        },
+        {
+          "nodeId": "p-0416",
+          "type": "static",
+          "text": "我方（）是按（）法律成立的一家制造商，主要营业地点设在（）。"
+        },
+        {
+          "nodeId": "p-0417",
+          "type": "static",
+          "text": "我方在此声明：我们未为本项目提供整体设计、规范编制或者项目管理、监理、检测等服务。"
+        },
+        {
+          "nodeId": "p-0419",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0422",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0423",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0423",
+          "type": "static",
+          "text": "日 期： 年 月 日"
+        },
+        {
+          "nodeId": "p-0425",
+          "type": "static",
+          "text": "（十八）招标文件要求或投标人认为必要的其它内容"
+        },
+        {
+          "nodeId": "p-0426",
+          "type": "static",
+          "text": "1、质量管理体系认证证书"
+        },
+        {
+          "nodeId": "break-0427",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0428",
+          "type": "static",
+          "text": "2、保证金缴费凭证"
+        },
+        {
+          "nodeId": "break-0430",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0431",
+          "type": "static",
+          "text": "3、网页查询"
+        },
+        {
+          "nodeId": "break-0432",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0433",
+          "type": "static",
+          "text": "4、公司简介"
+        },
+        {
+          "nodeId": "break-0436",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0437",
+          "type": "static",
+          "text": "5、荣誉证书"
+        },
+        {
+          "nodeId": "break-0439",
+          "type": "page_break"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0440",
+      "title": "八、中标服务费承诺书",
+      "nodes": [
+        {
+          "nodeId": "p-0443",
+          "type": "static",
+          "text": "致：东方国际招标有限责任公司"
+        },
+        {
+          "nodeId": "p-0445",
+          "type": "static",
+          "text": "我们在贵公司组织的 项目招标中若获中标（招标文件编号： ），我们保证在收到中标通知书后5日内，按招标文件的规定，以支票、汇票或现金，向贵公司一次性支付应该交纳的中标服务费用。"
+        },
+        {
+          "nodeId": "p-0448",
+          "type": "static",
+          "text": "特此承诺！"
+        },
+        {
+          "nodeId": "p-0451",
+          "type": "static",
+          "text": "承诺方法定名称："
+        },
+        {
+          "nodeId": "p-0452",
+          "type": "static",
+          "text": "地址："
+        },
+        {
+          "nodeId": "p-0453",
+          "type": "static",
+          "text": "电话： 传真："
+        },
+        {
+          "nodeId": "p-0454",
+          "type": "static",
+          "text": "电传： 邮编："
+        },
+        {
+          "nodeId": "p-0455",
+          "type": "static",
+          "text": "承诺方授权代表签字： （承诺方盖章）"
+        },
+        {
+          "nodeId": "break-0456",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0456",
+          "type": "static",
+          "text": "承诺日期："
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0457",
+      "title": "九、货物技术说明文件",
+      "nodes": [
+        {
+          "nodeId": "p-0459",
+          "type": "static",
+          "text": "系统详细配置方案"
+        },
+        {
+          "nodeId": "t-0009",
+          "type": "table",
+          "tableId": "table:t-0009",
+          "columns": [
+            {
+              "columnId": "t-0009:c-01",
+              "key": "t-0009:c-01",
+              "title": "第1列",
+              "description": "表格列：第1列",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 8
+            },
+            {
+              "columnId": "t-0009:c-02",
+              "key": "t-0009:c-02",
+              "title": "第2列",
+              "description": "表格列：第2列",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            },
+            {
+              "columnId": "t-0009:c-03",
+              "key": "t-0009:c-03",
+              "title": "第3列",
+              "description": "表格列：第3列",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 6
+            },
+            {
+              "columnId": "t-0009:c-04",
+              "key": "t-0009:c-04",
+              "title": "第4列",
+              "description": "表格列：第4列",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 79
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                },
+                {
+                  "text": ""
+                }
+              ]
+            }
+          ],
+          "minRows": 50,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "break-0463",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0464",
+          "type": "static",
+          "text": "产品彩页"
+        },
+        {
+          "nodeId": "break-0466",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0467",
+          "type": "static",
+          "text": "关于产品验收质量保证相关的材料证明--验收报告"
+        },
+        {
+          "nodeId": "p-0468",
+          "type": "static",
+          "text": "（截取了部分关键性指标、性能、培训、技术文件、产品出厂资料等材料）"
+        },
+        {
+          "nodeId": "break-0470",
+          "type": "page_break"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0471",
+      "title": "十、投标人针对本项目的技术支持及售后服务的内容承诺",
+      "nodes": [
+        {
+          "nodeId": "p-0472",
+          "type": "static",
+          "text": "（一）项目质量保障措施方案"
+        },
+        {
+          "nodeId": "p-0473",
+          "type": "static",
+          "text": "1、严格执行公司的质量标准"
+        },
+        {
+          "nodeId": "p-0474",
+          "type": "static",
+          "text": "按标准程序文件进行质量管理，按作业指导书进行操作，是质量水平保持稳定、连续并不断上升的根本保证。"
+        },
+        {
+          "nodeId": "p-0475",
+          "type": "static",
+          "text": "2、加强技术管理"
+        },
+        {
+          "nodeId": "p-0476",
+          "type": "static",
+          "text": "加强技术管理，认真贯彻执行国家规定、操作规程和各项管理制度，明确岗位责任制，认真做好技术交底工作。"
+        },
+        {
+          "nodeId": "p-0477",
+          "type": "static",
+          "text": "3、质量保证体系"
+        },
+        {
+          "nodeId": "p-0478",
+          "type": "static",
+          "text": "（1）广泛宣传教育，使每个职工要有明确的创优意识，激发职工创优的责任心和积极性。"
+        },
+        {
+          "nodeId": "p-0479",
+          "type": "static",
+          "text": "（2）在组织施工中，重点突出质量进度发生矛盾时，必须服从质量，充分发挥质量否决权的作用。"
+        },
+        {
+          "nodeId": "p-0480",
+          "type": "static",
+          "text": "（3）在质保体系上下功夫，按照公司的质量方针和质量保证体系运转。"
+        },
+        {
+          "nodeId": "p-0481",
+          "type": "static",
+          "text": "（4）重点完善施工现场质量管理体系，深入开展“三工序管理”，做到检查上工序，保证本工序，服务下工序，使全过程处于受控状态。"
+        },
+        {
+          "nodeId": "p-0483",
+          "type": "static",
+          "text": "（二）项目实施进度保障措施方案"
+        },
+        {
+          "nodeId": "p-0484",
+          "type": "static",
+          "text": "1.项目计划制定：在项目启动阶段，制定详细的项目计划，包括项目目标、任务分解、工期安排、资源分配等内容。确保项目的每个阶段和任务都有明确的时间节点和责任人。"
+        },
+        {
+          "nodeId": "p-0485",
+          "type": "static",
+          "text": "2.进度监控与反馈：建立有效的进度监控机制，通过使用项目管理软件或其他工具，对项目进展进行实时监控。及时发现进度偏差，并及时采取纠正措施。"
+        },
+        {
+          "nodeId": "p-0486",
+          "type": "static",
+          "text": "3.风险管理：在项目计划中考虑各种可能的风险，并制定相应的应对方案。定期评估项目风险，及时采取措施，防止风险对项目进度造成影响。"
+        },
+        {
+          "nodeId": "p-0487",
+          "type": "static",
+          "text": "4.资源管理：合理分配项目所需的人力、物力和财力资源，确保项目进度不受资源短缺或浪费的影响。同时，及时调整资源分配，以适应项目进度的变化。"
+        },
+        {
+          "nodeId": "p-0488",
+          "type": "static",
+          "text": "5.沟通与协调：建立良好的沟通机制，确保项目相关人员之间的信息流畅和协作高效。定期组织项目进度会议，及时解决项目中的问题，协调各方利益。"
+        },
+        {
+          "nodeId": "p-0489",
+          "type": "static",
+          "text": "6.质量控制：在项目实施过程中，严格按照质量管理要求进行工作，确保项目交付物的质量符合标准。避免因质量问题而导致项目进度延误。"
+        },
+        {
+          "nodeId": "p-0490",
+          "type": "static",
+          "text": "7.变更管理：对于项目中的变更请求，及时评估其对项目进度的影响，并根据实际情况决策是否接受变更。确保变更不会对项目进度造成不可控的影响。"
+        },
+        {
+          "nodeId": "p-0491",
+          "type": "static",
+          "text": "8.项目进度保障措施是确保项目按时按质完成的重要手段。通过制定详细的项目计划、建立监控机制、进行风险管理、合理分配资源、加强沟通与协调、严格质量控制和变更管理，可以有效保障项目的进度。同时，需要在实施过程中不断进行监督和调整，以适应项目进度的变化。只有确保项目进度的稳定和可控，才能顺利完成项目目标。"
+        },
+        {
+          "nodeId": "break-0493",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0494",
+          "type": "static",
+          "text": "（三）售后服务方案及承诺"
+        },
+        {
+          "nodeId": "p-0495",
+          "type": "static",
+          "text": "售后服务机构"
+        },
+        {
+          "nodeId": "p-0497",
+          "type": "static",
+          "text": "具体方案及承诺如下："
+        },
+        {
+          "nodeId": "t-0010",
+          "type": "table",
+          "tableId": "table:t-0010",
+          "columns": [
+            {
+              "columnId": "t-0010:c-01",
+              "key": "t-0010:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 9
+            },
+            {
+              "columnId": "t-0010:c-02",
+              "key": "t-0010:c-02",
+              "title": "服务内容",
+              "description": "表格列：服务内容",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 91
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "服务内容"
+                }
+              ]
+            }
+          ],
+          "minRows": 11,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "p-0499",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0501",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0502",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0502",
+          "type": "static",
+          "text": "日 期： 年 月 日"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0503",
+      "title": "十一、对于培训、安装、调试及验收要求的响应及承诺",
+      "nodes": [
+        {
+          "nodeId": "break-0504",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0504",
+          "type": "static",
+          "text": "（一）培训方案"
+        },
+        {
+          "nodeId": "p-0505",
+          "type": "static",
+          "text": "培训内容：详细介绍系统设备的基本原理、功能、安装、调试、操作使用及保养、维护和检修等方面的内容。"
+        },
+        {
+          "nodeId": "p-0506",
+          "type": "static",
+          "text": "培训目的：保证参加培训的人员能够掌握系统的基本工作原理，能独立进行操作、使用保养及软件应用，并通过实践逐步掌握简单的维护和检修技能。"
+        },
+        {
+          "nodeId": "p-0507",
+          "type": "static",
+          "text": "1. 培训安排："
+        },
+        {
+          "nodeId": "p-0508",
+          "type": "static",
+          "text": "1）首次培训：我司安排专业工程师从软硬件介绍到基础原理讲解，直至采购人完全掌握使用的知识和技能。培训地点为采购人指定地点。"
+        },
+        {
+          "nodeId": "p-0509",
+          "type": "static",
+          "text": "2）深度培训：在完成首次安装调试后，与采购人协商后安排3-6次短期培训，讲解并进行深度实验指导。"
+        },
+        {
+          "nodeId": "p-0510",
+          "type": "static",
+          "text": "3）邀请采购人参加我司后期组织的技术培训会。"
+        },
+        {
+          "nodeId": "p-0511",
+          "type": "static",
+          "text": "2.培训人员名额：提供不少于5个免费培训名额。"
+        },
+        {
+          "nodeId": "break-0512",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0512",
+          "type": "static",
+          "text": "3.培训地点、时间：由双方商量确定。"
+        },
+        {
+          "nodeId": "p-0513",
+          "type": "static",
+          "text": "（二）安装调试方案"
+        },
+        {
+          "nodeId": "p-0514",
+          "type": "static",
+          "text": "1. 当货物到达采购人指定地点后，我司与采购人依据《货物/服务清单一览表》共同对货物进行开箱验收，并对货物逐项检查。如采购人发现所提供货物的品质和技术规范不符合要求，或有明显损坏时，采购人有权向我司提出退、换和索赔。"
+        },
+        {
+          "nodeId": "p-0515",
+          "type": "static",
+          "text": "2. 我司在货物到达采购人场地后，尽快组织完成整套货物的安装调试。如货物安装有特殊要求，我司在货物安装之前2周内以书面形式向采购人提出安装场地环境要求，并对采购人就安装场地环境的咨询提供技术支持。"
+        },
+        {
+          "nodeId": "p-0516",
+          "type": "static",
+          "text": "3. 我司安装施工期间若损坏采购人的设备设施，需原价赔偿。"
+        },
+        {
+          "nodeId": "p-0517",
+          "type": "static",
+          "text": "4. 在调试过程中，如果任何软、硬件发生故障，我司会及时更换不合格的部件，并重新进行安装调试，由此引起的全部费用由我司承担。"
+        },
+        {
+          "nodeId": "p-0518",
+          "type": "static",
+          "text": "5. 在安装、调试过程中，我司向采购人提供安装调试过程中的各种文档资料，以便采购人掌握操作方法和维护方法。对采购人技术人员所提出的技术问题，我司技术人员会认真研究以给予采购人满意的答复。"
+        },
+        {
+          "nodeId": "p-0519",
+          "type": "static",
+          "text": "6. 安装调试完毕通过验收后，我司向采购人提出验收申请，由采购人组织有关人员进行验收，采购人根据测试结果提交验收报告，并在验收报告上签字确认。"
+        },
+        {
+          "nodeId": "p-0520",
+          "type": "static",
+          "text": "7.其他安装调试方案"
+        },
+        {
+          "nodeId": "p-0521",
+          "type": "static",
+          "text": "仪器经开箱检查确认一切正常后，由仪器安装工程师免费执行安装调试直至达到验收指标（以技术规格要求指标为验收指标）。由用户单位进行使用性能方面的验收。设备的性能应符合投标人应答文件中承诺的技术指标，所有指标验收必须由用户确认。"
+        },
+        {
+          "nodeId": "p-0522",
+          "type": "static",
+          "text": "1）现场条件"
+        },
+        {
+          "nodeId": "p-0523",
+          "type": "static",
+          "text": "场地条件、人员、吊装"
+        },
+        {
+          "nodeId": "p-0524",
+          "type": "static",
+          "text": "2）现场施工物料工具工装"
+        },
+        {
+          "nodeId": "p-0525",
+          "type": "static",
+          "text": "编制物料、工具、工装、辅料、设备清单，由现场施工一线一人签字，回公司后进行核对盘点。"
+        },
+        {
+          "nodeId": "p-0526",
+          "type": "static",
+          "text": "3）现场人员时间安排"
+        },
+        {
+          "nodeId": "p-0527",
+          "type": "static",
+          "text": "制定人员定额工时定额"
+        },
+        {
+          "nodeId": "p-0528",
+          "type": "static",
+          "text": "4）与客户沟通"
+        },
+        {
+          "nodeId": "p-0529",
+          "type": "static",
+          "text": "确定与客户沟通负责人，权限，沟通礼仪"
+        },
+        {
+          "nodeId": "p-0530",
+          "type": "static",
+          "text": "5）现场施工安全"
+        },
+        {
+          "nodeId": "p-0531",
+          "type": "static",
+          "text": "确定安全员和安全培训，实际现场安全评估"
+        },
+        {
+          "nodeId": "p-0532",
+          "type": "static",
+          "text": "6）现场施工考勤"
+        },
+        {
+          "nodeId": "p-0533",
+          "type": "static",
+          "text": "确定考勤负责人和检查要求"
+        },
+        {
+          "nodeId": "p-0534",
+          "type": "static",
+          "text": "7）现场施工报表"
+        },
+        {
+          "nodeId": "p-0535",
+          "type": "static",
+          "text": "制定现场施工状态反馈表"
+        },
+        {
+          "nodeId": "break-0536",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0537",
+          "type": "static",
+          "text": "（三）验收方案"
+        },
+        {
+          "nodeId": "p-0538",
+          "type": "static",
+          "text": "1、在交货前，成交供应商应对货物的质量、规格、性能、数量和重量等进行详细而全面的检验，并出具证明货物符合合同规定的文件。该文件将作为申请付款单据的一部分，但有关质量、规格、性能、数量或重量的检验不应视为最终检验。"
+        },
+        {
+          "nodeId": "p-0539",
+          "type": "static",
+          "text": "2、货物安装并集成完毕，买方应在试运行一周后的10日内组织验收，并制作验收备忘录，签署验收意见 。"
+        },
+        {
+          "nodeId": "p-0540",
+          "type": "static",
+          "text": "3、采购方在收到货物时的验收仅是对产品表面等进行初步查验，如果产品存在内在瑕疵或质量等或其他不易发觉的问题，成交供应商仍需对该产品承担相应的责任。采购方有权要求成交供应商提供满足合同要求的产品。"
+        },
+        {
+          "nodeId": "p-0541",
+          "type": "static",
+          "text": "具体方案如下："
+        },
+        {
+          "nodeId": "p-0542",
+          "type": "static",
+          "text": "1.我司对任何由于不当包装或防护不利而导致的货物损坏、损失、锈蚀等造成的费用增长及后果负责。"
+        },
+        {
+          "nodeId": "p-0543",
+          "type": "static",
+          "text": "2.我司提供详细的出厂装箱单以及技术资料（包含说明书、操作手册、维护手册等）。"
+        },
+        {
+          "nodeId": "p-0544",
+          "type": "static",
+          "text": "3.我司在接到采购人通知后，安排工程技术人员到采购人指定地点免费安装、调试，按验收指标或验收细则要求逐项测试，直至达到验收要求，并形成验收报告，各指标应与合同及技术协议一致，验收合格后双方签字盖章确认。"
+        },
+        {
+          "nodeId": "break-0545",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0546",
+          "type": "static",
+          "text": "（四）承诺函"
+        },
+        {
+          "nodeId": "p-0547",
+          "type": "static",
+          "text": "致： （采购人名称）"
+        },
+        {
+          "nodeId": "p-0548",
+          "type": "static",
+          "text": "我方（）是按（）法律成立的一家制造商，主要营业地点设在（）。"
+        },
+        {
+          "nodeId": "p-0549",
+          "type": "static",
+          "text": "我方在此承诺："
+        },
+        {
+          "nodeId": "p-0550",
+          "type": "static",
+          "text": "1、设备验收完成后，制造商对设备整机提供1年免费保修或相当价值的免费服务，其中外购件提供1年免费保修或相当价值的免费服务。保修期结束后，制造商同意以优惠价格提供零配件供应，以及人工服务收费。"
+        },
+        {
+          "nodeId": "p-0551",
+          "type": "static",
+          "text": "2、交货地点："
+        },
+        {
+          "nodeId": "p-0552",
+          "type": "static",
+          "text": "3、交货日期："
+        },
+        {
+          "nodeId": "p-0554",
+          "type": "static",
+          "text": "特此声明。"
+        },
+        {
+          "nodeId": "p-0557",
+          "type": "static",
+          "text": "投标人名称（盖章）："
+        },
+        {
+          "nodeId": "break-0558",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0558",
+          "type": "static",
+          "text": "日 期： 年 月日"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0559",
+      "title": "十二、中小企业声明函",
+      "nodes": [
+        {
+          "nodeId": "p-0560",
+          "type": "static",
+          "text": "（如为中小企业，应按《政府采购促进中小企业发展管理办法》的规定提供）"
+        },
+        {
+          "nodeId": "p-0561",
+          "type": "static",
+          "text": "中小企业声明函（货物）"
+        },
+        {
+          "nodeId": "p-0562",
+          "type": "static",
+          "text": "本公司（联合体）郑重声明，根据《政府采购促进中小企业发展管理办法》（财库﹝2020﹞46 号）的规定，本公司（联合体）参加（）采购活动，提供的货物全部由符合政策要求的中小企业制造。相关企业（含联合体中的中小企业、签订分包意向协议的中小企业） 的具体情况如下："
+        },
+        {
+          "nodeId": "p-0563",
+          "type": "static",
+          "text": "1. （ ） ，属 于 （ ） 行业；制造商为（），从业人员 252 人，营业收入为 万元，资产总额为 万元1，属于（）；"
+        },
+        {
+          "nodeId": "p-0564",
+          "type": "static",
+          "text": "2. （ 标 的 名 称 ） ， 属 于 （ 采 购 文 件 中 明 确 的 所 属 行 业 ） 行业；制造商为（企业名称），从业人员 人，营业收入为 万元，资产总额为 万元，属于（中型企业、小型企业、微型企业）；"
+        },
+        {
+          "nodeId": "p-0565",
+          "type": "static",
+          "text": "……"
+        },
+        {
+          "nodeId": "p-0566",
+          "type": "static",
+          "text": "以上企业，不属于大企业的分支机构，不存在控股股东为大企业的情形，也不存在与大企业的负责人为同一人的情形。"
+        },
+        {
+          "nodeId": "p-0567",
+          "type": "static",
+          "text": "本企业对上述声明内容的真实性负责。如有虚假，将依法承担相应责任。"
+        },
+        {
+          "nodeId": "p-0570",
+          "type": "static",
+          "text": "企业名称（盖章）：费勉仪器科技（上海）有限公司"
+        },
+        {
+          "nodeId": "break-0571",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0571",
+          "type": "static",
+          "text": "日期： 2024 年 02 月 28 日"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0572",
+      "title": "十三、残疾人福利性单位声明函",
+      "nodes": [
+        {
+          "nodeId": "p-0573",
+          "type": "static",
+          "text": "（如为残疾人福利性单位，应按《财政部 民政部 中国残疾人联合会关于促进残疾人就业政府采购政策的通知》（财库〔2017〕 141号）的规定提供）"
+        },
+        {
+          "nodeId": "p-0575",
+          "type": "static",
+          "text": "残疾人福利性单位声明函"
+        },
+        {
+          "nodeId": "p-0577",
+          "type": "field",
+          "fieldId": "field:p-0577",
+          "label": "本单位郑重声明，根据《财政部 民政部 中国残疾人联合会关于促进残疾人就业政府采购政策的通知》（财库〔2017〕 141号）的规定，本单位为符合条件的残疾人福利性单位，且本单位参加",
+          "description": "模板字段：本单位郑重声明，根据《财政部民政部中国残疾人联合会关于促进残疾人就业政府采购政策的通知》财库〔2017〕141号的规定，本单位为符合条件的残疾人福利性单位，且本单位参加",
+          "originalText": "本单位郑重声明，根据《财政部 民政部 中国残疾人联合会关于促进残疾人就业政府采购政策的通知》（财库〔2017〕 141号）的规定，本单位为符合条件的残疾人福利性单位，且本单位参加______单位的______项目采购活动提供本单位制造的货物（由本单位承担工程/提供服务），或者提供其他残疾人福利性单位制造的货物（不包括使用非残疾人福利性单位注册商标的货物）。",
+          "valueType": "string",
+          "sourcePolicy": "tender_or_company",
+          "required": true,
+          "renderAs": "inline"
+        },
+        {
+          "nodeId": "p-0578",
+          "type": "static",
+          "text": "本单位对上述声明的真实性负责。如有虚假，将依法承担相应责任。"
+        },
+        {
+          "nodeId": "p-0581",
+          "type": "static",
+          "text": "单位名称（盖章）："
+        },
+        {
+          "nodeId": "p-0582",
+          "type": "static",
+          "text": "日 期："
+        },
+        {
+          "nodeId": "break-0585",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0585",
+          "type": "static",
+          "text": "我公司不是残疾人福利性单位，此项不适用"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0586",
+      "title": "十四、节能产品、环境标志产品的证明材料",
+      "nodes": [
+        {
+          "nodeId": "p-0588",
+          "type": "static",
+          "text": "依据《财政部 发展改革委 生态环境部 市场监管总局 关于调整优化节能产品、环境标志产品政府采购执行机制的通知》（财库〔2019〕9号）的规定，节能产品、环境标志产品依据国家有关主管部门发布的品目清单和认证证书实施政府优先采购和强制采购。本项目拟采购的产品属于品目清单范围的，在评审时将依据国家确定的认证机构出具的、处于有效期之内的节能产品、环境标志产品认证证书，对获得证书的产品实施政府优先采购或强制采购。"
+        },
+        {
+          "nodeId": "p-0589",
+          "type": "static",
+          "text": "一、如采购的产品属于强制采购的，投标人必须为投标产品出具由国家确定的认证机构出具的、处于有效期之内的认证证书，否则其投标将被视为无效投标。"
+        },
+        {
+          "nodeId": "p-0590",
+          "type": "static",
+          "text": "二、如采购的产品属于优先采购的，投标人可以为投标产品出具由国家确定的认证机构出具的、处于有效期之内的认证证书，在评审时作加分因素。"
+        },
+        {
+          "nodeId": "p-0591",
+          "type": "static",
+          "text": "三、节能产品政府采购品目清单及环境标志产品政府采购品目清单，投标人可在“中国政府采购网”相关栏目中查询。"
+        },
+        {
+          "nodeId": "break-0594",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0594",
+          "type": "static",
+          "text": "本项目中无。"
+        }
+      ]
+    },
+    {
+      "sectionId": "section:p-0595",
+      "title": "十五、其他资料",
+      "nodes": [
+        {
+          "nodeId": "p-0596",
+          "type": "static",
+          "text": "（一）近3年内相关业绩清单"
+        },
+        {
+          "nodeId": "t-0011",
+          "type": "table",
+          "tableId": "table:t-0011",
+          "columns": [
+            {
+              "columnId": "t-0011:c-01",
+              "key": "t-0011:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            },
+            {
+              "columnId": "t-0011:c-02",
+              "key": "t-0011:c-02",
+              "title": "产品名称",
+              "description": "表格列：产品名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0011:c-03",
+              "key": "t-0011:c-03",
+              "title": "具体内容",
+              "description": "表格列：具体内容",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 16
+            },
+            {
+              "columnId": "t-0011:c-04",
+              "key": "t-0011:c-04",
+              "title": "生产时间",
+              "description": "表格列：生产时间",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 9
+            },
+            {
+              "columnId": "t-0011:c-05",
+              "key": "t-0011:c-05",
+              "title": "用户名称",
+              "description": "表格列：用户名称",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 12
+            },
+            {
+              "columnId": "t-0011:c-06",
+              "key": "t-0011:c-06",
+              "title": "反馈意见",
+              "description": "表格列：反馈意见",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 10
+            },
+            {
+              "columnId": "t-0011:c-07",
+              "key": "t-0011:c-07",
+              "title": "用户联系人",
+              "description": "表格列：用户联系人",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 9
+            },
+            {
+              "columnId": "t-0011:c-08",
+              "key": "t-0011:c-08",
+              "title": "联系电话",
+              "description": "表格列：联系电话",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 18
+            },
+            {
+              "columnId": "t-0011:c-09",
+              "key": "t-0011:c-09",
+              "title": "备注",
+              "description": "表格列：备注",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 7
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "产品名称"
+                },
+                {
+                  "text": "具体内容"
+                },
+                {
+                  "text": "生产时间"
+                },
+                {
+                  "text": "用户名称"
+                },
+                {
+                  "text": "反馈意见"
+                },
+                {
+                  "text": "用户联系人"
+                },
+                {
+                  "text": "联系电话"
+                },
+                {
+                  "text": "备注"
+                }
+              ]
+            }
+          ],
+          "minRows": 4,
+          "allowAddRows": true,
+          "repeatHeader": true
+        },
+        {
+          "nodeId": "break-0598",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0599",
+          "type": "static",
+          "text": "业绩1"
+        },
+        {
+          "nodeId": "p-0600",
+          "type": "static",
+          "text": "业绩2"
+        },
+        {
+          "nodeId": "break-0601",
+          "type": "page_break"
+        },
+        {
+          "nodeId": "p-0601",
+          "type": "static",
+          "text": "业绩3"
+        },
+        {
+          "nodeId": "p-0602",
+          "type": "static",
+          "text": "（二）拟参与本项目服务人员一览表及学历证书"
+        },
+        {
+          "nodeId": "t-0012",
+          "type": "table",
+          "tableId": "table:t-0012",
+          "columns": [
+            {
+              "columnId": "t-0012:c-01",
+              "key": "t-0012:c-01",
+              "title": "序号",
+              "description": "表格列：序号",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 8
+            },
+            {
+              "columnId": "t-0012:c-02",
+              "key": "t-0012:c-02",
+              "title": "姓名",
+              "description": "表格列：姓名",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 15
+            },
+            {
+              "columnId": "t-0012:c-03",
+              "key": "t-0012:c-03",
+              "title": "性别",
+              "description": "表格列：性别",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 11
+            },
+            {
+              "columnId": "t-0012:c-04",
+              "key": "t-0012:c-04",
+              "title": "专业",
+              "description": "表格列：专业",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 33
+            },
+            {
+              "columnId": "t-0012:c-05",
+              "key": "t-0012:c-05",
+              "title": "学历",
+              "description": "表格列：学历",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 14
+            },
+            {
+              "columnId": "t-0012:c-06",
+              "key": "t-0012:c-06",
+              "title": "相关工作年限",
+              "description": "表格列：相关工作年限",
+              "valueType": "string",
+              "sourcePolicy": "tender_or_company",
+              "required": true,
+              "width": 19
+            }
+          ],
+          "headerRows": [
+            {
+              "cells": [
+                {
+                  "text": "序号"
+                },
+                {
+                  "text": "姓名"
+                },
+                {
+                  "text": "性别"
+                },
+                {
+                  "text": "专业"
+                },
+                {
+                  "text": "学历"
+                },
+                {
+                  "text": "相关工作年限"
+                }
+              ]
+            }
+          ],
+          "minRows": 7,
+          "allowAddRows": true,
+          "repeatHeader": true
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

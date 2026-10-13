@@ -1,0 +1,10 @@
+# SalesEye 爬虫引擎依赖
+# pip install -r requirements.txt
+
+playwright>=1.40.0       # 无头浏览器自动化
+beautifulsoup4>=4.12.0   # HTML 解析与编码检测
+pydantic>=2.5.0          # 数据模型验证
+python-dotenv>=1.0.0     # 环境变量加载
+openai>=1.0.0            # DeepSeek API 调用（OpenAI 兼容）
+schedule>=1.2.0          # 定时任务调度
+rich>=13.7.0             # 终端美化输出

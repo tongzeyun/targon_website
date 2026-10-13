@@ -9,7 +9,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
     { href: `/${lang}`, label: isZh ? "首页" : "Home" },
     { href: `/${lang}/products`, label: isZh ? "产品" : "Products" },
     // { href: `/${lang}/cases`, label: isZh ? "案例" : "Cases" },
-    { href: "/smart-eye", label: isZh ? "灵眸智售" : "Smart Eye" },
+    { href: `/${lang}/smart-eye`, label: isZh ? "灵眸智售" : "Smart Eye" },
     { href: `/${lang}/contact`, label: isZh ? "联系我们" : "Contact" },
   ];
 

@@ -39,7 +39,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
             <Link href={`/${lang}/products`}>Vacuum AI</Link>
             <Link href={`/${lang}/products`}>Local Industrial Agent</Link>
             <Link href={`/${lang}/products`}>Enterprise Brain</Link>
-            <Link href="/smart-eye">{isZh ? "灵眸智售" : "Smart Eye"}</Link>
+            <Link href={`/${lang}/smart-eye`}>{isZh ? "灵眸智售" : "Smart Eye"}</Link>
           </div>
           <div className={styles.links}>
             <h2>{isZh ? "联系" : "Contact"}</h2>
