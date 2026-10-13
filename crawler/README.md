@@ -59,7 +59,7 @@ $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location).Path 'crawler/.venv/bro
 
 ## 环境变量
 
-在项目根目录 `.env.local` 中配置：
+读取项目根目录 `.env` 中的配置，外部注入的环境变量优先，不会被文件覆盖。修改配置后重新启动爬虫进程。
 
 | 变量 | 说明 |
 |------|------|

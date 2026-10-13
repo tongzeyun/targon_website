@@ -23,14 +23,24 @@ export class PostgresDatabaseAdapter implements DatabaseAdapter {
       return;
     }
     if (!this.initPromise) {
-      this.initPromise = this.initPool();
+      this.initPromise = this.initPool().catch((error) => {
+        // A database started after Web/Worker must be retryable on the next request.
+        this.initPromise = null;
+        throw error;
+      });
     }
     await this.initPromise;
   }
 
   private async initPool(): Promise<void> {
-    this.pool = new pg.Pool({ connectionString: requireDatabaseUrl() });
-    await validateSchema(this.pool);
+    const pool = new pg.Pool({ connectionString: requireDatabaseUrl() });
+    try {
+      await validateSchema(pool);
+      this.pool = pool;
+    } catch (error) {
+      await pool.end().catch(() => {});
+      throw error;
+    }
   }
 
   private executor(): pg.Pool | pg.PoolClient {

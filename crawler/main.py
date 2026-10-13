@@ -16,8 +16,8 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.table import Table
 
-# Load env
-load_dotenv(Path(__file__).parent.parent / ".env.local")
+# Load the same root configuration used by Web/Worker; externally injected values win.
+load_dotenv(Path(__file__).resolve().parent.parent / ".env", override=False)
 
 from crawlers.bid_platforms import BidPlatformCrawler
 from pipelines.ai_extract import AIExtractionPipeline
