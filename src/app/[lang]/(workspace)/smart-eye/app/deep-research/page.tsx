@@ -1,8 +1,11 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
-import { useApi } from "@/lib/hooks/use-api";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { createApiResponseError } from "@/lib/api/api-error";
 import { authenticatedFetch } from "@/lib/api/authenticated-fetch";
 import { productsApi } from "@/lib/api/client";
@@ -11,9 +14,8 @@ import {
   getProductTargetIndustries,
 } from "@/lib/ai/deep-research-filters";
 import { JobStatus } from "@/app/[lang]/(workspace)/smart-eye/_components/jobs/job-status";
-import Image from "next/image";
-const gradient = "linear-gradient(135deg, #6FB1FF 14.64%, #8E8DFF 51.41%, #B07DFF 85.36%)";
-const selectBackground = "linear-gradient(#141922, #141922) padding-box, linear-gradient(135deg, #6FB1FF 14.64%, #8E8DFF 51.41%, #B07DFF 85.36%) border-box";
+const gradient = "linear-gradient(180deg, #5b9bff 0%, #464660 100%)";
+const selectBackground = "linear-gradient(#eef5fb, #eef5fb) padding-box, linear-gradient(180deg, #5b9bff 0%, #464660 100%) border-box";
 
 interface ProductOption {
   id: string;
@@ -105,6 +107,7 @@ const tabs: { key: TabKey; label: string }[] = [
 ];
 
 export default function DeepResearchPage() {
+  const uiText = useUiText();
   const [productId, setProductId] = useState("");
   const [industry, setIndustry] = useState("");
   const [province, setProvince] = useState("");
@@ -164,14 +167,14 @@ export default function DeepResearchPage() {
           province: province || undefined,
         }),
       });
-      if (!res.ok) throw await createApiResponseError(res, "提交失败");
+      if (!res.ok) throw await createApiResponseError(res, uiText("提交失败"));
       const data = (await res.json()) as DeepResearchResponse;
-      if (!data.jobId) throw new Error("分析任务未创建");
+      if (!data.jobId) throw new Error(uiText("分析任务未创建"));
       setResearchJobId(data.jobId);
       setResearchPending(true);
-      toast.info("深度分析任务已提交，正在后台执行");
+      toast.info(uiText("深度分析任务已提交，正在后台执行"));
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : "提交失败");
+      toast.error(e instanceof Error ? e.message : uiText("提交失败"));
     } finally {
       setEnqueueing(false);
     }
@@ -191,18 +194,18 @@ export default function DeepResearchPage() {
         } else {
           await loadLatestReport(researchJobProductId || productId);
         }
-        toast.success("分析完成！请选择要添加的客户");
+        toast.success(uiText("分析完成！请选择要添加的客户"));
       } catch {
-        toast.error("报告加载失败");
+        toast.error(uiText("报告加载失败"));
       }
     } else if (j.status === "failed") {
-      toast.error(j.errorMessage || "深度分析失败");
+      toast.error(j.errorMessage || uiText("深度分析失败"));
     }
   };
 
   const handleAddSelected = async () => {
     if (selected.size === 0) {
-      toast.error("请选择至少一个客户");
+      toast.error(uiText("请选择至少一个客户"));
       return;
     }
     setAdding(true);
@@ -216,14 +219,14 @@ export default function DeepResearchPage() {
           selectedIndexes: Array.from(selected),
         }),
       });
-      if (!res.ok) throw await createApiResponseError(res, "发送失败");
+      if (!res.ok) throw await createApiResponseError(res, uiText("发送失败"));
       const data = (await res.json()) as DeepResearchResponse;
       const created = data.accountsCreated ?? 0;
       const skipped = data.duplicatesSkipped ?? 0;
-      toast.success(`已添加 ${created} 个目标客户${skipped > 0 ? `，跳过 ${skipped} 个重复客户` : ""}`);
+      toast.success(uiText("已添加 {0} 个目标客户{1}", { 0: created, 1: skipped > 0 ? uiText("，跳过 {0} 个重复客户", { 0: skipped }) : "" }));
       setSelected(new Set());
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "发送失败");
+      toast.error(e instanceof Error ? e.message : uiText("发送失败"));
     }
     setAdding(false);
   };
@@ -244,26 +247,25 @@ export default function DeepResearchPage() {
   };
 
   return (
-    <div className="w-full min-w-0 max-w-[1665px] px-4 pb-24 pt-24 text-[#E8EDF7] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px]">
+    <div className={`${pageStyles.page} ${pageStyles.research}`}>
       <div className="mb-9">
-        <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[32px]">深度销售情报</h1>
-        <p className="mt-2 text-base leading-7 text-[#A4ADBD] sm:text-[20px] sm:leading-8">
-          选择产品 ➡ AI分析市场、定位客户、还原决策链、给出触达路径
-        </p>
+        <h1>{uiText("深度销售情报")}</h1>
+        <p className="mt-2 text-base leading-7 text-[#52637a] sm:text-[20px] sm:leading-8">
+          {uiText("选择产品 ➡ AI分析市场、定位客户、还原决策链、给出触达路径")}</p>
       </div>
 
-      <section className="mb-9 min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] px-4 py-6 shadow-[0_0_0_1px_rgba(255,255,255,0.01)_inset] sm:px-8 sm:py-10 xl:px-[70px] xl:py-[56px]">
+      <section className="mb-9 min-w-0 rounded-[14px] border border-border bg-card px-4 py-6 sm:px-8 sm:py-10 xl:px-[70px] xl:py-[56px]">
         <div className="flex flex-wrap items-end gap-6">
           <div className="w-full min-w-0 flex-[2_1_500px] sm:min-w-[320px] sm:max-w-[800px]">
-            <label className="mb-3 block text-[18px] font-semibold text-white sm:text-[24px]">选择产品</label>
+            <label className="mb-3 block text-[18px] font-semibold text-foreground sm:text-[24px]">{uiText("选择产品")}</label>
             <div
-              className="relative  h-[60px] rounded-[9px] border border-transparent"
+              className="relative h-[60px] rounded-[9px] border border-transparent"
               style={{
                 background: selectBackground,
               }}
             >
               <select
-                className="h-full w-full min-w-0 appearance-none rounded-[9px] bg-transparent px-4 pr-12 text-base text-slate-100 outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:pr-14 sm:text-[22px]"
+                className="h-full w-full min-w-0 appearance-none rounded-[9px] bg-transparent px-4 pr-12 text-base text-foreground outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:pr-14 sm:text-[22px]"
                 value={productId}
                 onChange={(event) => {
                   setProductId(event.target.value);
@@ -271,58 +273,58 @@ export default function DeepResearchPage() {
                 }}
                 disabled={enqueueing || researchPending}
               >
-                <option className="bg-[#141922] text-[#8D96A7]" value="">选择一个产品...</option>
+                <option className="bg-card text-muted-foreground" value="">{uiText("选择一个产品...")}</option>
                 {productList.filter((p) => p && p.id && p.name).map((p) => (
-                  <option className="bg-[#141922] text-slate-100" key={String(p.id)} value={String(p.id)}>
+                  <option className="bg-card text-foreground" key={String(p.id)} value={String(p.id)}>
                     {String(p.name)}{p.category ? ` (${String(p.category)})` : ""}
                   </option>
                 ))}
               </select>
-              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#A4ADBD]" />
+              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#a4adbd]" />
             </div>
           </div>
 
           <div className="w-full min-w-0 flex-1 sm:min-w-[200px] sm:max-w-[260px]">
-            <label className="mb-3 block text-[18px] font-semibold text-white sm:text-[20px]">目标行业（可选）</label>
+            <label className="mb-3 block text-[18px] font-semibold text-foreground sm:text-[20px]">{uiText("目标行业（可选）")}</label>
             <div
               className="relative h-[60px] rounded-[9px] border border-transparent"
               style={{ background: selectBackground }}
             >
               <select
-                className="h-full w-full appearance-none rounded-[9px] bg-transparent px-5 pr-12 text-[18px] text-slate-100 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                className="h-full w-full appearance-none rounded-[9px] bg-transparent px-5 pr-12 text-[18px] text-foreground outline-none disabled:cursor-not-allowed disabled:opacity-60"
                 value={industry}
                 onChange={(event) => setIndustry(event.target.value)}
                 disabled={enqueueing || researchPending || !productId || industryOptions.length === 0}
               >
-                <option className="bg-[#141922] text-[#8D96A7]" value="">
-                  {productId && industryOptions.length === 0 ? "未配置目标行业" : "不限行业"}
+                <option className="bg-card text-muted-foreground" value="">
+                  {productId && industryOptions.length === 0 ? uiText("未配置目标行业") : uiText("不限行业")}
                 </option>
                 {industryOptions.map((option) => (
-                  <option className="bg-[#141922] text-slate-100" key={option} value={option}>{option}</option>
+                  <option className="bg-card text-foreground" key={option} value={option}>{option}</option>
                 ))}
               </select>
-              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#A4ADBD]" />
+              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#a4adbd]" />
             </div>
           </div>
 
           <div className="w-full min-w-0 flex-1 sm:min-w-[200px] sm:max-w-[260px]">
-            <label className="mb-3 block text-[18px] font-semibold text-white sm:text-[20px]">目标省份（可选）</label>
+            <label className="mb-3 block text-[18px] font-semibold text-foreground sm:text-[20px]">{uiText("目标省份（可选）")}</label>
             <div
               className="relative h-[60px] rounded-[9px] border border-transparent"
               style={{ background: selectBackground }}
             >
               <select
-                className="h-full w-full appearance-none rounded-[9px] bg-transparent px-5 pr-12 text-[18px] text-slate-100 outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                className="h-full w-full appearance-none rounded-[9px] bg-transparent px-5 pr-12 text-[18px] text-foreground outline-none disabled:cursor-not-allowed disabled:opacity-60"
                 value={province}
                 onChange={(event) => setProvince(event.target.value)}
                 disabled={enqueueing || researchPending}
               >
-                <option className="bg-[#141922] text-[#8D96A7]" value="">不限省份</option>
+                <option className="bg-card text-muted-foreground" value="">{uiText("不限省份")}</option>
                 {CHINA_MAINLAND_PROVINCES.map((option) => (
-                  <option className="bg-[#141922] text-slate-100" key={option} value={option}>{option}</option>
+                  <option className="bg-card text-foreground" key={option} value={option}>{option}</option>
                 ))}
               </select>
-              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#A4ADBD]" />
+              <span className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-b-2 border-r-2 border-[#a4adbd]" />
             </div>
           </div>
 
@@ -330,20 +332,20 @@ export default function DeepResearchPage() {
             type="button"
             onClick={handleResearch}
             disabled={enqueueing || researchPending || !productId}
-            className="btn-bg h-[52px] w-full min-w-0 rounded-[9px] px-4 text-lg font-semibold text-[#07111F] shadow-[0_0_26px_rgba(111,177,255,0.24)] transition disabled:cursor-not-allowed disabled:opacity-50 sm:h-[60px] sm:w-auto sm:min-w-[219px] sm:px-9 sm:text-[22px]"
+            className="btn-bg h-[52px] w-full min-w-0 rounded-[9px] px-4 text-lg font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50 sm:h-[60px] sm:w-auto sm:min-w-[219px] sm:px-9 sm:text-[22px]"
           >
-            {enqueueing || researchPending ? "分析中..." : "开始深度分析"}
+            {enqueueing || researchPending ? uiText("分析中...") : uiText("开始深度分析")}
           </button>
 
           <div className="ml-auto hidden min-w-[132px] justify-center lg:flex">
-            <Image src="/img/deepstar.png" alt="start" width={72} height={72} />
+            <img src="/img/smart-eye/deepstar.svg" alt="" />
           </div>
         </div>
 
         {(enqueueing || researchJobId) && (
-          <div className="mt-6 rounded-[10px] border border-[#202837] bg-[#080D16] p-4 text-sm text-[#A4ADBD]">
+          <div className="mt-6 rounded-[10px] border border-border bg-input p-4 text-sm text-[#52637a]">
             {enqueueing && !researchJobId ? (
-              <span>提交任务中...</span>
+              <span>{uiText("提交任务中...")}</span>
             ) : researchJobId ? (
               <JobStatus jobId={researchJobId} onDone={handleResearchDone} />
             ) : null}
@@ -353,7 +355,7 @@ export default function DeepResearchPage() {
 
       {report && (
         <>
-          <div className="mb-9 w-full max-w-[757px] rounded-[9px] border border-[#1D2533] bg-[#060A11] p-1">
+          <div className="mb-9 w-full max-w-[757px] rounded-[9px] border border-border bg-input p-1">
             <div className="grid grid-cols-2 gap-1 sm:grid-cols-4">
               {tabs.map((tab) => {
                 const isActive = activeTab === tab.key;
@@ -365,12 +367,12 @@ export default function DeepResearchPage() {
                     className={[
                       "h-[42px] rounded-[8px] px-2 text-base font-semibold transition sm:text-[20px]",
                       isActive
-                        ? "text-white shadow-[0_0_18px_rgba(111,177,255,0.46)]"
-                        : "text-[#687286] hover:text-slate-200",
+                        ? "text-white"
+                        : "text-muted-foreground hover:text-foreground",
                     ].join(" ")}
                     style={isActive ? { background: gradient } : undefined}
                   >
-                    {tab.label}{tab.key === "accounts" ? `（${targetAccounts.length}）` : ""}
+                    {uiText(tab.label)}{tab.key === "accounts" ? ` (${targetAccounts.length})` : ""}
                   </button>
                 );
               })}
@@ -384,25 +386,24 @@ export default function DeepResearchPage() {
                   <button
                     type="button"
                     onClick={toggleAll}
-                    className="h-9 rounded-[9px] border border-[#202837] bg-[#141922] px-5 text-base text-[#D8DEEA] transition hover:border-[#35547D]"
+                    className="h-9 rounded-[9px] border border-border bg-card px-5 text-base text-foreground transition hover:border-[#35547d]"
                   >
-                    {allSelected ? "取消全选" : "全选"}
+                    {allSelected ? uiText("取消全选") : uiText("全选")}
                   </button>
                   <button
                     type="button"
                     onClick={handleAddSelected}
                     disabled={adding || selected.size === 0}
-                    className="btn-bg h-9 rounded-[9px] px-5 text-base font-semibold text-[#07111F] shadow-[0_0_18px_rgba(176,125,255,0.22)] transition disabled:cursor-not-allowed disabled:opacity-50"
+                    className="btn-bg h-9 rounded-[9px] px-5 text-base font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {adding ? "添加中..." : `添加选中客户（${selected.size}）`}
+                    {adding ? uiText("添加中...") : uiText("添加选中客户（{0}）", { 0: selected.size })}
                   </button>
                 </div>
               )}
 
               {targetAccounts.length === 0 ? (
-                <div className="rounded-[14px] border border-[#202837] bg-[#141922] px-8 py-14 text-center text-[18px] text-[#A4ADBD]">
-                  未找到满足当前行业和省份条件的客户
-                </div>
+                <div className="rounded-[14px] border border-border bg-card px-8 py-14 text-center text-[18px] text-[#52637a]">
+                  {uiText("未找到满足当前行业和省份条件的客户")}</div>
               ) : (
                 <div className="space-y-5">
                   {targetAccounts.map((account, index) => (
@@ -436,56 +437,56 @@ function TargetAccountCard({
   selected: boolean;
   onToggle: () => void;
 }) {
+  const uiText = useUiText();
   const decisionChain = account.decisionChain ?? [];
   const matchScore = typeof account.matchScore === "number" ? account.matchScore : 0;
   const locationLabel = [account.province, account.location].filter(Boolean).join(" · ") || "-";
 
   return (
-    <article className="rounded-[14px] border border-[#202837] bg-[#141922] px-[70px] py-8">
+    <article className="rounded-[14px] border border-border bg-card px-6 py-8 xl:px-[65px]">
       <div className="mb-5 flex items-start gap-4">
         <button
           type="button"
           onClick={onToggle}
           className="mt-2 shrink-0"
           aria-pressed={selected}
-          aria-label={selected ? "取消选择客户" : "选择客户"}
+          aria-label={selected ? uiText("取消选择客户") : uiText("选择客户")}
         >
           <GradientCheckbox checked={selected} />
         </button>
 
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex flex-wrap items-center gap-3">
-            <h2 className="text-[26px] font-bold leading-tight text-white">{account.companyName || "-"}</h2>
+            <h2 className="text-[26px] font-bold leading-tight text-foreground">{account.companyName || "-"}</h2>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Tag>{account.industry || "-"}</Tag>
             <Tag>{locationLabel}</Tag>
-            <span className="rounded-[6px] border border-[#5FC597] bg-[#235D46] px-4 py-1 text-[16px] text-[#62D59A]">
-              匹配{matchScore}分
-            </span>
+            <span className="rounded-[6px] border border-[#5fc597] bg-emerald-100 px-4 py-1 text-[16px] text-emerald-700">
+              {uiText("匹配")}{matchScore}{uiText("分")}</span>
           </div>
         </div>
       </div>
 
-      <div className="mb-7 rounded-[8px] bg-[#203454] px-5 py-3 text-[18px] leading-7 text-[#5AA0FF]">
-        为什么是目标：{account.whyTarget || "-"}
+      <div className="mb-7 rounded-[8px] bg-[#5b9bff]/15 px-5 py-3 text-[18px] leading-7 text-[#5aa0ff]">
+        {uiText("为什么是目标：")}{account.whyTarget || "-"}
       </div>
 
-      <h3 className="mb-4 text-[22px] font-medium text-[#C7CFDA]">决策链</h3>
+      <h3 className="mb-4 text-[22px] font-medium text-foreground">{uiText("决策链")}</h3>
       <div className="grid gap-3 xl:grid-cols-2">
         {(decisionChain.length > 0 ? decisionChain : [{ step: "-", typicalRole: "-", influence: 0, notes: "-" }]).map((item, itemIndex) => (
-          <div key={`${item.step ?? "decision"}-${itemIndex}`} className="rounded-[8px] bg-[#060A11] px-7 py-5">
+          <div key={`${item.step ?? "decision"}-${itemIndex}`} data-decision-card className="rounded-[8px] px-7 py-5">
             <div className="mb-1 flex items-start justify-between gap-4">
               <div>
-                <p className="text-[22px] font-semibold text-white">{item.step || "-"}</p>
-                <p className="mt-1 text-[20px] text-[#C7CFDA]">{item.typicalRole || "-"}</p>
+                <p className="text-[22px] font-semibold text-foreground">{item.step || "-"}</p>
+                <p className="mt-1 text-[20px] text-foreground">{item.typicalRole || "-"}</p>
               </div>
-              <div className="shrink-0 pt-1 text-[16px] text-[#D7DCE6] flex ">
-                <span>影响力</span>
+              <div className="shrink-0 pt-1 text-[16px] text-foreground flex">
+                <span>{uiText("影响力")}</span>
                 <InfluenceStars value={item.influence ?? 0} />
               </div>
             </div>
-            <p className="text-[16px] leading-6 text-[#687286]">{item.notes || "-"}</p>
+            <p className="text-[16px] leading-6 text-muted-foreground">{item.notes || "-"}</p>
           </div>
         ))}
       </div>
@@ -494,29 +495,30 @@ function TargetAccountCard({
 }
 
 function MarketPanel({ report }: { report: DeepResearchReport }) {
+  const uiText = useUiText();
   const analysis = report.marketAnalysis;
   return (
     <section className="grid gap-5 xl:grid-cols-2">
-      <Panel title="目标行业">
+      <Panel title={uiText("目标行业")}>
         <div className="space-y-3">
           {(analysis?.industryBreakdown ?? []).map((item, index) => (
-            <div key={`${item.industry ?? "industry"}-${index}`} className="rounded-[8px] bg-[#060A11] p-5">
+            <div key={`${item.industry ?? "industry"}-${index}`} className="rounded-[8px] bg-input p-5">
               <div className="mb-2 flex items-center justify-between gap-4">
-                <p className="text-[20px] font-semibold text-white">{item.industry || "-"}</p>
+                <p className="text-[20px] font-semibold text-foreground">{item.industry || "-"}</p>
                 <Tag>{item.estimatedMarket || "-"}</Tag>
               </div>
-              <p className="text-[16px] leading-7 text-[#A4ADBD]">{item.demandDrivers || "-"}</p>
+              <p className="text-[16px] leading-7 text-[#52637a]">{item.demandDrivers || "-"}</p>
             </div>
           ))}
         </div>
       </Panel>
-      <Panel title="市场概览">
+      <Panel title={uiText("市场概览")}>
         <div className="space-y-4 text-[18px]">
-          <InfoRow label="公司规模" value={analysis?.companySizeRange} />
-          <InfoRow label="采购周期" value={analysis?.buyingCycle} />
-          <InfoRow label="预算范围" value={analysis?.budgetRange} />
+          <InfoRow label={uiText("公司规模")} value={analysis?.companySizeRange} />
+          <InfoRow label={uiText("采购周期")} value={analysis?.buyingCycle} />
+          <InfoRow label={uiText("预算范围")} value={analysis?.budgetRange} />
           <div>
-            <p className="mb-2 text-[#687286]">热门地区</p>
+            <p className="mb-2 text-muted-foreground">{uiText("热门地区")}</p>
             <div className="flex flex-wrap gap-2">
               {(analysis?.geographicHotspots ?? []).map((item) => <Tag key={item}>{item}</Tag>)}
             </div>
@@ -528,36 +530,37 @@ function MarketPanel({ report }: { report: DeepResearchReport }) {
 }
 
 function OutreachPanel({ report }: { report: DeepResearchReport }) {
+  const uiText = useUiText();
   const strategy = report.outreachStrategy;
   return (
     <section className="grid gap-5 xl:grid-cols-2">
-      <Panel title="触达渠道">
+      <Panel title={uiText("触达渠道")}>
         <div className="space-y-3">
           {(strategy?.channels ?? []).map((item, index) => (
-            <div key={`${item.channel ?? "channel"}-${index}`} className="rounded-[8px] bg-[#060A11] p-5">
+            <div key={`${item.channel ?? "channel"}-${index}`} className="rounded-[8px] bg-input p-5">
               <div className="mb-2 flex items-center justify-between gap-4">
-                <p className="text-[20px] font-semibold text-white">{item.channel || "-"}</p>
+                <p className="text-[20px] font-semibold text-foreground">{item.channel || "-"}</p>
                 <Tag>{item.effectiveness || "-"}</Tag>
               </div>
-              <p className="text-[16px] leading-7 text-[#A4ADBD]">{item.tips || "-"}</p>
+              <p className="text-[16px] leading-7 text-[#52637a]">{item.tips || "-"}</p>
             </div>
           ))}
         </div>
       </Panel>
-      <Panel title="关键触点">
-        <div className="space-y-5 text-[18px] text-[#C7CFDA]">
+      <Panel title={uiText("关键触点")}>
+        <div className="space-y-5 text-[18px] text-foreground">
           <div>
-            <p className="mb-2 text-[#687286]">关键展会</p>
+            <p className="mb-2 text-muted-foreground">{uiText("关键展会")}</p>
             <div className="flex flex-wrap gap-2">
               {(strategy?.keyConferences ?? []).map((item) => <Tag key={item}>{item}</Tag>)}
             </div>
           </div>
           <div>
-            <p className="mb-2 text-[#687286]">推荐平台</p>
+            <p className="mb-2 text-muted-foreground">{uiText("推荐平台")}</p>
             <p>{strategy?.keyPlatforms?.join("、") || "-"}</p>
           </div>
           <div>
-            <p className="mb-2 text-[#687286]">竞争情报</p>
+            <p className="mb-2 text-muted-foreground">{uiText("竞争情报")}</p>
             <p className="leading-7">{strategy?.competitorIntel || "-"}</p>
           </div>
         </div>
@@ -567,6 +570,7 @@ function OutreachPanel({ report }: { report: DeepResearchReport }) {
 }
 
 function ActionPlanPanel({ report }: { report: DeepResearchReport }) {
+  const uiText = useUiText();
   const phases = [
     { title: "第一周", data: report.actionPlan?.week1 },
     { title: "第2-4周", data: report.actionPlan?.week2_4 },
@@ -577,11 +581,11 @@ function ActionPlanPanel({ report }: { report: DeepResearchReport }) {
     <section className="space-y-5">
       <div className="grid gap-5 xl:grid-cols-3">
         {phases.map((phase) => (
-          <Panel key={phase.title} title={phase.title}>
-            <ul className="space-y-3 text-[17px] leading-7 text-[#C7CFDA]">
+          <Panel key={phase.title} title={uiText(phase.title)}>
+            <ul className="space-y-3 text-[17px] leading-7 text-foreground">
               {phase.data?.map((item, index) => (
                 <li key={`${item}-${index}`} className="flex gap-3">
-                  <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6FB1FF]" />
+                  <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6fb1ff]" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -589,7 +593,7 @@ function ActionPlanPanel({ report }: { report: DeepResearchReport }) {
           </Panel>
         ))}
       </div>
-      <Panel title="核心指标">
+      <Panel title={uiText("核心指标")}>
         <div className="flex flex-wrap gap-3">
           {(report.actionPlan?.kpis ?? []).map((item) => <Tag key={item}>{item}</Tag>)}
         </div>
@@ -627,10 +631,10 @@ function GradientCheckbox({ checked }: { checked: boolean }) {
 function InfluenceStars({ value }: { value: number }) {
   const count = Math.max(0, Math.min(5, Math.round(value)));
   return (
-    <span className="ml-1 whitespace-nowrap text-[#F7C55B] flex items-center gap-1">
+    <span className="ml-1 whitespace-nowrap text-[#f7c55b] flex items-center gap-1">
       {Array.from({ length: 5 }).map((_, index) => (
         <span key={index} className={index < count ? "" : "opacity-25"}>
-          <Image src="/img/rating.png" alt="star" width={16} height={16} />
+          <img src="/img/smart-eye/influence-star.svg" alt="" />
         </span>
       ))}
     </span>
@@ -639,8 +643,8 @@ function InfluenceStars({ value }: { value: number }) {
 
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="rounded-[14px] border border-[#202837] bg-[#141922] p-7">
-      <h2 className="mb-5 text-[24px] font-semibold text-white">{title}</h2>
+    <section className="rounded-[14px] border border-border bg-card p-7">
+      <h2 className="mb-5 text-[24px] font-semibold text-foreground">{title}</h2>
       {children}
     </section>
   );
@@ -648,7 +652,7 @@ function Panel({ title, children }: { title: string; children: ReactNode }) {
 
 function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-[5px] border border-[#2B5E9D] bg-[#060A11] px-4 py-1 text-[16px] leading-6 text-[#D8DEEA]">
+    <span className="rounded-[5px] border border-[#b8c3d0] bg-input px-4 py-1 text-[16px] leading-6 text-foreground">
       {children}
     </span>
   );
@@ -656,9 +660,9 @@ function Tag({ children }: { children: ReactNode }) {
 
 function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
-    <div className="flex items-center justify-between gap-6 border-b border-[#202837] pb-3">
-      <span className="text-[#687286]">{label}</span>
-      <span className="text-right text-[#D8DEEA]">{value || "-"}</span>
+    <div className="flex items-center justify-between gap-6 border-b border-border pb-3">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="text-right text-foreground">{value || "-"}</span>
     </div>
   );
 }

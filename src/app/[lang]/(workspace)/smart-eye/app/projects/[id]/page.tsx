@@ -1,17 +1,19 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/ui/date-picker";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useApi } from "@/lib/hooks/use-api";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/dialog";
+import { Input } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/input";
+import { DatePicker } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/date-picker";
+import { Label } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/label";
+import { Textarea } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/textarea";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { pipelineApi, projectsApi } from "@/lib/api/client";
 import { parseJson } from "@/lib/utils";
 import { toast } from "sonner";
-import Image from "next/image";
 
 const typeLabels: Record<string, string> = {
   public_bid: "公开招标",
@@ -104,6 +106,7 @@ function getErrorMessage(error: unknown): string {
 }
 
 export default function ProjectDetailPage() {
+  const uiText = useUiText();
   const params = useParams();
   const id = params.id as string;
   const [activeTab, setActiveTab] = useState<"overview" | "signals" | "bidding">("overview");
@@ -173,7 +176,7 @@ export default function ProjectDetailPage() {
         nextAction: pipeForm.nextAction,
         nextActionDate: pipeForm.nextActionDate,
       });
-      toast.success("已添加到管线");
+      toast.success(uiText("已添加到管线"));
       setPipelines((items) => [...items, created as PipelineItem]);
       setShowPipeline(false);
     } catch (error) {
@@ -184,14 +187,14 @@ export default function ProjectDetailPage() {
 
   if (loading) {
     return (
-      <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-slate-100 sm:px-6 lg:px-8 lg:pb-10 lg:pt-[110px]">
+      <section className={`${pageStyles.page} ${pageStyles.projectDetail}`}>
         <div className="grid max-w-[1560px] gap-6 lg:grid-cols-[minmax(0,1000px)_minmax(320px,530px)]">
           <div className="space-y-6">
-            <div className="h-16 w-2/3 animate-pulse rounded-[12px] bg-[#11161F]" />
-            <div className="h-[106px] animate-pulse rounded-[14px] bg-[#11161F]" />
-            <div className="h-[134px] animate-pulse rounded-[14px] bg-[#11161F]" />
+            <div className="h-16 w-2/3 animate-pulse rounded-[12px] bg-card" />
+            <div className="h-[106px] animate-pulse rounded-[14px] bg-card" />
+            <div className="h-[134px] animate-pulse rounded-[14px] bg-card" />
           </div>
-          <div className="h-[265px] animate-pulse rounded-[14px] bg-[#11161F]" />
+          <div className="h-[265px] animate-pulse rounded-[14px] bg-card" />
         </div>
       </section>
     );
@@ -199,36 +202,35 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-center text-[#8D96A7] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[110px]">
-        项目不存在
-      </section>
+      <section className={`${pageStyles.page} ${pageStyles.projectDetail}`}>
+        {uiText("项目不存在")}</section>
     );
   }
 
   const tabs = [
-    { value: "overview" as const, label: "项目概览" },
-    { value: "signals" as const, label: `情报来源（${signals.length}）` },
-    ...(bidDocs.length > 0 ? [{ value: "bidding" as const, label: "招标详情" }] : []),
+    { value: "overview" as const, label: uiText("项目概览") },
+    { value: "signals" as const, label: uiText("情报来源（{0}）", { 0: signals.length }) },
+    ...(bidDocs.length > 0 ? [{ value: "bidding" as const, label: uiText("招标详情") }] : []),
   ];
 
   return (
-    <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-[#F2F4F8] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[110px]">
+    <section className={`${pageStyles.page} ${pageStyles.projectDetail}`}>
       <div className="max-w-[1560px]">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <h1 className="text-[24px] font-semibold leading-[1.35] text-[#F2F4F8] lg:text-[20px]">
-              {project.projectName || "未命名项目"}
+            <h1>
+              {project.projectName || uiText("未命名项目")}
             </h1>
             <div className="mt-3 flex flex-wrap items-center gap-4">
-              <span className="rounded-[6px] border border-[rgba(91,155,255,0.45)] px-4 py-1 text-sm tracking-[0.03em] text-[#F2F4F8]">
-                {typeLabels[project.projectType || ""] || project.projectType || "-"}
+              <span className="rounded-[6px] border border-[rgba(91,155,255,0.45)] px-4 py-1 text-sm tracking-[0.03em] text-foreground">
+                {uiText(typeLabels[project.projectType || ""] || project.projectType || "-")}
               </span>
-              <span className="rounded-[6px] border border-white/5 bg-[#04070D] px-4 py-1 text-sm text-[#F2F4F8]">
-                {project.industry || "未知行业"}
+              <span className="rounded-[6px] border border-white/5 bg-input px-4 py-1 text-sm text-foreground">
+                {project.industry || uiText("未知行业")}
               </span>
               {project.matchScore ? (
-                <span className="rounded-[6px] border border-[#3F9B6C] bg-[#1D4E3B] px-4 py-1 text-sm text-[#71D49C]">
-                  匹配 {project.matchScore}%
+                <span className="rounded-[6px] border border-[#3f9b6c] bg-[#66d49e]/15 px-4 py-1 text-sm text-emerald-700">
+                  {uiText("匹配")}{project.matchScore}%
                 </span>
               ) : null}
             </div>
@@ -237,10 +239,9 @@ export default function ProjectDetailPage() {
           <button
             type="button"
             onClick={openPipeline}
-            className="btn-bg h-[34px] w-fit rounded-[10px] px-4 text-[13px] font-semibold text-[#0A0613] lg:mt-0"
+            className="btn-bg h-[34px] w-fit rounded-[10px] px-4 text-[13px] font-semibold text-white lg:mt-0"
           >
-            添加到销售管线
-          </button>
+            {uiText("添加到销售管线")}</button>
         </div>
 
         <Dialog open={showPipeline} onOpenChange={setShowPipeline}>
@@ -248,33 +249,33 @@ export default function ProjectDetailPage() {
             className="smart-eye-dialog max-w-lg"
             overlayClassName="bg-black/70 supports-backdrop-filter:backdrop-blur-sm"
           >
-            <DialogHeader><DialogTitle>添加到销售管线</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{uiText("添加到销售管线")}</DialogTitle></DialogHeader>
             <div className="smart-eye-dialog__body space-y-3">
               <div className="smart-eye-dialog__columns grid grid-cols-2 gap-3">
-                <div><Label>当前阶段</Label>
+                <div><Label>{uiText("当前阶段")}</Label>
                   <select className="smart-eye-dialog__select" value={pipeForm.currentStage} onChange={(event) => setPipeForm({ ...pipeForm, currentStage: event.target.value })}>
-                    <option value="discovered">发现机会</option>
-                    <option value="tech_exchange">技术交流</option>
-                    <option value="proposal">方案提交</option>
-                    <option value="testing">样机测试</option>
-                    <option value="negotiation">商务谈判</option>
+                    <option value="discovered">{uiText("发现机会")}</option>
+                    <option value="tech_exchange">{uiText("技术交流")}</option>
+                    <option value="proposal">{uiText("方案提交")}</option>
+                    <option value="testing">{uiText("样机测试")}</option>
+                    <option value="negotiation">{uiText("商务谈判")}</option>
                   </select>
                 </div>
-                <div><Label>预计金额</Label><Input value={pipeForm.dealAmount} onChange={(event) => setPipeForm({ ...pipeForm, dealAmount: event.target.value })} placeholder="¥200万" /></div>
+                <div><Label>{uiText("预计金额")}</Label><Input value={pipeForm.dealAmount} onChange={(event) => setPipeForm({ ...pipeForm, dealAmount: event.target.value })} placeholder={uiText("¥200万")} /></div>
               </div>
-              <div><Label>下一步行动</Label><Input value={pipeForm.nextAction} onChange={(event) => setPipeForm({ ...pipeForm, nextAction: event.target.value })} placeholder="如：安排技术团队到现场交流" /></div>
+              <div><Label>{uiText("下一步行动")}</Label><Input value={pipeForm.nextAction} onChange={(event) => setPipeForm({ ...pipeForm, nextAction: event.target.value })} placeholder={uiText("如：安排技术团队到现场交流")} /></div>
               <div className="smart-eye-dialog__columns grid grid-cols-2 gap-3">
-                <div><Label>行动日期</Label><DatePicker value={pipeForm.nextActionDate} onChange={(nextActionDate) => setPipeForm({ ...pipeForm, nextActionDate })} /></div>
+                <div><Label>{uiText("行动日期")}</Label><DatePicker value={pipeForm.nextActionDate} onChange={(nextActionDate) => setPipeForm({ ...pipeForm, nextActionDate })} /></div>
               </div>
-              <div><Label>备注</Label><Textarea value={pipeForm.notes} onChange={(event) => setPipeForm({ ...pipeForm, notes: event.target.value })} rows={3} /></div>
+              <div><Label>{uiText("备注")}</Label><Textarea value={pipeForm.notes} onChange={(event) => setPipeForm({ ...pipeForm, notes: event.target.value })} rows={3} /></div>
               <button type="button" className="smart-eye-dialog-action btn-bg w-full" onClick={handleAddToPipeline} disabled={pipeSaving}>
-                {pipeSaving ? "保存中..." : "添加到管线"}
+                {pipeSaving ? uiText("保存中...") : uiText("添加到管线")}
               </button>
             </div>
           </DialogContent>
         </Dialog>
 
-        <div className="mb-6 flex w-full flex-col gap-1 rounded-[10px] bg-[#04070D] p-1 sm:w-fit sm:flex-row sm:flex-wrap">
+        <div className="mb-6 flex w-full flex-col gap-1 rounded-[10px] bg-input p-1 sm:w-fit sm:flex-row sm:flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab.value}
@@ -283,11 +284,11 @@ export default function ProjectDetailPage() {
               className={[
                 "h-10 w-full min-w-0 rounded-[10px] px-4 text-base transition sm:w-auto sm:min-w-[164px] sm:px-7 sm:text-[20px]",
                 activeTab === tab.value
-                  ? "bg-[#6EA9F4] text-[#F2F4F8] shadow-[0_0_2px_rgba(138,184,255,0.75),0_0_24px_rgba(91,155,255,0.45)]"
-                  : "text-[#6E7588] hover:text-[#B0B6C4]",
+                  ? "bg-[#6ea9f4] text-foreground"
+                  : "text-muted-foreground hover:text-muted-foreground",
               ].join(" ")}
             >
-              {tab.label}
+              {uiText(tab.label)}
             </button>
           ))}
         </div>
@@ -295,34 +296,34 @@ export default function ProjectDetailPage() {
         {activeTab === "overview" ? (
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1000px)_minmax(320px,530px)]">
             <div className="space-y-6">
-              <ProjectCard title="项目概述">
-                <p className="text-sm text-[#B0B6C4]">{project.summary || "暂无描述"}</p>
+              <ProjectCard title={uiText("项目概述")}>
+                <p className="text-sm text-muted-foreground">{project.summary || uiText("暂无描述")}</p>
               </ProjectCard>
 
-              <ProjectCard title="时间节点">
+              <ProjectCard title={uiText("时间节点")}>
                 {timelineItems.length > 0 ? (
                   <div className="space-y-3">
                     {timelineItems.map((item) => (
-                      <HighlightRow key={`${item.label}-${item.value}`} text={`${item.value}    ${item.label}`} />
+                      <HighlightRow key={`${item.label}-${item.value}`} text={`${item.value}    ${uiText(item.label)}`} />
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-[#6E7588]">暂无时间节点</p>
+                  <p className="text-sm text-muted-foreground">{uiText("暂无时间节点")}</p>
                 )}
               </ProjectCard>
 
-              <ProjectCard title="销售管线">
+              <ProjectCard title={uiText("销售管线")}>
                 {pipelines.length > 0 ? (
                   <div className="space-y-4">
                     {pipelines.map((pipeline) => (
                       <div key={pipeline.id}>
-                        <div className="mb-4 flex flex-wrap items-center gap-8 text-[20px] text-[#B0B6C4]">
+                        <div className="mb-4 flex flex-wrap items-center gap-8 text-[20px] text-muted-foreground">
                           <span className="flex items-center gap-2">
-                            <Image src="/img/dollar_g.png" alt="money" width={20} height={20} className="size-4" />
+                            <img src="/img/smart-eye/dollar_g.svg" alt="" />
                             <span>{pipeline.dealAmount || "-"}</span>
                           </span>
-                          <span>概率：{pipeline.probability ?? 50}%</span>
-                          <span>{stageLabels[pipeline.currentStage || ""] || pipeline.currentStage || "-"}</span>
+                          <span>{uiText("概率：")}{pipeline.probability ?? 50}%</span>
+                          <span>{uiText(stageLabels[pipeline.currentStage || ""] || pipeline.currentStage || "-")}</span>
                         </div>
                         {(pipeline.nextAction || pipeline.nextActionDate) ? (
                           <HighlightRow text={`${pipeline.nextActionDate?.slice(0, 10) || "-"}    ${pipeline.nextAction || "-"}`} />
@@ -331,38 +332,38 @@ export default function ProjectDetailPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-[#6E7588]">暂无销售管线记录</p>
+                  <p className="text-sm text-muted-foreground">{uiText("暂无销售管线记录")}</p>
                 )}
               </ProjectCard>
             </div>
 
             <aside className="space-y-6">
-              <ProjectCard title="基本信息" className="lg:min-h-[265px]">
+              <ProjectCard title={uiText("基本信息")} className="lg:min-h-[265px]">
                 <div className="space-y-[18px] text-base">
-                  <InfoRow label="预算" value={project.budgetRange || "-"} />
-                  <InfoRow label="地点" value={project.location || "-"} />
-                  <InfoRow label="采购单位" value={project.buyerName || "-"} />
-                  <InfoRow label="资金来源" value={project.fundingSource || "-"} />
-                  <InfoRow label="AI置信度" value={project.confidenceScore ? `${project.confidenceScore}%` : "-"} />
+                  <InfoRow label={uiText("预算")} value={project.budgetRange || "-"} />
+                  <InfoRow label={uiText("地点")} value={project.location || "-"} />
+                  <InfoRow label={uiText("采购单位")} value={project.buyerName || "-"} />
+                  <InfoRow label={uiText("资金来源")} value={project.fundingSource || "-"} />
+                  <InfoRow label={uiText("AI置信度")} value={project.confidenceScore ? `${project.confidenceScore}%` : "-"} />
                 </div>
               </ProjectCard>
 
-              <ProjectCard title="联系人">
+              <ProjectCard title={uiText("联系人")}>
                 {buyerContact.name || buyerContact.phone || buyerContact.email ? (
                   <div className="space-y-3 text-base">
-                    {buyerContact.name ? <p className="text-[#B0B6C4]">{buyerContact.name}</p> : null}
+                    {buyerContact.name ? <p className="text-muted-foreground">{buyerContact.name}</p> : null}
                     {buyerContact.phone ? 
-                      <p className="flex items-center gap-2 text-[#6E7588]">
-                        <Image src="/img/phone.png" alt="phone" width={20} height={20} className="size-4" />
+                      <p className="flex items-center gap-2 text-muted-foreground">
+                        <img src="/img/smart-eye/phone.svg" alt="" />
                         {buyerContact.phone}
                       </p> 
                       : 
                       null
                     }
-                    {buyerContact.email ? <p className="text-[#6E7588]">{buyerContact.email}</p> : null}
+                    {buyerContact.email ? <p className="text-muted-foreground">{buyerContact.email}</p> : null}
                   </div>
                 ) : (
-                  <p className="text-base text-[#6E7588]">暂无联系人</p>
+                  <p className="text-base text-muted-foreground">{uiText("暂无联系人")}</p>
                 )}
               </ProjectCard>
             </aside>
@@ -374,24 +375,24 @@ export default function ProjectDetailPage() {
             {signals.length > 0 ? signals.map((signal, index) => {
               const extracted = asRecord(parseJson(signal.extractedData));
               return (
-                <ProjectCard key={`${signal.title}-${index}`} title={signal.title || "未命名情报"}>
+                <ProjectCard key={`${signal.title}-${index}`} title={signal.title || uiText("未命名情报")}>
                   <div className="mb-3 flex flex-wrap items-center gap-3">
-                    <span className="rounded-[6px] border border-[rgba(91,155,255,0.45)] px-3 py-1 text-sm text-[#5B9BFF]">{signalLabels[signal.signalType || ""] || signal.signalType || "-"}</span>
-                    <span className="text-sm text-[#6E7588]">{signal.publishDate?.slice(0, 10) || "-"}</span>
-                    <span className="text-sm text-[#6E7588]">来源：{signal.sourceName || "-"}</span>
+                    <span className="rounded-[6px] border border-[rgba(91,155,255,0.45)] px-3 py-1 text-sm text-[#5b9bff]">{uiText(signalLabels[signal.signalType || ""] || signal.signalType || "-")}</span>
+                    <span className="text-sm text-muted-foreground">{signal.publishDate?.slice(0, 10) || "-"}</span>
+                    <span className="text-sm text-muted-foreground">{uiText("来源：")}{signal.sourceName || "-"}</span>
                   </div>
                   {Object.keys(extracted).length > 0 ? (
-                    <div className="rounded-[10px] bg-[#04070D] p-4 text-sm text-[#B0B6C4]">
+                    <div className="rounded-[10px] bg-input p-4 text-sm text-muted-foreground">
                       {Object.entries(extracted).slice(0, 5).map(([key, value]) => (
-                        <div key={key} className="flex gap-2"><span className="text-[#6E7588]">{key}:</span><span>{String(value)}</span></div>
+                        <div key={key} className="flex gap-2"><span className="text-muted-foreground">{key}:</span><span>{String(value)}</span></div>
                       ))}
                     </div>
                   ) : null}
-                  {signal.sourceUrl ? <a href={signal.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex text-sm text-[#5B9BFF]">查看来源</a> : null}
+                  {signal.sourceUrl ? <a href={signal.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex text-sm text-[#5b9bff]">{uiText("查看来源")}</a> : null}
                 </ProjectCard>
               );
             }) : (
-              <ProjectCard title="情报来源"><p className="text-sm text-[#6E7588]">暂无信号数据</p></ProjectCard>
+              <ProjectCard title={uiText("情报来源")}><p className="text-sm text-muted-foreground">{uiText("暂无信号数据")}</p></ProjectCard>
             )}
           </div>
         ) : null}
@@ -399,11 +400,11 @@ export default function ProjectDetailPage() {
         {activeTab === "bidding" ? (
           <div className="grid gap-4 lg:grid-cols-2">
             {bidDocs.map((doc, index) => (
-              <ProjectCard key={`${doc.bidNumber}-${index}`} title={doc.bidPlatform || "招标文件"}>
-                <div className="space-y-2 text-sm text-[#B0B6C4]">
-                  <InfoLine label="编号" value={doc.bidNumber || "-"} />
-                  <InfoLine label="预算" value={doc.budgetAmount || "-"} />
-                  <InfoLine label="截止" value={doc.submissionDeadline || "-"} />
+              <ProjectCard key={`${doc.bidNumber}-${index}`} title={doc.bidPlatform || uiText("招标文件")}>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <InfoLine label={uiText("编号")} value={doc.bidNumber || "-"} />
+                  <InfoLine label={uiText("预算")} value={doc.budgetAmount || "-"} />
+                  <InfoLine label={uiText("截止")} value={doc.submissionDeadline || "-"} />
                   {doc.requirements ? <p>{doc.requirements}</p> : null}
                 </div>
               </ProjectCard>
@@ -417,8 +418,8 @@ export default function ProjectDetailPage() {
 
 function ProjectCard({ title, children, className = "" }: { title: string; children: React.ReactNode; className?: string }) {
   return (
-    <section className={`min-w-0 rounded-[14px] border border-white/[0.06] bg-[#11161F] px-4 py-5 sm:px-[23px] sm:py-[21px] ${className}`}>
-      <h2 className="mb-4 text-[20px] font-medium leading-[26px] text-[#F2F4F8]">{title}</h2>
+    <section className={`min-w-0 rounded-[14px] border border-border bg-card px-4 py-5 sm:px-[23px] sm:py-[21px] ${className}`}>
+      <h2 className="mb-4 text-[20px] font-medium leading-[26px] text-foreground">{title}</h2>
       {children}
     </section>
   );
@@ -426,8 +427,8 @@ function ProjectCard({ title, children, className = "" }: { title: string; child
 
 function HighlightRow({ text }: { text: string }) {
   return (
-    <div className="flex min-h-12 items-center gap-3 rounded-[10px] bg-[rgba(91,155,255,0.14)] px-4 text-base text-[#5B9BFF]">
-      <Image src="/img/node.png" alt="dot" width={16} height={16} className="size-4" />
+    <div className="flex min-h-12 items-center gap-3 rounded-[10px] bg-[rgba(91,155,255,0.14)] px-4 text-base text-[#5b9bff]">
+      <img src="/img/smart-eye/timeline.svg" alt="" />
       <span>{text}</span>
     </div>
   );
@@ -436,12 +437,12 @@ function HighlightRow({ text }: { text: string }) {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-6">
-      <span className="shrink-0 text-[#6E7588]">{label}</span>
-      <span className="text-right text-[#B0B6C4]">{value}</span>
+      <span className="shrink-0 text-muted-foreground">{label}</span>
+      <span className="text-right text-muted-foreground">{value}</span>
     </div>
   );
 }
 
 function InfoLine({ label, value }: { label: string; value: string }) {
-  return <p><span className="text-[#6E7588]">{label}：</span>{value}</p>;
+  return <p><span className="text-muted-foreground">{label}: </span>{value}</p>;
 }

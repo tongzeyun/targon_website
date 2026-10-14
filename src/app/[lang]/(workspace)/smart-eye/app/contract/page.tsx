@@ -1,8 +1,11 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useState, type ReactNode } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { DatePicker } from "@/components/ui/date-picker";
+import { Textarea } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/textarea";
+import { DatePicker } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/date-picker";
 import { toast } from "sonner";
 import { initContractClient, ContractData } from "@/lib/document/contract-template";
 import { JobStatus } from "@/app/[lang]/(workspace)/smart-eye/_components/jobs/job-status";
@@ -10,9 +13,9 @@ import { createApiResponseError } from "@/lib/api/api-error";
 import { authenticatedFetch } from "@/lib/api/authenticated-fetch";
 import { createDocumentJob, downloadDocumentFromJob } from "@/lib/document/document-job-client";
 import { calculateContractAmounts, formatContractCurrency, parseContractTaxRate } from "@/lib/document/contract-amounts";
-import Image from "next/image";
 
 export default function ContractPage() {
+  const uiText = useUiText();
   const [data, setData] = useState<ContractData>(() => initContractClient());
   const [reqText, setReqText] = useState("");
   const [lastAiRunId, setLastAiRunId] = useState<string | null>(null);
@@ -54,7 +57,7 @@ export default function ContractPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "fill-form", requirements: reqText }),
       });
-      if (!res.ok) throw await createApiResponseError(res, "失败");
+      if (!res.ok) throw await createApiResponseError(res, uiText("失败"));
       const filled = (await res.json()) as Partial<ContractData> & { aiRunId?: string };
       const { aiRunId, ...formFields } = filled;
       if (typeof aiRunId === "string" && aiRunId.trim()) setLastAiRunId(aiRunId.trim());
@@ -66,7 +69,7 @@ export default function ContractPage() {
           ? formFields.taxRate
           : prev.taxRate,
       }));
-      toast.success("AI 已填充合同");
+      toast.success(uiText("AI 已填充合同"));
     } catch (e) {
       toast.error((e as Error).message);
     } finally {
@@ -76,7 +79,7 @@ export default function ContractPage() {
 
   const handleDownload = async (format: "docx" | "pdf") => {
     if (parseContractTaxRate(data.taxRate) === null) {
-      toast.error("请输入 0% 到 100% 之间的有效税率");
+      toast.error(uiText("请输入 0% 到 100% 之间的有效税率"));
       return;
     }
     if (format === "pdf") {
@@ -84,7 +87,7 @@ export default function ContractPage() {
       if (!el) return;
       const w = window.open("", "_blank");
       if (!w) {
-        toast.error("请允许弹出窗口");
+        toast.error(uiText("请允许弹出窗口"));
         return;
       }
       w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>销售合同</title>
@@ -105,7 +108,7 @@ export default function ContractPage() {
         aiRunId: lastAiRunId,
       });
       setDocumentJobId(jobId);
-      toast.success("Word 生成任务已创建");
+      toast.success(uiText("Word 生成任务已创建"));
     } catch (e) {
       setDocumentJobPending(false);
       toast.error((e as Error).message);
@@ -116,7 +119,7 @@ export default function ContractPage() {
     setDocumentJobPending(false);
     try {
       await downloadDocumentFromJob(job);
-      toast.success("Word 下载完成");
+      toast.success(uiText("Word 下载完成"));
       setDocumentJobId(null);
     } catch (e) {
       toast.error((e as Error).message);
@@ -124,123 +127,121 @@ export default function ContractPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full flex-col overflow-x-clip px-4 pb-24 pt-24 text-[#E8EDF7] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px] xl:h-[calc(100dvh-64px)] xl:overflow-hidden">
-      <div className="mb-6 flex shrink-0 flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between lg:mb-9">
-        <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[36px]">合同制作</h1>
+    <div className={`${pageStyles.page} ${pageStyles.document}`}>
+      <div className="mb-6 flex shrink-0 flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between lg:mb-8">
+        <h1>{uiText("合同制作")}</h1>
         <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
           <button
             type="button"
             onClick={() => handleDownload("pdf")}
-            className="h-[34px] whitespace-nowrap rounded-[10px] border border-[#202837] bg-[#141922] px-5 text-sm text-[#D8DEEA] transition hover:border-[#35547D]"
+            className="h-[34px] whitespace-nowrap rounded-[10px] border border-border bg-card px-5 text-sm text-foreground transition hover:border-[#35547d]"
           >
-            下载PDF
-          </button>
+            {uiText("下载PDF")}</button>
           <button
             type="button"
             onClick={() => handleDownload("docx")}
             disabled={documentJobPending}
-            className="btn-bg h-[34px] whitespace-nowrap rounded-[10px] px-5 text-sm font-semibold text-[#0A0613] disabled:cursor-not-allowed disabled:opacity-60"
+            className="btn-bg h-[34px] whitespace-nowrap rounded-[10px] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            下载 Word
-          </button>
+            {uiText("下载 Word")}</button>
         </div>
       </div>
 
       {documentJobId && (
-        <div className="mb-4 shrink-0 rounded-[12px] border border-[#202837] bg-[#141922] p-4">
+        <div className="mb-4 shrink-0 rounded-[12px] border border-border bg-card p-4">
           <JobStatus jobId={documentJobId} onDone={handleDocumentJobDone} />
         </div>
       )}
 
-      <div className="grid min-w-0 grid-cols-1 gap-6 xl:min-h-0 xl:flex-1 xl:grid-cols-[minmax(0,614px)_minmax(0,1fr)] xl:gap-9 xl:overflow-hidden">
-        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pr-4">
+      <div className="grid min-w-0 grid-cols-1 gap-6 xl:min-h-0 xl:flex-1 xl:grid-cols-[minmax(0,600px)_minmax(0,1fr)] xl:gap-6 xl:overflow-hidden">
+        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pr-[26px]">
           <div className="space-y-4 pb-8">
-            <Section title="AI辅助填充" icon="/img/star.png">
+            <Section title={uiText("AI辅助填充")} icon="/img/smart-eye/form-star.svg">
               <Textarea
                 value={reqText}
                 onChange={(event) => setReqText(event.target.value)}
-                placeholder="粘贴合同要点，AI自动填充……"
+                placeholder={uiText("粘贴合同要点，AI自动填充……")}
                 rows={3}
-                className="min-h-[92px] resize-none rounded-[8px] border-0 bg-[#070B14] px-4 py-4 text-[18px] leading-7 text-slate-100 placeholder:text-[#8D96A7] focus-visible:ring-[#6FB1FF]/40"
+                className="min-h-[92px] resize-none rounded-[8px] border-0 bg-input px-4 py-4 text-[18px] leading-7 text-foreground placeholder:text-muted-foreground focus-visible:ring-[#6FB1FF]/40"
                 disabled={generating}
               />
               <button
                 type="button"
                 onClick={handleAIFill}
                 disabled={!reqText.trim() || generating}
-                className="mx-auto mt-5 flex h-10 items-center gap-2 rounded-[8px] px-5 text-[16px] text-[#A4ADBD] transition hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                className="mx-auto mt-5 flex h-10 items-center gap-2 rounded-[8px] px-5 text-[16px] text-[#52637a] transition hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <Image src="/img/star_g.png" alt="ai" width={20} height={20} />
-                {generating ? "AI 分析中..." : "AI 自动填充表单"}
+                <img src="/img/smart-eye/star_g.svg" alt="" />
+                {generating ? uiText("AI 分析中...") : uiText("AI 自动填充表单")}
               </button>
             </Section>
 
-            <Section title="合同双方">
+            <Section title={uiText("合同双方")}>
               <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                <Field className="sm:col-span-2" label="甲方（买方）" value={data.partyA} onChange={(v) => update("partyA", v)} placeholder="客户公司全称" />
-                <Field label="甲方联系人" value={data.partyAContact} onChange={(v) => update("partyAContact", v)} />
-                <Field label="甲方电话" value={data.partyAPhone} onChange={(v) => update("partyAPhone", v)} />
-                <Field className="sm:col-span-2" label="甲方地址" value={data.partyAAddress} onChange={(v) => update("partyAAddress", v)} />
+                <Field className="sm:col-span-2" label={uiText("甲方（买方）")} value={data.partyA} onChange={(v) => update("partyA", v)} placeholder={uiText("客户公司全称")} />
+                <Field label={uiText("甲方联系人")} value={data.partyAContact} onChange={(v) => update("partyAContact", v)} />
+                <Field label={uiText("甲方电话")} value={data.partyAPhone} onChange={(v) => update("partyAPhone", v)} />
+                <Field className="sm:col-span-2" label={uiText("甲方地址")} value={data.partyAAddress} onChange={(v) => update("partyAAddress", v)} />
                 <div className="sm:col-span-2 border-t border-[#687286]" />
-                <Field className="sm:col-span-2" label="乙方公司" value={data.partyB} onChange={(v) => update("partyB", v)} placeholder="你的公司全称" />
-                <Field label="乙方联系人" value={data.partyBContact} onChange={(v) => update("partyBContact", v)} />
-                <Field label="乙方电话" value={data.partyBPhone} onChange={(v) => update("partyBPhone", v)} />
-                <Field className="sm:col-span-2" label="乙方地址" value={data.partyBAddress} onChange={(v) => update("partyBAddress", v)} />
+                <Field className="sm:col-span-2" label={uiText("乙方公司")} value={data.partyB} onChange={(v) => update("partyB", v)} placeholder={uiText("你的公司全称")} />
+                <Field label={uiText("乙方联系人")} value={data.partyBContact} onChange={(v) => update("partyBContact", v)} />
+                <Field label={uiText("乙方电话")} value={data.partyBPhone} onChange={(v) => update("partyBPhone", v)} />
+                <Field className="sm:col-span-2" label={uiText("乙方地址")} value={data.partyBAddress} onChange={(v) => update("partyBAddress", v)} />
               </div>
             </Section>
 
-            <Section title="合同信息">
+            <Section title={uiText("合同信息")}>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <Field label="合同编号" value={data.contractNo} onChange={(v) => update("contractNo", v)} placeholder="HT-2026-001" />
-                <Field label="签订日期" value={data.signDate} onChange={(v) => update("signDate", v)} type="date" />
-                <Field label="签订地点" value={data.signPlace} onChange={(v) => update("signPlace", v)} />
+                <Field label={uiText("合同编号")} value={data.contractNo} onChange={(v) => update("contractNo", v)} placeholder="HT-2026-001" />
+                <Field label={uiText("签订日期")} value={data.signDate} onChange={(v) => update("signDate", v)} type="date" />
+                <Field label={uiText("签订地点")} value={data.signPlace} onChange={(v) => update("signPlace", v)} />
               </div>
             </Section>
 
-            <Section title="产品与金额">
+            <Section title={uiText("产品与金额")}>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Field className="sm:col-span-2" label="产品名称" value={data.productName} onChange={(v) => update("productName", v)} />
-                <Field label="规格型号" value={data.productSpec} onChange={(v) => update("productSpec", v)} />
-                <Field label="数量" value={data.quantity} onChange={(v) => update("quantity", Number(v))} type="number" />
-                <Field label="未税单价" value={data.unitPrice} onChange={(v) => update("unitPrice", v)} placeholder="¥285,000/台" />
-                <Field label="税率" value={data.taxRate} onChange={(v) => update("taxRate", v)} placeholder="13%" />
-                <Field label="未税金额" value={data.subtotal} onChange={() => {}} readOnly placeholder="自动计算" />
-                <Field label="税额" value={data.taxAmount} onChange={() => {}} readOnly placeholder="自动计算" />
-                <Field className="sm:col-span-2" label="含税总金额" value={data.totalAmount} onChange={() => {}} readOnly placeholder="自动计算" />
-                <Field className="sm:col-span-2" label="金额大写" value={data.totalAmountCN} onChange={() => {}} readOnly placeholder="自动生成" />
+                <Field className="sm:col-span-2" label={uiText("产品名称")} value={data.productName} onChange={(v) => update("productName", v)} />
+                <Field label={uiText("规格型号")} value={data.productSpec} onChange={(v) => update("productSpec", v)} />
+                <Field label={uiText("数量")} value={data.quantity} onChange={(v) => update("quantity", Number(v))} type="number" />
+                <Field label={uiText("未税单价")} value={data.unitPrice} onChange={(v) => update("unitPrice", v)} placeholder={uiText("¥285,000/台")} />
+                <Field label={uiText("税率")} value={data.taxRate} onChange={(v) => update("taxRate", v)} placeholder="13%" />
+                <Field label={uiText("未税金额")} value={data.subtotal} onChange={() => {}} readOnly placeholder={uiText("自动计算")} />
+                <Field label={uiText("税额")} value={data.taxAmount} onChange={() => {}} readOnly placeholder={uiText("自动计算")} />
+                <Field className="sm:col-span-2" label={uiText("含税总金额")} value={data.totalAmount} onChange={() => {}} readOnly placeholder={uiText("自动计算")} />
+                <Field className="sm:col-span-2" label={uiText("金额大写")} value={data.totalAmountCN} onChange={() => {}} readOnly placeholder={uiText("自动生成")} />
               </div>
             </Section>
 
-            <Section title="合同条款">
+            <Section title={uiText("合同条款")}>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Field label="交货时间" value={data.deliveryTime} onChange={(v) => update("deliveryTime", v)} />
-                <Field label="交货地点" value={data.deliveryPlace} onChange={(v) => update("deliveryPlace", v)} />
-                <Field className="sm:col-span-2" label="付款方式" value={data.paymentTerms} onChange={(v) => update("paymentTerms", v)} />
-                <Field label="质保期" value={data.warranty} onChange={(v) => update("warranty", v)} />
-                <Field className="sm:col-span-2" label="违约责任" value={data.penaltyClause} onChange={(v) => update("penaltyClause", v)} />
-                <Field className="sm:col-span-2" label="争议解决" value={data.disputeResolution} onChange={(v) => update("disputeResolution", v)} />
+                <Field label={uiText("交货时间")} value={data.deliveryTime} onChange={(v) => update("deliveryTime", v)} />
+                <Field label={uiText("交货地点")} value={data.deliveryPlace} onChange={(v) => update("deliveryPlace", v)} />
+                <Field className="sm:col-span-2" label={uiText("付款方式")} value={data.paymentTerms} onChange={(v) => update("paymentTerms", v)} />
+                <Field label={uiText("质保期")} value={data.warranty} onChange={(v) => update("warranty", v)} />
+                <Field className="sm:col-span-2" label={uiText("违约责任")} value={data.penaltyClause} onChange={(v) => update("penaltyClause", v)} />
+                <Field className="sm:col-span-2" label={uiText("争议解决")} value={data.disputeResolution} onChange={(v) => update("disputeResolution", v)} />
               </div>
             </Section>
 
-            <Section title="常规条款">
+            <Section title={uiText("常规条款")}>
               <Textarea
                 value={data.clauses}
                 onChange={(event) => update("clauses", event.target.value)}
                 rows={5}
-                className="resize-y rounded-[8px] border border-transparent bg-[#070B14] px-4 py-3 text-[16px] leading-7 text-slate-100 focus-visible:ring-[#6FB1FF]/40"
+                className="resize-y rounded-[8px] border border-transparent bg-input px-4 py-3 text-[16px] leading-7 text-foreground focus-visible:ring-[#6FB1FF]/40"
               />
             </Section>
 
-            <Section title="备注">
-              <Field label="" value={data.remarks} onChange={(v) => update("remarks", v)} placeholder="补充说明" />
+            <Section title={uiText("备注")}>
+              <Field label="" value={data.remarks} onChange={(v) => update("remarks", v)} placeholder={uiText("补充说明")} />
             </Section>
           </div>
         </div>
 
-        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pl-8">
-          <div className="contract-preview rounded-[14px] border border-[#202837] bg-[#141922] px-6 py-8 text-[#A4ADBD]">
-            <h2 className="mb-7 text-center text-[30px] font-bold text-white">销售合同</h2>
-            <p className="mb-6 text-[16px] text-[#687286]">
+        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pr-[10px]">
+          <div className="contract-preview rounded-[14px] border border-border bg-card px-6 py-8 text-[#52637a]">
+            <h2 className="mb-7 text-center text-[30px] font-bold text-foreground">销售合同</h2>
+            <p className="mb-6 text-[16px] text-muted-foreground">
               编号：{data.contractNo || "—"} | 日期：{data.signDate || "—"} | 地点：{data.signPlace || "—"}
             </p>
 
@@ -258,12 +259,12 @@ export default function ContractPage() {
               <table className="w-full min-w-[620px] border-collapse text-[16px]">
                 <thead>
                   <tr>
-                    <th className="border border-[#687286] p-3 text-center text-white">#</th>
-                    <th className="border border-[#687286] p-3 text-center text-white">产品名称</th>
-                    <th className="border border-[#687286] p-3 text-center text-white">规格型号</th>
-                    <th className="border border-[#687286] p-3 text-center text-white">数量</th>
-                    <th className="border border-[#687286] p-3 text-center text-white">未税单价（元）</th>
-                    <th className="border border-[#687286] p-3 text-center text-white">含税总价（元）</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">#</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">产品名称</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">规格型号</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">数量</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">未税单价（元）</th>
+                    <th className="border border-[#687286] p-3 text-center text-foreground">含税总价（元）</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -281,7 +282,7 @@ export default function ContractPage() {
               <div className="space-y-1 text-right">
                 <p>未税金额：{data.subtotal || "—"}</p>
                 <p>税率：{data.taxRate || "—"}　税额：{data.taxAmount || "—"}</p>
-                <p className="text-[18px] font-bold text-white">合同含税总金额：{data.totalAmount || "—"}</p>
+                <p className="text-[18px] font-bold text-foreground">合同含税总金额：{data.totalAmount || "—"}</p>
                 <p>大写：{data.totalAmountCN || "—"}</p>
               </div>
 
@@ -306,11 +307,11 @@ export default function ContractPage() {
                   <p key={`${clause}-${index}`}>{clause}</p>
                 ))}
               </div>
-              {data.remarks && <p className="text-[#687286]">备注：{data.remarks}</p>}
+              {data.remarks && <p className="text-muted-foreground">备注：{data.remarks}</p>}
 
               <div className="mt-10 grid grid-cols-1 gap-6 border-t border-[#687286] pt-5 sm:grid-cols-2 sm:gap-8">
-                <div><p>甲方（盖章）：________________</p><p className="mt-1 text-[#687286]">日期：________________</p></div>
-                <div><p>乙方（盖章）：________________</p><p className="mt-1 text-[#687286]">日期：________________</p></div>
+                <div><p>甲方（盖章）：________________</p><p className="mt-1 text-muted-foreground">日期：________________</p></div>
+                <div><p>乙方（盖章）：________________</p><p className="mt-1 text-muted-foreground">日期：________________</p></div>
               </div>
             </div>
           </div>
@@ -322,9 +323,9 @@ export default function ContractPage() {
 
 function Section({ title, icon, children }: { title: string; icon?: string; children: ReactNode }) {
   return (
-    <section className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-4 sm:p-6">
-      <h2 className="mb-5 flex items-center gap-2 text-[18px] font-semibold text-white sm:mb-7 sm:text-[20px]">
-        {icon && <Image src={icon} alt="sparkle" width={20} height={20} />}
+    <section className="min-w-0 rounded-[14px] border border-border bg-card p-4 sm:p-6">
+      <h2 className="mb-5 flex items-center gap-2 text-[18px] font-semibold text-foreground sm:mb-7 sm:text-[20px]">
+        {icon && <img src={icon} alt="" />}
         {title}
       </h2>
       {children}
@@ -351,14 +352,14 @@ function Field({
 }) {
   return (
     <label className={`min-w-0 ${className}`}>
-      {label && <span className="mb-2 block text-[16px] text-[#687286]">{label}</span>}
+      {label && <span className="mb-2 block text-[16px] text-muted-foreground">{label}</span>}
       {type === "date" ? (
         <DatePicker
           value={String(value ?? "")}
           onChange={onChange}
           placeholder={placeholder}
           disabled={readOnly}
-          className="h-[42px] border-transparent bg-[#070B14] px-4 text-[17px] focus-visible:border-[#6FB1FF]"
+          className="h-[42px] border-transparent bg-input px-4 text-[17px] focus-visible:border-[#6fb1ff]"
         />
       ) : (
         <input
@@ -367,7 +368,7 @@ function Field({
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           readOnly={readOnly}
-          className="h-[42px] w-full min-w-0 rounded-[8px] border border-transparent bg-[#070B14] px-4 text-[17px] text-slate-100 outline-none placeholder:text-[#687286] focus:border-[#6FB1FF] read-only:cursor-default read-only:text-[#A4ADBD]"
+          className="h-[42px] w-full min-w-0 rounded-[8px] border border-transparent bg-input px-4 text-[17px] text-foreground outline-none placeholder:text-muted-foreground focus:border-[#6fb1ff] read-only:cursor-default read-only:text-[#52637a]"
         />
       )}
     </label>
@@ -375,7 +376,7 @@ function Field({
 }
 
 function ArticleTitle({ children }: { children: ReactNode }) {
-  return <p className="font-bold text-white">{children}</p>;
+  return <p className="font-bold text-foreground">{children}</p>;
 }
 
 function numberToChinese(n: number): string {

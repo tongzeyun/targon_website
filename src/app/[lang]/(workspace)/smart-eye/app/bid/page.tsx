@@ -1,8 +1,11 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { DateTimePicker } from "@/components/ui/date-picker";
+import { Textarea } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/textarea";
+import { DateTimePicker } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/date-picker";
 import { toast } from "sonner";
 import { JobStatus } from "@/app/[lang]/(workspace)/smart-eye/_components/jobs/job-status";
 import { createApiResponseError } from "@/lib/api/api-error";
@@ -16,7 +19,6 @@ import {
   type BidSection,
   type BidTemplateSource,
 } from "@/lib/document/bid-document-model";
-import Image from "next/image";
 
 const BID_FILE_EXTENSIONS = [".docx", ".pdf", ".txt"];
 const TEMPLATE_FILE_EXTENSIONS = [".docx"];
@@ -43,6 +45,7 @@ interface BidResult {
 }
 
 export default function BidPage() {
+  const uiText = useUiText();
   const [bidFile, setBidFile] = useState<File | null>(null);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
   const [companyInfo, setCompanyInfo] = useState("");
@@ -126,11 +129,11 @@ export default function BidPage() {
 
   const selectBidFile = (file: File | null): boolean => {
     if (file && !isSupportedBidFile(file)) {
-      toast.error("仅支持 DOCX、PDF、TXT 格式");
+      toast.error(uiText("仅支持 DOCX、PDF、TXT 格式"));
       return false;
     }
     if (file && uploadExceedsLimit(file, MAX_BID_UPLOAD_BYTES)) {
-      toast.error(`招标文件不能超过 ${MAX_BID_UPLOAD_MB} MB`);
+      toast.error(uiText("招标文件不能超过 {0} MB", { 0: MAX_BID_UPLOAD_MB }));
       return false;
     }
 
@@ -142,11 +145,11 @@ export default function BidPage() {
 
   const selectTemplateFile = (file: File | null): boolean => {
     if (file && !TEMPLATE_FILE_EXTENSIONS.some((extension) => file.name.toLowerCase().endsWith(extension))) {
-      toast.error("投标模板仅支持 DOCX 格式");
+      toast.error(uiText("投标模板仅支持 DOCX 格式"));
       return false;
     }
     if (file && uploadExceedsLimit(file, MAX_BID_UPLOAD_BYTES)) {
-      toast.error(`投标模板不能超过 ${MAX_BID_UPLOAD_MB} MB`);
+      toast.error(uiText("投标模板不能超过 {0} MB", { 0: MAX_BID_UPLOAD_MB }));
       return false;
     }
 
@@ -196,11 +199,11 @@ export default function BidPage() {
       if (templateFile) fd.append("templateFile", templateFile);
       fd.append("companyInfo", companyInfo);
       const res = await authenticatedFetch("/api/documents/bid", { method: "POST", body: fd });
-      if (!res.ok) throw await createApiResponseError(res, "分析失败");
+      if (!res.ok) throw await createApiResponseError(res, uiText("分析失败"));
       const data = (await res.json().catch(() => ({}))) as { jobId?: unknown };
-      if (!data.jobId || typeof data.jobId !== "string") throw new Error("分析任务未创建");
+      if (!data.jobId || typeof data.jobId !== "string") throw new Error(uiText("分析任务未创建"));
       setAnalyzeJobId(data.jobId);
-      toast.success("分析任务已创建");
+      toast.success(uiText("分析任务已创建"));
     } catch (e) {
       setAnalyzing(false);
       toast.error((e as Error).message);
@@ -215,14 +218,14 @@ export default function BidPage() {
       resultJson?: BidResult | null;
     };
     if (done.status === "failed") {
-      toast.error(done.errorMessage || "分析失败");
+      toast.error(done.errorMessage || uiText("分析失败"));
       setAnalyzeJobId(null);
       return;
     }
     if (done.resultJson) {
       setResult(done.resultJson);
       setActiveChapterIndex(0);
-      toast.success("标书已生成，请在右侧编辑补充");
+      toast.success(uiText("标书已生成，请在右侧编辑补充"));
     }
     setAnalyzeJobId(null);
   };
@@ -242,7 +245,7 @@ export default function BidPage() {
         templateStoredFileId: result.templateStoredFileId ?? null,
       });
       setDocumentJobId(jobId);
-      toast.success("Word 生成任务已创建");
+      toast.success(uiText("Word 生成任务已创建"));
     } catch (e) {
       setDocumentJobPending(false);
       toast.error((e as Error).message);
@@ -253,7 +256,7 @@ export default function BidPage() {
     setDocumentJobPending(false);
     try {
       await downloadDocumentFromJob(job);
-      toast.success("Word 下载完成");
+      toast.success(uiText("Word 下载完成"));
       setDocumentJobId(null);
     } catch (e) {
       toast.error((e as Error).message);
@@ -263,46 +266,45 @@ export default function BidPage() {
   const missingCount = result ? countMissingBidFields(result.sections) : 0;
 
   return (
-    <div className="flex min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full flex-col overflow-x-clip px-4 pb-24 pt-24 text-[#E8EDF7] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px] xl:h-[calc(100dvh-64px)] xl:overflow-hidden">
-      <div className="mb-6 flex shrink-0 flex-col items-stretch gap-4 sm:flex-row sm:items-start sm:justify-between lg:mb-9">
+    <div className={`${pageStyles.page} ${pageStyles.document}`}>
+      <div className="mb-6 flex shrink-0 flex-col items-stretch gap-4 sm:flex-row sm:items-start sm:justify-between lg:mb-8">
         <div>
-          <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[36px]">标书制作</h1>
-          {result?.formatRequirements && <p className="mt-2 text-sm text-[#687286]">格式：{result.formatRequirements}</p>}
+          <h1>{uiText("标书制作")}</h1>
+          {result?.formatRequirements && <p className="mt-2 text-sm text-muted-foreground">{uiText("格式：")}{result.formatRequirements}</p>}
           {result?.generationWarnings?.map((warning) => (
-            <p key={warning} className="mt-1 text-sm text-[#F6BE5B]">提示：{warning}</p>
+            <p key={warning} className="mt-1 text-sm text-[#f6be5b]">{uiText("提示：")}{warning}</p>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
-          {result && missingCount > 0 && <span className="text-sm text-[#F6BE5B]">{missingCount}项待填写</span>}
+          {result && missingCount > 0 && <span className="text-sm text-[#f6be5b]">{missingCount}{uiText("项待填写")}</span>}
           {result && (
             <button
               type="button"
               onClick={handleDownload}
               disabled={documentJobPending}
-              className="btn-bg h-[34px] whitespace-nowrap rounded-[10px] px-5 text-sm font-semibold text-[#0A0613] disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn-bg h-[34px] whitespace-nowrap rounded-[10px] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
             >
-              下载 Word
-            </button>
+              {uiText("下载 Word")}</button>
           )}
         </div>
       </div>
 
       {analyzeJobId && (
-        <div className="mb-4 shrink-0 rounded-[12px] border border-[#202837] bg-[#141922] p-4">
+        <div className="mb-4 shrink-0 rounded-[12px] border border-border bg-card p-4">
           <JobStatus jobId={analyzeJobId} onDone={handleAnalyzeJobDone} />
         </div>
       )}
 
       {documentJobId && (
-        <div className="mb-4 shrink-0 rounded-[12px] border border-[#202837] bg-[#141922] p-4">
+        <div className="mb-4 shrink-0 rounded-[12px] border border-border bg-card p-4">
           <JobStatus jobId={documentJobId} onDone={handleDocumentJobDone} />
         </div>
       )}
 
-      <div className="grid min-w-0 grid-cols-1 gap-6 xl:min-h-0 xl:flex-1 xl:grid-cols-[clamp(420px,34vw,614px)_minmax(0,1fr)] xl:overflow-hidden">
-        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pr-4">
+      <div className="grid min-w-0 grid-cols-1 gap-6 xl:min-h-0 xl:flex-1 xl:grid-cols-[minmax(0,600px)_minmax(0,1fr)] xl:overflow-hidden">
+        <div className="min-w-0 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto xl:pr-[26px]">
           <div className="space-y-7 pb-8">
-            <Section title="1.上传招标文件">
+            <Section title={uiText("1.上传招标文件")}>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -326,19 +328,17 @@ export default function BidPage() {
                 onDragLeave={() => setDragOver(false)}
                 onDrop={handleFileDrop}
                 disabled={analyzing}
-                className={`flex h-[254px] w-full flex-col items-center justify-center rounded-[8px] text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${
-                  dragOver
-                    ? "bg-[#0A1424] ring-1 ring-[#6FB1FF]"
-                    : "bg-[#070B14] hover:bg-[#0A101C]"
-                }`}
+                className={`flex h-[254px] w-full flex-col items-center justify-center rounded-[8px] text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${dragOver
+                    ? "bg-accent ring-1 ring-[#6FB1FF]"
+                    : "bg-input hover:bg-accent"}`}
               >
-                <Image src="/img/upload.png" alt="upload" width={48} height={48} />
-                <span className="mt-7 text-[22px] text-[#D8DEEA]">{bidFile ? bidFile.name : "上传招标文件"}</span>
-                <span className="mt-3 text-[17px] leading-7 text-[#687286]">AI将按招标文件格式生成标书</span>
-                <span className="text-[17px] leading-7 text-[#687286]">
-                  建议不超过{RECOMMENDED_BID_UPLOAD_MB}MB · 最大{MAX_BID_UPLOAD_MB}MB
+                <img src="/img/smart-eye/upload.svg" alt="" />
+                <span className="mt-7 text-[22px] text-foreground">{bidFile ? bidFile.name : uiText("上传招标文件")}</span>
+                <span className="mt-3 text-[17px] leading-7 text-muted-foreground">{uiText("AI将按招标文件格式生成标书")}</span>
+                <span className="text-[17px] leading-7 text-muted-foreground">
+                  {uiText("建议不超过")}{RECOMMENDED_BID_UPLOAD_MB}{uiText("MB · 最大")}{MAX_BID_UPLOAD_MB}MB
                 </span>
-                <span className="text-[14px] leading-6 text-[#566176]">文件越大，AI分析和生成耗时越长</span>
+                <span className="text-[14px] leading-6 text-[#566176]">{uiText("文件越大，AI分析和生成耗时越长")}</span>
               </button>
               {bidFile && (
                 <button
@@ -347,14 +347,13 @@ export default function BidPage() {
                     selectBidFile(null);
                     if (fileInputRef.current) fileInputRef.current.value = "";
                   }}
-                  className="mt-3 text-sm text-[#687286] transition hover:text-white"
+                  className="mt-3 text-sm text-muted-foreground transition hover:text-foreground"
                 >
-                  清除文件
-                </button>
+                  {uiText("清除文件")}</button>
               )}
             </Section>
 
-            <Section title="2.上传投标模板（可选）">
+            <Section title={uiText("2.上传投标模板（可选）")}>
               <input
                 ref={templateFileInputRef}
                 type="file"
@@ -378,21 +377,18 @@ export default function BidPage() {
                 onDragLeave={() => setTemplateDragOver(false)}
                 onDrop={handleTemplateFileDrop}
                 disabled={analyzing}
-                className={`flex min-h-[176px] w-full flex-col items-center justify-center rounded-[8px] px-5 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${
-                  templateDragOver
-                    ? "bg-[#0A1424] ring-1 ring-[#6FB1FF]"
-                    : "bg-[#070B14] hover:bg-[#0A101C]"
-                }`}
+                className={`flex min-h-[176px] w-full flex-col items-center justify-center rounded-[8px] px-5 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${templateDragOver
+                    ? "bg-accent ring-1 ring-[#6FB1FF]"
+                    : "bg-input hover:bg-accent"}`}
               >
-                <Image src="/img/upload.png" alt="upload template" width={40} height={40} />
-                <span className="mt-4 max-w-full truncate text-[19px] text-[#D8DEEA]">
-                  {templateFile ? templateFile.name : "上传投标模板（DOCX）"}
+                <img src="/img/smart-eye/upload.svg" alt="" />
+                <span className="mt-4 max-w-full truncate text-[19px] text-foreground">
+                  {templateFile ? templateFile.name : uiText("上传投标模板（DOCX）")}
                 </span>
-                <span className="mt-2 text-[15px] leading-6 text-[#687286]">
-                  招标 DOCX 已包含模板时无需上传；未包含且未上传时使用系统默认模板
-                </span>
+                <span className="mt-2 text-[15px] leading-6 text-muted-foreground">
+                  {uiText("招标 DOCX 已包含模板时无需上传；未包含且未上传时使用系统默认模板")}</span>
                 <span className="text-[14px] leading-6 text-[#566176]">
-                  建议不超过{RECOMMENDED_TEMPLATE_UPLOAD_MB}MB · 最大{MAX_BID_UPLOAD_MB}MB
+                  {uiText("建议不超过")}{RECOMMENDED_TEMPLATE_UPLOAD_MB}{uiText("MB · 最大")}{MAX_BID_UPLOAD_MB}MB
                 </span>
               </button>
               {templateFile && (
@@ -402,41 +398,40 @@ export default function BidPage() {
                     selectTemplateFile(null);
                     if (templateFileInputRef.current) templateFileInputRef.current.value = "";
                   }}
-                  className="mt-3 text-sm text-[#687286] transition hover:text-white"
+                  className="mt-3 text-sm text-muted-foreground transition hover:text-foreground"
                 >
-                  清除模板
-                </button>
+                  {uiText("清除模板")}</button>
               )}
             </Section>
 
-            <Section title="3.我方信息">
+            <Section title={uiText("3.我方信息")}>
               <Textarea
                 value={companyInfo}
                 onChange={(event) => setCompanyInfo(event.target.value)}
-                placeholder="粘贴合同要点，AI自动填充……"
+                placeholder={uiText("粘贴合同要点，AI自动填充……")}
                 rows={3}
-                className="min-h-[90px] resize-y rounded-[8px] border-0 bg-[#070B14] px-4 py-4 text-[18px] leading-7 text-slate-100 placeholder:text-[#8D96A7] focus-visible:ring-[#6FB1FF]/40"
+                className="min-h-[90px] resize-y rounded-[8px] border-0 bg-input px-4 py-4 text-[18px] leading-7 text-foreground placeholder:text-muted-foreground focus-visible:ring-[#6FB1FF]/40"
                 disabled={analyzing}
               />
               <button
                 type="button"
                 onClick={handleAnalyze}
                 disabled={!bidFile || analyzing}
-                className="btn-bg mt-4 h-[45px] w-full rounded-[9px] text-[18px] font-semibold text-[#0A0613] disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn-bg mt-4 h-[45px] w-full rounded-[9px] text-[18px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {analyzing ? "AI 分析招标文件..." : "AI分析并制成标书"}
+                {analyzing ? uiText("AI 分析招标文件...") : uiText("AI分析并制成标书")}
               </button>
             </Section>
 
             {result && (
-              <Section title="4.编辑补充">
+              <Section title={uiText("4.编辑补充")}>
                 <div className="space-y-4">
-                  <Field label="项目名称" value={result.projectName} onChange={(value) => setResult({ ...result, projectName: value })} />
-                  <Field label="投标截止日期" value={result.bidDeadline} onChange={(value) => setResult({ ...result, bidDeadline: value })} dateTime />
+                  <Field label={uiText("项目名称")} value={result.projectName} onChange={(value) => setResult({ ...result, projectName: value })} />
+                  <Field label={uiText("投标截止日期")} value={result.bidDeadline} onChange={(value) => setResult({ ...result, bidDeadline: value })} dateTime />
                   {result.sections.map((section, index) => (
                     <div key={section.id} className="block">
-                      <span className="mb-2 block text-[16px] font-medium text-[#A4ADBD]">{section.title}</span>
-                      {section.missingInfo && <p className="mb-2 text-sm text-[#F6BE5B]">待填写：{section.missingInfo}</p>}
+                      <span className="mb-2 block text-[16px] font-medium text-[#52637a]">{section.title}</span>
+                      {section.missingInfo && <p className="mb-2 text-sm text-[#f6be5b]">{uiText("待填写：")}{section.missingInfo}</p>}
                       <div className="space-y-3">
                         {section.blocks.map((block, blockIndex) => (
                           <BidBlockEditor
@@ -459,14 +454,11 @@ export default function BidPage() {
           </div>
         </div>
 
-        <div className="min-w-0 xl:min-h-0 xl:pl-2">
-          <div className="grid min-w-0 grid-cols-1 gap-4 xl:h-full xl:min-h-0 xl:grid-cols-[clamp(168px,14vw,220px)_minmax(0,1fr)]">
-            <aside className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-4 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto">
-              <h2 className="mb-4 text-[17px] font-semibold text-white">完整章节</h2>
-              {!result ? (
-                <p className="text-sm leading-6 text-[#687286]">分析完成后展示模板的全部章节。</p>
-              ) : (
-                <nav className="space-y-1" aria-label="投标文件章节">
+        <div className="min-w-0 xl:min-h-0 xl:pr-[10px]">
+          <div className={`grid min-w-0 grid-cols-1 gap-4 xl:h-full xl:min-h-0 ${result ? "xl:grid-cols-[clamp(168px,14vw,220px)_minmax(0,1fr)]" : ""}`}>
+            {result && <aside className="min-w-0 rounded-[14px] border border-border bg-card p-4 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto">
+              <h2 className="mb-4 text-[17px] font-semibold text-foreground">{uiText("完整章节")}</h2>
+              <nav className="space-y-1" aria-label={uiText("投标文件章节")}>
                   {result.sections.map((section, index) => {
                     const needsInput = sectionNeedsInput(section);
                     return (
@@ -480,45 +472,42 @@ export default function BidPage() {
                             block: "start",
                           });
                         }}
-                        className={`flex w-full items-start gap-2 rounded-[8px] px-2.5 py-2 text-left text-sm leading-5 transition ${
-                          activeChapterIndex === index
-                            ? "bg-[#243044] text-white"
-                            : "text-[#A4ADBD] hover:bg-[#1A2230] hover:text-white"
-                        }`}
+                        className={`flex w-full items-start gap-2 rounded-[8px] px-2.5 py-2 text-left text-sm leading-5 transition ${activeChapterIndex === index
+                            ? "bg-accent text-white"
+                            : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
                       >
-                        <span className="w-5 shrink-0 text-[#687286]">{index + 1}.</span>
+                        <span className="w-5 shrink-0 text-muted-foreground">{index + 1}.</span>
                         <span className="min-w-0 flex-1 break-words">{section.title}</span>
                         <span
                           className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${needsInput ? "bg-[#F6BE5B]" : "bg-[#52C98A]"}`}
-                          title={needsInput ? "待补充" : "已生成"}
+                          title={needsInput ? uiText("待补充") : uiText("已生成")}
                         />
                       </button>
                     );
                   })}
-                </nav>
-              )}
-            </aside>
+              </nav>
+            </aside>}
 
-            <div className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-4 sm:p-6 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto">
+            <div className="min-w-0 rounded-[14px] border border-border bg-card p-4 sm:p-6 xl:min-h-0 xl:overflow-x-hidden xl:overflow-y-auto">
             {!result ? (
-              <div className="flex h-full min-h-[520px] items-center justify-center text-center text-[#A4ADBD]">
+              <div className="flex h-full min-h-[520px] items-center justify-center text-center text-[#52637a]">
                 <div>
-                  <Image className="mx-auto" src="/img/file.png" alt="file" width={48} height={48} />
-                  <p className="mt-5 text-[22px]">上传招标文件</p>
-                  <p className="mt-3 text-[20px] leading-8">AI将按照招标文件中的格式要求</p>
-                  <p className="text-[20px] leading-8">自动生成投标响应文件</p>
+                  <img className="mx-auto" src="/img/smart-eye/file.svg" alt="" />
+                  <p className="mt-5 text-[22px]">{uiText("上传招标文件")}</p>
+                  <p className="mt-3 text-[20px] leading-8">{uiText("AI将按照招标文件中的格式要求")}</p>
+                  <p className="text-[20px] leading-8">{uiText("自动生成投标响应文件")}</p>
                 </div>
               </div>
             ) : (
-              <div className="bid-preview text-[16px] leading-8 text-[#A4ADBD]">
-                <h2 className="mb-2 text-center text-[30px] font-bold text-white">投 标 文 件</h2>
+              <div className="bid-preview text-[16px] leading-8 text-[#52637a]">
+                <h2 className="mb-2 text-center text-[30px] font-bold text-foreground">投 标 文 件</h2>
                 {result.bidUnit && <p className="text-center">致：{result.bidUnit}</p>}
                 <p className="text-center">项目：{result.projectName || "—"}</p>
-                <p className="mb-8 text-center text-[#687286]">截止日期：{result.bidDeadline || "—"}</p>
+                <p className="mb-8 text-center text-muted-foreground">截止日期：{result.bidDeadline || "—"}</p>
                 {result.sections.map((section, index) => (
                   <section id={`bid-chapter-${index}`} key={section.id} className="mb-6 scroll-mt-6">
-                    <h3 className="mb-2 text-[20px] font-bold text-white">{section.title}</h3>
-                    {section.missingInfo && <p className="mb-2 rounded-[6px] bg-[#3B2E14] px-3 py-1 text-sm text-[#F6BE5B]">待填写：{section.missingInfo}</p>}
+                    <h3 className="mb-2 text-[20px] font-bold text-foreground">{section.title}</h3>
+                    {section.missingInfo && <p className="mb-2 rounded-[6px] bg-[#f6be5b]/15 px-3 py-1 text-sm text-[#f6be5b]">待填写：{section.missingInfo}</p>}
                     <div className="space-y-3">
                       {section.blocks.map((block) => <BidBlockPreview key={block.id} block={block} />)}
                     </div>
@@ -526,7 +515,7 @@ export default function BidPage() {
                 ))}
                 <div className="mt-10 border-t border-[#687286] pt-5 text-[16px]">
                   <p>投标人（盖章）：________________</p>
-                  <p className="mt-1 text-[#687286]">授权代表签字：________________　　日期：________________</p>
+                  <p className="mt-1 text-muted-foreground">授权代表签字：________________　　日期：________________</p>
                 </div>
               </div>
             )}
@@ -540,8 +529,8 @@ export default function BidPage() {
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-4 sm:p-7">
-      <h2 className="mb-5 text-[18px] font-semibold text-white sm:mb-8 sm:text-[20px]">{title}</h2>
+    <section className="min-w-0 rounded-[14px] border border-border bg-card p-4 sm:p-7">
+      <h2 className="mb-5 text-[18px] font-semibold text-foreground sm:mb-8 sm:text-[20px]">{title}</h2>
       {children}
     </section>
   );
@@ -550,18 +539,18 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 function Field({ label, value, onChange, dateTime = false }: { label: string; value: string; onChange: (value: string) => void; dateTime?: boolean }) {
   return (
     <label className="block min-w-0">
-      <span className="mb-2 block text-[16px] text-[#687286]">{label}</span>
+      <span className="mb-2 block text-[16px] text-muted-foreground">{label}</span>
       {dateTime ? (
         <DateTimePicker
           value={value ?? ""}
           onChange={onChange}
-          className="h-[42px] border-transparent bg-[#070B14] px-4 text-[17px] focus-visible:border-[#6FB1FF]"
+          className="h-[42px] border-transparent bg-input px-4 text-[17px] focus-visible:border-[#6fb1ff]"
         />
       ) : (
         <input
           value={value ?? ""}
           onChange={(event) => onChange(event.target.value)}
-          className="h-[42px] w-full min-w-0 rounded-[8px] border border-transparent bg-[#070B14] px-4 text-[17px] text-slate-100 outline-none focus:border-[#6FB1FF]"
+          className="h-[42px] w-full min-w-0 rounded-[8px] border border-transparent bg-input px-4 text-[17px] text-foreground outline-none focus:border-[#6fb1ff]"
         />
       )}
     </label>
@@ -595,22 +584,22 @@ function BidBlockEditor({
   onAddRow: () => void;
   onRemoveRow: (rowIndex: number) => void;
 }) {
+  const uiText = useUiText();
   if (block.type === "paragraph") {
     return (
       <Textarea
         value={block.text}
         onChange={(event) => onParagraphChange(event.target.value)}
         rows={4}
-        className="resize-y rounded-[8px] border border-transparent bg-[#070B14] px-4 py-3 text-[16px] leading-7 text-slate-100 focus-visible:ring-[#6FB1FF]/40"
+        className="resize-y rounded-[8px] border border-transparent bg-input px-4 py-3 text-[16px] leading-7 text-foreground focus-visible:ring-[#6FB1FF]/40"
       />
     );
   }
   if (block.type === "page_break") {
     return (
-      <div className="flex items-center gap-3 py-1 text-xs text-[#687286]" aria-label="分页符">
-        <span className="h-px flex-1 bg-[#293244]" />
-        分页
-        <span className="h-px flex-1 bg-[#293244]" />
+      <div className="flex items-center gap-3 py-1 text-xs text-muted-foreground" aria-label={uiText("分页符")}>
+        <span className="h-px flex-1 bg-border" />
+        {uiText("分页")}<span className="h-px flex-1 bg-border" />
       </div>
     );
   }
@@ -618,8 +607,8 @@ function BidBlockEditor({
   const canModifyRows = block.allowAddRows !== false;
 
   return (
-    <div className="min-w-0 rounded-[8px] border border-[#293244] bg-[#090E18] p-3">
-      {block.title && <p className="mb-3 text-sm font-medium text-white">{block.title}</p>}
+    <div className="min-w-0 rounded-[8px] border border-border bg-input p-3">
+      {block.title && <p className="mb-3 text-sm font-medium text-foreground">{block.title}</p>}
       <div className="max-w-full overflow-x-auto overscroll-x-contain">
         <table
           className="border-collapse text-left text-sm"
@@ -628,13 +617,13 @@ function BidBlockEditor({
           <thead>
             <tr>
               {block.columns.map((column) => (
-                <th key={column.key} className="border border-[#354055] bg-[#1D2635] px-2 py-2 font-medium text-[#DCE3EF]">
+                <th key={column.key} className="border border-border bg-secondary px-2 py-2 font-medium text-foreground">
                   {column.title}
-                  {column.readOnly && <span className="ml-1 text-[11px] font-normal text-[#8290A6]">原文</span>}
+                  {column.readOnly && <span className="ml-1 text-[11px] font-normal text-muted-foreground">{uiText("原文")}</span>}
                 </th>
               ))}
               {canModifyRows && (
-                <th className="w-16 border border-[#354055] bg-[#1D2635] px-2 py-2 text-center font-medium text-[#DCE3EF]">操作</th>
+                <th className="w-16 border border-border bg-secondary px-2 py-2 text-center font-medium text-foreground">{uiText("操作")}</th>
               )}
             </tr>
           </thead>
@@ -644,34 +633,31 @@ function BidBlockEditor({
                 {block.columns.map((column) => {
                   const cell = row.cells[column.key];
                   return (
-                    <td key={column.key} className="border border-[#354055] p-1 align-top">
+                    <td key={column.key} className="border border-border p-1 align-top">
                       <textarea
                         value={cell?.value || ""}
                         onChange={(event) => onCellChange(rowIndex, column.key, event.target.value)}
                         readOnly={column.readOnly}
                         placeholder={cell?.missingInfo
-                          ? `待填写：${cell.missingInfo}`
-                          : column.required ? `待填写：${column.title}` : "可选"}
-                        aria-label={`${block.title || "表格"}-${column.title}-第${rowIndex + 1}行`}
-                        className={`min-h-20 w-full resize-y rounded px-2 py-2 leading-5 outline-none ${
-                          column.readOnly
-                            ? "cursor-default bg-[#111926] text-[#AEB9CA]"
-                            : "bg-[#070B14] text-slate-100 focus:ring-1 focus:ring-[#6FB1FF]"
-                        } placeholder:text-[#B54D59]`}
+                          ? uiText("待填写：{0}", { 0: cell.missingInfo })
+                          : column.required ? uiText("待填写：{0}", { 0: column.title }) : uiText("可选")}
+                        aria-label={uiText("{0}-{1}-第{2}行", { 0: block.title || "表格", 1: column.title, 2: rowIndex + 1 })}
+                        className={`min-h-20 w-full resize-y rounded px-2 py-2 leading-5 outline-none ${column.readOnly
+                            ? "cursor-default bg-secondary text-muted-foreground"
+                            : "bg-input text-foreground focus:ring-1 focus:ring-[#6FB1FF]"} placeholder:text-[#b54d59]`}
                       />
                     </td>
                   );
                 })}
                 {canModifyRows && (
-                  <td className="border border-[#354055] px-2 text-center align-middle">
+                  <td className="border border-border px-2 text-center align-middle">
                     <button
                       type="button"
                       onClick={() => onRemoveRow(rowIndex)}
                       disabled={block.rows.length <= 1}
-                      className="text-xs text-[#E77A87] disabled:cursor-not-allowed disabled:opacity-30"
+                      className="text-xs text-[#e77a87] disabled:cursor-not-allowed disabled:opacity-30"
                     >
-                      删除
-                    </button>
+                      {uiText("删除")}</button>
                   </td>
                 )}
               </tr>
@@ -683,10 +669,9 @@ function BidBlockEditor({
         <button
           type="button"
           onClick={onAddRow}
-          className="mt-3 rounded-[6px] border border-[#354055] px-3 py-1.5 text-xs text-[#AFCBEE] transition hover:border-[#6FB1FF] hover:text-white"
+          className="mt-3 rounded-[6px] border border-border px-3 py-1.5 text-xs text-foreground transition hover:border-[#6fb1ff] hover:text-foreground"
         >
-          + 添加一行
-        </button>
+          {uiText("+ 添加一行")}</button>
       )}
     </div>
   );
@@ -695,7 +680,7 @@ function BidBlockEditor({
 function HighlightedBidText({ text }: { text: string }) {
   return text.split(/(【待填写[^】]*】)/g).map((part, index) =>
     part.startsWith("【待填写")
-      ? <span key={index} className="rounded bg-[#3C1720] px-1 text-[#FF6B6B]">{part}</span>
+      ? <span key={index} className="rounded bg-red-100 px-1 text-[#ff6b6b]">{part}</span>
       : <span key={index}>{part}</span>
   );
 }
@@ -705,12 +690,12 @@ function BidBlockPreview({ block }: { block: BidBlock }) {
     return <p className="whitespace-pre-wrap"><HighlightedBidText text={block.text} /></p>;
   }
   if (block.type === "page_break") {
-    return <div className="my-4 border-t border-dashed border-[#465167]" aria-label="分页符" />;
+    return <div className="my-4 border-t border-dashed border-border" aria-label="分页符" />;
   }
 
   return (
     <div className="max-w-full overflow-x-auto overscroll-x-contain">
-      {block.title && <p className="mb-2 font-medium text-[#DCE3EF]">{block.title}</p>}
+      {block.title && <p className="mb-2 font-medium text-foreground">{block.title}</p>}
       <table
         className="border-collapse text-left text-sm leading-5"
         style={{ minWidth: Math.max(640, block.columns.length * 130) }}
@@ -723,7 +708,7 @@ function BidBlockPreview({ block }: { block: BidBlock }) {
                   key={`${rowIndex}-${cellIndex}`}
                   colSpan={cell.columnSpan}
                   rowSpan={cell.rowSpan}
-                  className="border border-[#465167] bg-[#1D2635] px-3 py-2 text-center font-semibold text-white"
+                  className="border border-border bg-secondary px-3 py-2 text-center font-semibold text-foreground"
                 >
                   {cell.text}
                 </th>
@@ -732,7 +717,7 @@ function BidBlockPreview({ block }: { block: BidBlock }) {
           )) : (
             <tr>
               {block.columns.map((column) => (
-                <th key={column.key} className="border border-[#465167] bg-[#1D2635] px-3 py-2 text-center font-semibold text-white">
+                <th key={column.key} className="border border-border bg-secondary px-3 py-2 text-center font-semibold text-foreground">
                   {column.title}
                 </th>
               ))}
@@ -751,7 +736,7 @@ function BidBlockPreview({ block }: { block: BidBlock }) {
                     key={column.key}
                     colSpan={cell?.columnSpan}
                     rowSpan={cell?.rowSpan}
-                    className="border border-[#465167] px-3 py-2 align-top text-[#C0C8D6]"
+                    className="border border-border px-3 py-2 align-top text-foreground"
                   >
                     <HighlightedBidText text={value} />
                   </td>

@@ -1,24 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/locales";
-import { ClientProviders } from "@/components/client-providers";
-import { Toaster } from "@/components/ui/sonner";
-import { WebsiteHeader } from "./_components/website-header";
-import "./smart-eye.css";
+import { ErrorBoundary } from "@/app/[lang]/(workspace)/smart-eye/_components/error-boundary";
+import { Toaster } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/sonner";
+import "./_styles/smart-eye.css";
 
-export const metadata: Metadata = {
-  title: { absolute: "灵眸智售 · Smart Eye｜探氩科技" },
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  return {
+    title: { absolute: lang === "zh" ? "灵眸智售 · Smart Eye｜探氩科技" : "Smart Eye | Targon" },
+    robots: {
       index: false,
       follow: false,
-      noimageindex: true,
+      nocache: true,
+      googleBot: {
+        index: false,
+        follow: false,
+        noimageindex: true,
+      },
     },
-  },
-};
+  };
+}
 
 export default async function SmartEyeLayout({ children, params }: {
   children: React.ReactNode;
@@ -27,12 +30,11 @@ export default async function SmartEyeLayout({ children, params }: {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   return (
-    <div className="smart-eye-scope min-h-screen bg-[#050914] text-white antialiased">
-      <ClientProviders lang={lang}>
-        <WebsiteHeader />
+    <div className="smart-eye-scope min-h-screen antialiased">
+      <ErrorBoundary lang={lang}>
         {children}
         <Toaster position="top-right" />
-      </ClientProviders>
+      </ErrorBoundary>
     </div>
   );
 }

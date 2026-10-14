@@ -1,12 +1,14 @@
 ﻿"use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useRef, useState, type ChangeEvent } from "react";
 import { toast } from "sonner";
 import { JobStatus } from "@/app/[lang]/(workspace)/smart-eye/_components/jobs/job-status";
 import { createApiResponseError } from "@/lib/api/api-error";
 import { authenticatedFetch } from "@/lib/api/authenticated-fetch";
 import { downloadDocumentFromJob } from "@/lib/document/document-job-client";
-import Image from "next/image";
 
 type TargetFormat = "txt" | "docx" | "html";
 
@@ -17,6 +19,7 @@ const formats: { value: TargetFormat; label: string; suffix: string; desc: strin
 ];
 
 export default function ConvertPage() {
+  const uiText = useUiText();
   const [file, setFile] = useState<File | null>(null);
   const [target, setTarget] = useState<TargetFormat>("docx");
   const [convertJobId, setConvertJobId] = useState<string | null>(null);
@@ -50,14 +53,14 @@ export default function ConvertPage() {
         method: "POST",
         body: fd,
       });
-      if (!res.ok) throw await createApiResponseError(res, "转换任务创建失败");
+      if (!res.ok) throw await createApiResponseError(res, uiText("转换任务创建失败"));
       const data = (await res.json().catch(() => ({}))) as { jobId?: unknown };
-      if (typeof data.jobId !== "string" || !data.jobId) throw new Error("转换任务未创建");
+      if (typeof data.jobId !== "string" || !data.jobId) throw new Error(uiText("转换任务未创建"));
       setConvertJobId(data.jobId);
-      toast.info("转换任务已创建（需 worker 执行）");
+      toast.info(uiText("转换任务已创建（需 worker 执行）"));
     } catch (error) {
       setJobPending(false);
-      toast.error(error instanceof Error ? error.message : "转换失败");
+      toast.error(error instanceof Error ? error.message : uiText("转换失败"));
     }
   };
 
@@ -65,36 +68,36 @@ export default function ConvertPage() {
     setJobPending(false);
     const done = job as { status?: string; errorMessage?: string | null };
     if (done.status === "failed") {
-      toast.error(done.errorMessage || "转换失败");
+      toast.error(done.errorMessage || uiText("转换失败"));
       setConvertJobId(null);
       return;
     }
     try {
       await downloadDocumentFromJob(job);
-      toast.success("下载完成");
+      toast.success(uiText("下载完成"));
       setConvertJobId(null);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "下载失败");
+      toast.error(error instanceof Error ? error.message : uiText("下载失败"));
     }
   };
 
   return (
-    <div className="w-full min-w-0 max-w-full px-4 pb-24 pt-24 text-[#E8EDF7] sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px]">
+    <div className={`${pageStyles.page} ${pageStyles.convert}`}>
       <div className="mb-8">
-        <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[32px]">格式转换</h1>
-        <p className="mt-3 text-base leading-7 text-[#A4ADBD] sm:text-[20px] sm:leading-8">PDF/DOCX转其他格式</p>
+        <h1>{uiText("格式转换")}</h1>
+        <p className="mt-3 text-base leading-7 text-[#52637a] sm:text-[20px] sm:leading-8">{uiText("PDF/DOCX转其他格式")}</p>
       </div>
 
       <div className="max-w-[960px] space-y-6">
         {convertJobId && (
-          <section className="rounded-[14px] border border-[#202837] bg-[#141922] p-4">
+          <section className="rounded-[14px] border border-border bg-card p-4">
             <JobStatus jobId={convertJobId} onDone={handleJobDone} />
           </section>
         )}
 
-        <section className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-5 sm:p-7">
-          <h2 className="mb-3 text-[20px] font-semibold text-white">1.上传文件</h2>
-          <p className="mb-7 text-[16px] text-[#A4ADBD]">支持PDF、DOCX、TXT</p>
+        <section className="min-w-0 rounded-[14px] border border-border bg-card px-6 py-[22px]">
+          <h2 className="mb-1 font-semibold text-foreground">{uiText("1.上传文件")}</h2>
+          <p className="mb-6 text-[13px] leading-5 text-[#52637a]">{uiText("支持PDF、DOCX、TXT")}</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -107,31 +110,30 @@ export default function ConvertPage() {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={jobPending}
-            className="flex h-[254px] w-full flex-col items-center justify-center rounded-[8px] bg-[#070B14] text-center transition hover:bg-[#0A101C] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-[240px] w-full flex-col items-center justify-center rounded-[8px] bg-input text-center transition hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <Image className="mx-auto" src="/img/upload.png" alt="upload" width={48} height={48} />
-            <span className="mt-7 text-[22px] text-[#D8DEEA]">{file ? file.name : "上传文档"}</span>
-            <span className="mt-3 text-[17px] leading-7 text-[#687286]">PDF/DOCX/TXT</span>
-            <span className="text-[17px] leading-7 text-[#687286]">最大20MB · 点击选择或拖拽</span>
+            <img className="mx-auto" src="/img/smart-eye/upload.svg" alt="" />
+            <span className="mt-7 text-[22px] text-foreground">{file ? file.name : uiText("上传文档")}</span>
+            <span className="mt-3 text-[17px] leading-7 text-muted-foreground">PDF/DOCX/TXT</span>
+            <span className="text-[17px] leading-7 text-muted-foreground">{uiText("最大20MB · 点击选择文件")}</span>
           </button>
           {file && (
-            <button type="button" onClick={clearFile} className="mt-3 text-sm text-[#687286] transition hover:text-white">
-              清除文件
-            </button>
+            <button type="button" onClick={clearFile} className="mt-3 text-sm text-muted-foreground transition hover:text-foreground">
+              {uiText("清除文件")}</button>
           )}
         </section>
 
-        <section className="min-w-0 rounded-[14px] border border-[#202837] bg-[#141922] p-5 sm:p-7">
-          <h2 className="mb-7 text-[20px] font-semibold text-white">2.选择目标格式</h2>
+        <section className="min-w-0 rounded-[14px] border border-border bg-card px-6 py-[22px]">
+          <h2 className="mb-6 font-semibold text-foreground">{uiText("2.选择目标格式")}</h2>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {formats.map((format) => (
               <FormatCard
                 key={format.value}
                 active={target === format.value}
                 onClick={() => setTarget(format.value)}
-                label={format.label}
+                label={uiText(format.label)}
                 suffix={format.suffix}
-                desc={format.desc}
+                desc={uiText(format.desc)}
               />
             ))}
           </div>
@@ -139,9 +141,9 @@ export default function ConvertPage() {
             type="button"
             onClick={handleConvert}
             disabled={!file || jobPending}
-            className="btn-bg mt-6 h-[45px] w-full rounded-[9px] text-[18px] font-semibold text-[#0A0613] disabled:cursor-not-allowed disabled:opacity-60"
+            className="btn-bg mt-6 h-10 w-full rounded-[9px] text-[18px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {jobPending ? "任务执行中..." : "开始转换"}
+            {jobPending ? uiText("任务执行中...") : uiText("开始转换")}
           </button>
         </section>
       </div>
@@ -167,14 +169,14 @@ function FormatCard({
       type="button"
       onClick={onClick}
       className={[
-        "h-[94px] rounded-[5px] border px-4 text-center transition",
-        active ? "border-[#3F72B2] bg-[#203454] text-[#8AB8FF]" : "border-[#0A0F18] bg-[#070B14] text-[#A4ADBD] hover:border-[#253048]",
+        "h-[88px] rounded-[5px] border px-4 text-center transition",
+        active ? "border-[#3f72b2] bg-[#5b9bff]/15 text-[#5b9bff]" : "border-transparent bg-input text-[#52637a] hover:border-border",
       ].join(" ")}
     >
       <p className="text-[20px] font-semibold">
         {label} <span>{suffix}</span>
       </p>
-      <p className="mt-1 text-[16px] text-[#687286]">{desc}</p>
+      <p className="mt-1 text-[16px] text-muted-foreground">{desc}</p>
     </button>
   );
 }

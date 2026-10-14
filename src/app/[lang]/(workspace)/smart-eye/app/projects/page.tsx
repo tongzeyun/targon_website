@@ -1,20 +1,22 @@
 "use client";
 
-import { useI18n } from "@/lib/i18n";
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
+import { useLocale } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-locale";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/ui/date-picker";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useApi } from "@/lib/hooks/use-api";
+import { Button } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/dialog";
+import { Input } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/input";
+import { DatePicker } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/date-picker";
+import { Label } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/label";
+import { Textarea } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/textarea";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { accountsApi, projectsApi } from "@/lib/api/client";
 import { toast } from "sonner";
-import Image from "next/image";
 interface ProjectListItem {
   id: string;
   projectName?: string;
@@ -30,7 +32,7 @@ interface AccountOption {
   companyName?: string;
 }
 
-const checkboxGradient = "linear-gradient(135deg, #6FB1FF 14.64%, #8E8DFF 51.41%, #B07DFF 85.36%)";
+const checkboxGradient = "linear-gradient(180deg, #5b9bff 0%, #464660 100%)";
 
 function GradientCheckbox({ checked }: { checked: boolean }) {
   return (
@@ -59,7 +61,8 @@ function GradientCheckbox({ checked }: { checked: boolean }) {
 }
 
 export default function ProjectsPage() {
-  const { lang } = useI18n();
+  const uiText = useUiText();
+  const lang = useLocale();
   const searchParams = useSearchParams();
   const [showCreate, setShowCreate] = useState(false);
   const { data: projects, loading, refetch } = useApi(() => projectsApi.list());
@@ -95,7 +98,7 @@ export default function ProjectsPage() {
 
   const deleteSelected = async () => {
     if (selected.size === 0) return;
-    if (!confirm(`删除选中的 ${selected.size} 个项目？`)) return;
+    if (!confirm(uiText("删除选中的 {0} 个项目？", { 0: selected.size }))) return;
     setDeleting(true);
     let count = 0;
     for (const id of selected) {
@@ -104,7 +107,7 @@ export default function ProjectsPage() {
         count++;
       } catch {}
     }
-    toast.success(`删除了 ${count} 个项目`);
+    toast.success(uiText("删除了 {0} 个项目", { 0: count }));
     setSelected(new Set());
     setDeleting(false);
     refetch();
@@ -130,7 +133,7 @@ export default function ProjectsPage() {
 
   const handleCreate = async () => {
     if (!form.projectName) {
-      toast.error("请输入项目名称");
+      toast.error(uiText("请输入项目名称"));
       return;
     }
     try {
@@ -141,12 +144,12 @@ export default function ProjectsPage() {
         buyerContact: {},
         timeline: form.deadline ? { bidDeadline: form.deadline } : {},
       });
-      toast.success("项目已创建");
+      toast.success(uiText("项目已创建"));
       setShowCreate(false);
       setForm({ projectName: "", buyerName: "", budgetRange: "", location: "", deadline: "", summary: "", accountId: "", industry: "半导体" });
       refetch();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "创建失败");
+      toast.error(error instanceof Error ? error.message : uiText("创建失败"));
     }
   };
 
@@ -166,25 +169,24 @@ export default function ProjectsPage() {
   };
 
   return (
-    <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-slate-100 sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px]">
+    <section className={`${pageStyles.page} ${pageStyles.projects}`}>
       <div className="max-w-[1665px]">
-        <div className="mb-8 flex flex-col items-stretch gap-5 sm:flex-row sm:items-start sm:justify-between lg:mb-10">
+        <div className="mb-8 flex flex-col items-stretch gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[32px]">项目跟进</h1>
-            <p className="mt-3 text-base text-[#A6AEBD] sm:text-xl">管理你的销售项目，从发现到成交</p>
+            <h1>{uiText("项目跟进")}</h1>
+            <p className="mt-3 text-base text-[#52637a] sm:text-xl">{uiText("管理你的销售项目，从发现到成交")}</p>
           </div>
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="flex size-10 items-center justify-center rounded-[10px] border border-[#253048] bg-[#111722] transition hover:border-[#3B6EA8]"
+              className="flex size-10 items-center justify-center rounded-[10px] border border-border bg-card transition hover:border-[#3b6ea8]"
               onClick={handleExport}
-              title="导出项目"
+              title={uiText("导出项目")}
             >
-              <Image src="/img/download.png" alt="download" width={14} height={16} />
+              <img src="/img/smart-eye/download.svg" alt="" />
             </button>
-            <div className="btn-bg h-10 rounded-[10px] px-5 text-sm font-semibold" onClick={() => setShowCreate(true)}>
-              新建项目
-            </div>
+            <button type="button" className="btn-bg h-10 rounded-[10px] px-5 text-sm font-semibold" onClick={() => setShowCreate(true)}>
+              {uiText("新建项目")}</button>
           </div>
         </div>
 
@@ -193,88 +195,88 @@ export default function ProjectsPage() {
             className="smart-eye-dialog max-w-lg"
             overlayClassName="bg-black/70 supports-backdrop-filter:backdrop-blur-sm"
           >
-            <DialogHeader><DialogTitle>新建项目</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{uiText("新建项目")}</DialogTitle></DialogHeader>
             <div className="smart-eye-dialog__body space-y-3">
               <div className="space-y-1">
-                <Label>项目名称 *</Label>
-                <Input value={form.projectName} onChange={(event) => setForm({ ...form, projectName: event.target.value })} placeholder="如：某晶圆厂真空泵采购项目" />
+                <Label>{uiText("项目名称 *")}</Label>
+                <Input value={form.projectName} onChange={(event) => setForm({ ...form, projectName: event.target.value })} placeholder={uiText("如：某晶圆厂真空泵采购项目")} />
               </div>
               <div className="smart-eye-dialog__columns grid gap-3 md:grid-cols-2">
                 <div className="space-y-1">
-                  <Label>采购单位</Label>
-                  <Input value={form.buyerName} onChange={(event) => setForm({ ...form, buyerName: event.target.value })} placeholder="公司/机构名称" />
+                  <Label>{uiText("采购单位")}</Label>
+                  <Input value={form.buyerName} onChange={(event) => setForm({ ...form, buyerName: event.target.value })} placeholder={uiText("公司/机构名称")} />
                 </div>
                 <div className="space-y-1">
-                  <Label>预算</Label>
-                  <Input value={form.budgetRange} onChange={(event) => setForm({ ...form, budgetRange: event.target.value })} placeholder="如 ¥200-500万" />
+                  <Label>{uiText("预算")}</Label>
+                  <Input value={form.budgetRange} onChange={(event) => setForm({ ...form, budgetRange: event.target.value })} placeholder={uiText("如 ¥200-500万")} />
                 </div>
               </div>
               <div className="smart-eye-dialog__columns grid gap-3 md:grid-cols-2">
                 <div className="space-y-1">
-                  <Label>所在地</Label>
-                  <Input value={form.location} onChange={(event) => setForm({ ...form, location: event.target.value })} placeholder="城市" />
+                  <Label>{uiText("所在地")}</Label>
+                  <Input value={form.location} onChange={(event) => setForm({ ...form, location: event.target.value })} placeholder={uiText("城市")} />
                 </div>
                 <div className="space-y-1">
-                  <Label>截止日期</Label>
-                  <DatePicker value={form.deadline} onChange={(deadline) => setForm({ ...form, deadline })} placeholder="选择截止日期" />
+                  <Label>{uiText("截止日期")}</Label>
+                  <DatePicker value={form.deadline} onChange={(deadline) => setForm({ ...form, deadline })} placeholder={uiText("选择截止日期")} />
                 </div>
               </div>
               <div className="space-y-1">
-                <Label>关联客户</Label>
+                <Label>{uiText("关联客户")}</Label>
                 <select
                   className="smart-eye-dialog__select"
                   value={form.accountId}
                   onChange={(event) => setForm({ ...form, accountId: event.target.value })}
                 >
-                  <option value="">不关联</option>
+                  <option value="">{uiText("不关联")}</option>
                   {accountList.map((account) => <option key={account.id} value={account.id}>{account.companyName}</option>)}
                 </select>
               </div>
               <div className="space-y-1">
-                <Label>行业</Label>
-                <Input value={form.industry} onChange={(event) => setForm({ ...form, industry: event.target.value })} placeholder="输入行业名称" />
+                <Label>{uiText("行业")}</Label>
+                <Input value={form.industry} onChange={(event) => setForm({ ...form, industry: event.target.value })} placeholder={uiText("输入行业名称")} />
               </div>
               <div className="space-y-1">
-                <Label>项目描述</Label>
-                <Textarea value={form.summary} onChange={(event) => setForm({ ...form, summary: event.target.value })} rows={3} placeholder="项目背景、采购内容、关键信息..." />
+                <Label>{uiText("项目描述")}</Label>
+                <Textarea value={form.summary} onChange={(event) => setForm({ ...form, summary: event.target.value })} rows={3} placeholder={uiText("项目背景、采购内容、关键信息...")} />
               </div>
-              <Button className="smart-eye-dialog-action btn-bg w-full" onClick={handleCreate}>创建项目</Button>
+              <Button className="smart-eye-dialog-action btn-bg w-full" onClick={handleCreate}>{uiText("创建项目")}</Button>
             </div>
           </DialogContent>
         </Dialog>
 
         {projectList.length > 0 ? (
-          <div className="mb-8 flex flex-wrap items-center gap-4">
-            <button type="button" onClick={selectAll} className="inline-flex items-center gap-2 text-base text-[#A6AEBD] transition hover:text-white">
+          <div className="mb-6 flex min-h-[31px] flex-wrap items-center gap-4">
+            <button type="button" onClick={selectAll} className="inline-flex items-center gap-2 text-base text-[#52637a] transition hover:text-foreground">
               <GradientCheckbox checked={allSelected} />
-              {allSelected ? "取消全选" : `全选（${projectList.length}）`}
+              {allSelected ? uiText("取消全选") : uiText("全选（{0}）", { 0: projectList.length })}
             </button>
             {selected.size > 0 ? (
               <button
                 type="button"
-                className="rounded-md border border-[#7A3030] px-3 py-1.5 text-sm text-[#FF7474] transition hover:bg-[#2B1518] disabled:opacity-50"
+                className="rounded-md border border-[#7a3030] px-3 py-1.5 text-sm text-[#ff7474] transition hover:bg-red-50 disabled:opacity-50"
                 onClick={deleteSelected}
                 disabled={deleting}
               >
-                删除选中（{selected.size}）
+                {uiText("删除选中（{0}）", { 0: selected.size })}
               </button>
             ) : null}
-            <span className="w-full text-sm text-[#747D91] sm:ml-auto sm:w-auto">点击复选框选择，点击标题进入详情</span>
+            <span className="w-full text-sm text-muted-foreground sm:ml-auto sm:w-auto">{uiText("点击复选框选择，点击标题进入详情")}</span>
           </div>
         ) : null}
 
         {loading ? (
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-[30px] lg:grid-cols-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="h-[216px] animate-pulse rounded-[12px] border border-[#202839] bg-[#131821]" />
+              <div key={item} className="h-[216px] animate-pulse rounded-[12px] border border-border bg-card" />
             ))}
           </div>
         ) : projectList.length > 0 ? (
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-[30px] lg:grid-cols-2">
             {projectList.map((project) => {
               const checked = selected.has(project.id);
               return (
-                <article key={project.id} className="min-w-0 rounded-[12px] border border-[#202839] bg-[#131821] px-5 py-6 transition hover:border-[#3B6EA8] sm:px-8 sm:py-8">
+                <article key={project.id} className="min-w-0 rounded-[12px] border border-border bg-card px-5 py-6 transition hover:border-[#3b6ea8] sm:px-7 sm:py-6">
                   <div className="flex items-start gap-4">
                     <button
                       type="button"
@@ -283,50 +285,50 @@ export default function ProjectsPage() {
                         toggleSelect(project.id);
                       }}
                       className="mt-1 shrink-0"
-                      aria-label={checked ? "取消选择项目" : "选择项目"}
+                      aria-label={checked ? uiText("取消选择项目") : uiText("选择项目")}
                     >
                       <GradientCheckbox checked={checked} />
                     </button>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-4">
                         <div className="min-w-0">
-                          <Link href={`/${lang}/smart-eye/app/projects/${project.id}`} className="block text-2xl font-bold leading-tight text-[#F1F5FA] transition hover:text-white">
+                          <Link href={`/${lang}/smart-eye/app/projects/${project.id}`} className="block text-2xl font-bold leading-tight text-foreground transition hover:text-foreground">
                             <span className="line-clamp-1">{project.projectName}</span>
                           </Link>
-                          {project.summary ? <p className="mt-1 line-clamp-1 text-lg text-[#A6AEBD]">{project.summary}</p> : null}
+                          {project.summary ? <p className="mt-1 line-clamp-1 text-lg text-[#52637a]">{project.summary}</p> : null}
                         </div>
                         <button
                           type="button"
                           className="group flex size-8 shrink-0 items-center justify-center"
                           onClick={async (event) => {
                             event.preventDefault();
-                            if (!confirm("删除此项目？")) return;
+                            if (!confirm(uiText("删除此项目？"))) return;
                             try {
                               await projectsApi.delete(project.id);
-                              toast.success("已删除");
+                              toast.success(uiText("已删除"));
                               refetch();
                             } catch {
-                              toast.error("删除失败");
+                              toast.error(uiText("删除失败"));
                             }
                           }}
-                          aria-label="删除项目"
+                          aria-label={uiText("删除项目")}
                         >
-                          <Image src="/img/delete_g.png" alt="trash" width={18} height={18} />
+                          <img src="/img/smart-eye/delete_g.svg" alt="" />
                         </button>
                       </div>
 
-                      <div className="mt-5 flex flex-wrap items-center gap-4">
-                        <span className="rounded-md border border-[#396AA8] px-4 py-1.5 text-sm text-[#DDE3EC]">{project.industry || "未分类"}</span>
-                        {project.buyerName ? <span className="rounded bg-[#050914] px-4 py-1.5 text-sm text-[#DDE3EC]">{project.buyerName}</span> : null}
+                      <div className="mt-4 flex flex-wrap items-center gap-4">
+                        <span className="rounded-md border border-[#b8c3d0] px-4 py-1.5 text-sm text-foreground">{project.industry || uiText("未分类")}</span>
+                        {project.buyerName ? <span className="rounded bg-input px-4 py-1.5 text-sm text-foreground">{project.buyerName}</span> : null}
                       </div>
 
-                      <div className="mt-6 flex flex-wrap items-center gap-7 text-xl text-[#A6AEBD]">
+                      <div className="mt-4 flex flex-wrap items-center gap-7 text-xl text-[#52637a]">
                         <span className="inline-flex items-center gap-2">
-                          <Image src="/img/location.png" alt="location" width={16} height={19} />
+                          <img src="/img/smart-eye/location.svg" alt="" />
                           {project.location || "-"}
                         </span>
                         <span className="inline-flex items-center gap-2">
-                          <Image src="/img/money.png" alt="money" width={16} height={19} />
+                          <img src="/img/smart-eye/money.svg" alt="" />
                           {project.budgetRange || "-"}
                         </span>
                       </div>
@@ -337,10 +339,10 @@ export default function ProjectsPage() {
             })}
           </div>
         ) : (
-          <div className="rounded-[12px] border border-[#202839] bg-[#131821] px-8 py-16 text-center text-[#8D96A7]">
-            <div className="mx-auto mb-4 size-12 rounded-lg border border-[#253048] bg-[#111722]" />
-            <p className="font-medium text-[#DDE3EC]">暂无项目</p>
-            <p className="mt-2 text-sm">点击“新建项目”手动添加，或在目标客户页一键创建</p>
+          <div className="rounded-[12px] border border-border bg-card px-8 py-16 text-center text-muted-foreground">
+            <div className="mx-auto mb-4 size-12 rounded-lg border border-border bg-card" />
+            <p className="font-medium text-foreground">{uiText("暂无项目")}</p>
+            <p className="mt-2 text-sm">{uiText("点击“新建项目”手动添加，或在目标客户页一键创建")}</p>
           </div>
         )}
       </div>

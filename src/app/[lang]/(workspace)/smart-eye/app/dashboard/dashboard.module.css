@@ -1,0 +1,16 @@
+.page { min-width: 0; min-height: calc(100dvh - 116px); padding: 103px 85px 48px 30px; color: #14284a; }
+.heading { margin-bottom: 33px; }
+.title { font-size: 32px; font-weight: 700; line-height: 46px; }
+.subtitle { margin-top: 5px; color: #52637a; font-size: 20px; line-height: 29px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 35px; }
+.card { position: relative; display: flex; min-width: 0; min-height: 217px; flex-direction: column; border: 1px solid rgb(255 255 255 / 6%); border-radius: 14px; padding: 32px 24px 24px; background: #eef5fb; color: #14284a; text-decoration: none; transition: box-shadow 160ms ease; }
+.card:hover { box-shadow: 0 5px 20px rgb(20 40 74 / 10%); }
+.icon { display: grid; width: 40px; height: 40px; place-items: center; border: .91px solid #5b9bff73; border-radius: 9.09px; background: #5b9bff24; }
+.icon img, .arrow { display: block; max-width: none; }
+.arrow { position: absolute; top: 44px; right: 25px; }
+.value { margin-top: 24px; font-family: Inter, Arial, sans-serif; font-size: 36px; font-weight: 600; line-height: 39px; overflow-wrap: anywhere; }
+.label { color: #52637a; font-size: 17px; font-weight: 500; line-height: 26px; }
+.detail { margin-top: 2px; color: #8795a8; font-size: 12px; line-height: 21px; }
+@media (max-width: 1500px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .page { padding-right: 32px; } }
+@media (max-width: 767px) { .page { min-height: auto; padding: 40px 20px; } .grid { gap: 16px; } .card { padding: 24px 18px; } .value { font-size: 28px; } .label { font-size: 14px; } .arrow { right: 18px; top: 35px; } }
+@media (max-width: 420px) { .grid { grid-template-columns: minmax(0, 1fr); } }

@@ -1,15 +1,19 @@
 "use client";
 
-import { useI18n } from "@/lib/i18n";
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
+import { useLocale } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-locale";
+import { formatPipelineAmount } from "@/app/[lang]/(workspace)/smart-eye/_lib/copy";
 
 import { useState } from "react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/card";
+import { Badge } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/badge";
+import { Button } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/button";
+import { Skeleton } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/skeleton";
 import { toast } from "sonner";
-import { useApi } from "@/lib/hooks/use-api";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { pipelineApi } from "@/lib/api/client";
 import { Columns3, DollarSign } from "lucide-react";
 
@@ -38,7 +42,8 @@ function parseDealAmount(dealAmount?: string): number {
 }
 
 export default function PipelineBoardPage() {
-  const { lang } = useI18n();
+  const uiText = useUiText();
+  const lang = useLocale();
   const { data, loading, refetch } = useApi(() => pipelineApi.list());
   const items = (Array.isArray(data) ? data : []) as PipelineBoardItem[];
   const [moving, setMoving] = useState<string | null>(null);
@@ -52,26 +57,25 @@ export default function PipelineBoardPage() {
     setMoving(itemId);
     try {
       await pipelineApi.update(itemId, { currentStage: toStage });
-      toast.success(`已移动到 ${STAGES.find(s => s.key === toStage)?.label}`);
+      toast.success(uiText("已移动到 {0}", { 0: uiText(STAGES.find(s => s.key === toStage)?.label || toStage) }));
       refetch();
     } catch {
-      toast.error("移动失败");
+      toast.error(uiText("移动失败"));
     } finally {
       setMoving(null);
     }
   };
 
   return (
-    <div className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full space-y-6 px-4 pb-24 pt-24 sm:px-6 lg:px-8 lg:pb-10 lg:pt-[112px]">
+    <div className={`${pageStyles.page} ${pageStyles.board} space-y-6`}>
       <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Columns3 className="h-6 w-6 text-blue-600" />管线看板
-          </h1>
-          <p className="text-gray-500 mt-1">{items.length} 个机会 · 拖拽或点击移动阶段</p>
+          <h1 className="flex items-center gap-2">
+            <Columns3 className="h-6 w-6 text-blue-600" />{uiText("管线看板")}</h1>
+          <p className="text-muted-foreground mt-1">{items.length} {uiText("个机会 · 点击按钮切换阶段")}</p>
         </div>
         <Link href={`/${lang}/smart-eye/app/pipeline`} className="self-start sm:self-auto">
-          <Button variant="outline" size="sm">列表视图</Button>
+          <Button variant="outline" size="sm">{uiText("列表视图")}</Button>
         </Link>
       </div>
 
@@ -90,28 +94,28 @@ export default function PipelineBoardPage() {
                 {/* Column Header */}
                 <div className={`p-3 rounded-t-lg border-b-2 ${stage.color} border-b-current`}>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-sm">{stage.label}</h3>
+                    <h3 className="font-semibold text-sm">{uiText(stage.label)}</h3>
                     <Badge variant="secondary" className="text-xs">{cards.length}</Badge>
                   </div>
                   {totalAmount > 0 && (
-                    <p className="text-xs text-gray-500 mt-1">¥{Math.round(totalAmount)}万</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatPipelineAmount(Math.round(totalAmount), lang)}</p>
                   )}
                 </div>
 
                 {/* Cards */}
                 <div className="flex-1 bg-gray-50 rounded-b-lg p-2 space-y-2 min-h-[200px]">
                   {cards.length === 0 ? (
-                    <div className="text-center py-8 text-xs text-gray-400">拖拽到此</div>
+                    <div className="text-center py-8 text-xs text-muted-foreground">{uiText("暂无机会")}</div>
                   ) : (
                     cards.map((p) => (
                       <Card key={p.id} className={`shadow-sm border hover:shadow-md transition-shadow ${moving === p.id ? "opacity-50" : ""}`}>
                         <CardContent className="p-3">
                           <Link href={`/${lang}/smart-eye/app/projects/${p.projectId || ""}`} className="block">
                             <p className="text-sm font-medium truncate hover:text-blue-600">
-                              {p.projectName || "未关联项目"}
+                              {p.projectName || uiText("未关联项目")}
                             </p>
                           </Link>
-                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
                             {p.dealAmount && (
                               <span className="flex items-center gap-1">
                                 <DollarSign className="h-3 w-3" />{p.dealAmount}
@@ -129,9 +133,9 @@ export default function PipelineBoardPage() {
                                 onClick={(e) => { e.preventDefault(); handleMove(p.id, s.key); }}
                                 disabled={moving === p.id}
                                 className="text-[10px] px-2 py-0.5 rounded border bg-white hover:bg-gray-100 transition-colors"
-                                title={`移到 ${s.label}`}
+                                title={uiText("移到 {0}", { 0: uiText(s.label) })}
                               >
-                                → {s.label}
+                                → {uiText(s.label)}
                               </button>
                             ))}
                           </div>

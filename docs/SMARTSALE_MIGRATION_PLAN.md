@@ -1,172 +1,148 @@
-# Smart Eye / 灵眸智售迁移计划
+# Smart Eye迁移与界面整理记录
 
-日期：2026-10-12。状态：阶段A代码与运行资源已迁入，待用户手动验收；尚未操作数据库。本文是唯一迁移计划，包含当前范围、两阶段步骤和排除清单。
+更新日期：2026-10-14。本文件统一记录代码迁入、目录整理、冗余清理、设计与双语适配；生产部署、旧服务器数据清理及SEO/GEO只见 [部署方案](TARGON_FRESH_DEPLOYMENT_PLAN.md)。
 
-## 2026-10-12执行约定更新
+## 当前状态与执行约定
 
-用户在阶段A迁入过程中明确要求：**完成阶段A之后不运行测试，由用户手动测试；暂时不再询问测试服务准备。** 因此本轮只执行阶段A代码、依赖与运行资源迁入，不执行typecheck/build、数据库迁移、Web/Worker启动、业务测试或第三方采集。下文统一测试清单保留为用户手动验收参考，不作为本轮自动执行指令。
-
-本轮不复制真实env、不连接原数据库或OSS、不变更旧Docker服务。阶段A的代码迁入状态与待验收事项记录在 `docs/SMARTSALE_MIGRATION_STAGE_A.md`；界面完整双语仍属于阶段B。
-
-阶段A迁入结束后的配置更新：用户已授权将旧项目 `.env.local` 中全部业务配置复制到目标根目录 `.env`，保留SITE_DEFAULT_LOCALE，取消.env的Git跟踪。当前本地页面使用3000端口，目标AUTH_TRUSTED_ORIGIN和NEXT_PUBLIC_APP_URL已从3876适配为3000；原数据库和存储目标保留。尚未启动数据库或Worker，未运行测试。
-
-## 固定范围
-
-- 来源 `D:/T_workspace/saleseye`；目标 `D:/T_workspace/TargonWebsite`。源项目保留，不先在旧项目删除功能。
-- 正式环境沿用原 PostgreSQL 与文件存储；业务记录、AI 结果、生成文档维持中文，既有外文输入保留原文。
-- 先把原有功能迁入并跑通，再按设计稿改页面。界面中英通过固定文案字典实现，不改变后端数据格式。
-- 已确认的20个无调用文件、测试、旧官网、seed和构建产物不复制。具体文件见本文末尾的排除清单。
-- 首轮保留现有认证、限流、配额、Origin、组织范围、任务类型和重试机制；不在搬迁中收敛重复JWT或重构Worker。
-- 保留原目录下的lib/repositories，不新建业务框架、通用工作流、另一套数据库或服务层。不升级Next/React。
-
-按用户最新要求，执行合并为两阶段：**阶段A合并原第1–3步，全部迁入完成后统一测试；阶段B合并原第4–5步，完成新设计/界面双语和新环境切换，最终验收后释放旧应用环境。** 各内部环节不单独跑测试或构建；失败修复后只复核受影响项。英文路由存在不等于英文界面已完成，不能提前宣称双语交付。
-
-## 第0步：保存基线，准备验收环境
-
-1. 记录两边当前代码版本和未提交变更，在目标建立 `codex/smart-eye-migration` 分支；不覆盖已有修改，不自动提交真实环境文件。
-2. 记录原应用实际Node版本、数据库版本、schema_version、存储驱动/目录或OSS bucket、运行Worker和外部爬虫入口。
-3. 用已有数据库备份恢复一份隔离验收库；本地存储使用独立目录，OSS使用独立验收bucket。没有现成备份时，经确认后制作备份。验收库数据涉及业务信息，不加入Git。
-4. 目标 `.env.local` 配置验收库/存储、JWT与必要供应商配置；生产通过已有部署方式注入。先核验DATABASE_URL和存储目标，再允许启动Worker。
-5. 使用满足旧lockfile依赖engine要求的Node22版本；检查实际安装的传递依赖，不只检查直接包。
-
-**完成条件：** 旧代码可作为对照；验收Web/Worker不会消费现有库任务或清理现有文件。
-
-## 阶段A：合并第1–3步，迁移完成后统一测试
-
-### 1. 迁入后端运行底座
-
-以下路径相对于两个项目各自根目录，除特别注明外原路径迁入。
-
-| 来源 | 目标/处理 |
+| 内容 | 状态 |
 | --- | --- |
-| `src/lib/db/**` | 同路径；保留index/client、adapter、schema、migrate runner、SQL/JSON/transform工具，排除测试、queries、seed-logic |
-| `src/lib/repositories/**` | 同路径；排除测试和孤立activity-log-repository |
-| `src/lib/{api,ai,crawler,document,jobs,storage,alert}/**` | 按已审查闭包迁入，排除冗余清单中的完整文件；当前使用的schema保留 |
-| `src/lib/utils.ts`、日期/联系人等可达工具 | 同路径；按import补齐，不复制export-csv和旧seo |
-| `src/config/bid-template.json` | 同路径，保留现有中文配置 |
-| `src/app/api/**/route.ts` | 同路径，保留48个API；不加zh/en前缀，不复制route.test |
-| `src/proxy.ts` | 迁入并核验目标域名/Origin/CORS配置；首轮保留有效检查 |
-| `scripts/job-worker.ts`、`load-env.ts`、`db-migrate.ts` | 同路径，保留独立CLI入口 |
-| `scripts/pg-baseline.sql`、`pg-migrations/*.sql` | 同路径，保留017–022和基线，确保打包后路径可读 |
-| `scripts/generate-bid-default-template.ts` | 保留手动模板维护工具；不加入启动流程 |
+| 阶段A：业务代码、依赖及运行资源迁入 | 完成 |
+| 结构整理和旧语言机制清理 | 完成 |
+| 阶段B：17个界面的样式与双语代码适配 | 完成，另保留1个重定向入口；用户反馈页面检查没有太大问题 |
+| 自动测试、typecheck、build及完整业务回归 | 未执行；用户要求手动验收，不自动运行 |
+| 服务器部署与SEO/GEO | 未执行，归部署文档管理 |
 
-这个环节不改官网页面、不迁旧根layout和旧globals.css、不改表结构。
+只做必要接线和已确认的无用代码清理，保留业务契约、认证/组织范围、任务类型和重试机制。静态检查及用户对页面的反馈不等于完整业务、类型或生产验收。
 
-### 依赖与启动命令
+用户于2026-10-14确认：域名为`https://targon.cn`，服务器操作由用户手动完成；最新更正为AWS新建EC2只部署官网版本，暂不启用Smart Eye、Worker、数据库或OSS。旧官网/Smart Eye专属资源清理作为原服务器上的独立事项。Smart Eye迁移成果继续保留在本地项目，原“沿用生产数据、切换并释放旧应用”的路线已取消，不再列作迁移待办。
 
-保留目标原package和原scripts。把下列旧lockfile中已解析版本合入目标，由npm生成目标lockfile，不覆盖为旧package-lock：
+## 迁移基线与范围
 
-| 依赖 | 版本 |
+| 项目 | 记录 |
 | --- | --- |
-| @base-ui/react、bcryptjs、cheerio | 1.5.0、3.0.3、1.2.0 |
-| class-variance-authority、clsx、tailwind-merge | 0.7.1、2.1.1、3.6.0 |
-| docx、mammoth、pdf-parse、pizzip、xlsx | 9.7.1、1.12.0、2.4.5、3.2.0、0.18.5 |
-| iconv-lite、jose、pg、uuid | 0.7.2、6.2.3、8.22.0、14.0.0 |
-| lucide-react、react-day-picker、sonner | 1.17.0、10.0.1、2.0.7 |
-| openai | 6.41.0 |
-| tw-animate-css、shadcn | 1.4.0、4.10.0；后续业务CSS有实际import |
-| tsx | 4.22.4；放在生产可用依赖中，Worker需要 |
-| @next/env | 16.2.7，与Next一致；显式声明CLI环境加载所需的直接依赖 |
-| @types/pg | 8.20.0；开发类型依赖 |
+| 来源 | `D:/T_workspace/saleseye`，master，`16c839861b5e15a2d36d54c943f5ccc90b494e12` |
+| 目标迁入前 | `D:/T_workspace/TargonWebsite`，main，`6d1686a7d361c411c40e2952ffed411fb9c70df0` |
+| 工作分支 | `codex/smart-eye-migration`；2026-10-12从目标HEAD创建，未自动提交或推送 |
+| 框架/运行时 | Next 16.2.7、React/React DOM 19.2.4；本地Node 22.21.1、npm 10.9.4 |
+| 原有修改 | 来源旧官网与历史部署包的改动、目标方案与next-env.d.ts修改均保留 |
 
-框架沿用Next16.2.7、React/React DOM19.2.4，Tailwind沿用目标版本。其他类型依赖只在实际类型检查需要时补齐。不添加Vitest、未用Radix、recharts、旧PDF/模板生成依赖；保留pdf-parse实际需要的传递依赖。
+本地来源源码保留作对照；服务器删除范围由部署文档单独管理。
 
-package scripts只新增：
+| 内容 | 迁入结果 |
+| --- | --- |
+| 后端 | 原路径迁入`lib/db`、repositories、api、ai、crawler、document、jobs、storage、alert及可达工具 |
+| API | 48个`src/app/api/**/route.ts`，保留原路径，不加zh/en前缀 |
+| 页面 | 18个page入口：17个界面和1个重定向入口 |
+| 数据结构 | 28张表、预期schema 22；基线SQL及017–022增量SQL，共7个SQL文件 |
+| 异步任务 | 15类任务及真实handler、领取、恢复、清理逻辑；Web和Worker独立运行 |
+| 运行工具 | `scripts/job-worker.ts`、`scripts/load-env.ts`、`scripts/db-migrate.ts`及模板维护CLI |
+| 模板 | `src/config/bid-template.json`及实际文档生成/下载链路 |
+| Python | 独立crawler源码、requirements、说明和本地虚拟环境/Chromium |
+| 打包 | Dockerfile、.dockerignore；SQL、JSON、CLI与tsx保留，镜像默认只启动Web |
 
-```json
-{
-  "worker:jobs": "tsx scripts/job-worker.ts",
-  "db:migrate": "tsx scripts/db-migrate.ts"
-}
+依赖按旧lockfile解析版本迁入。保留实际需要的Base UI、日期控件、Sonner、Lucide、文档/AI/数据库/存储依赖；tsx为生产依赖，显式声明@next/env及@types/pg。不升级Next/React，不添加测试框架或未使用组件包；实际版本以package.json和package-lock.json为准。
+
+新增命令为`worker:jobs`和`db:migrate`，原dev/build/start/typecheck命令保持。CLI使用Next的loadEnvConfig，外部注入配置优先，生产使用NODE_ENV=production；crawler读取根目录.env且不覆盖外部环境变量。
+
+## 接线及运行问题处理
+
+- `[lang]/layout.tsx`负责语言校验及html/body；官网Header/Footer/AOS位于`(website)`，业务位于`(workspace)/smart-eye`。路由分组名不进入URL，API位置保持。
+- 业务内部链接、语言切换、登录/退出、401回跳沿用URL语言；安全next只接受站内业务路径。旧`/smart-eye/*`兼容入口依据SITE_DEFAULT_LOCALE跳转并保留query，不占用官网`/products`。
+- 认证Cookie、会话刷新并发合并、有限重试、401与临时刷新故障区分、限流/配额、Origin/CORS和组织隔离保留。
+- 本地401/刷新403：复制配置后的认证Origin仍指向旧3876端口，已适配为localhost:3000，认证逻辑不变。
+- 数据库启动后的500：初始化Promise在连接失败后一直被缓存；已在失败时关闭连接池并清除缓存，允许后续重试。2026-10-13只读确认本地28表/schema 22，health/ready恢复200。
+- 报价任务持续轮询：核查为queued、attempts=0且无独立Worker；处理用户实际任务时启动一个Worker，该报价任务领取后succeeded。未创建额外测试任务；启动伴随正常会话/配额维护，没有删除过期存储文件。
+
+这些是处理用户实际运行问题的记录，不代表全套测试已执行。2026-10-12授权复制旧项目业务配置至目标根.env并取消Git跟踪；仅保留配置事实，不记录任何密钥。生产全新库及密钥配置见部署文档，不能直接复用本地旧业务数据目标。
+
+## 当前模块结构与责任
+
+```text
+src/app/[lang]/(workspace)/smart-eye/
+├── layout.tsx                        ErrorBoundary、Toaster、模块样式
+├── page.tsx                          重定向入口
+├── _components/
+│   ├── layout/                       sidebar、workspace-shell、workspace.module.css
+│   ├── ui/                           12个实际使用的UI文件
+│   ├── jobs/job-status.tsx            任务轮询与错误显示
+│   └── error-boundary.tsx
+├── _hooks/                           use-api、use-locale、use-ui-text
+├── _lib/                             copy、ui-copy.en/zh、ui-text
+├── _styles/                          smart-eye.css、pages.module.css
+├── login/                            页面与login.module.css
+└── app/
+    ├── layout.tsx                    业务顶栏与WorkspaceShell
+    ├── dashboard/                    页面与dashboard.module.css
+    ├── accounts/[id]/                客户详情、联系人保存及影响力评分
+    ├── projects/[id]/                项目详情
+    └── 其他现有业务页面
 ```
 
-现有 `dev`、`build`、`start`、`typecheck` 不改。环境加载统一为Next现有加载规则：CLI使用 `@next/env` loadEnvConfig；该包已由Next安装，仍显式声明为直接依赖，避免依赖偶然的安装布局。启动时保留外部注入变量优先，核对生产/开发模式；不再维护另一份只识别.env.local的解析器，不新增独立dotenv包。
+- 首轮移动21个模块专用文件，更新所有消费者及Tailwind扫描路径；旧位置不保留重复重导出。
+- 共用官网SiteHeader、LocaleSwitch、公共Locale类型。业务实例使用116px顶栏、244px侧栏；官网Header默认行为保持。
+- `_hooks/use-locale.ts`只读[lang]；固定文案字典只做显示查找与数字格式化，不维护Context、默认语言或localStorage。旧i18n、Provider包装已删除。
+- API客户端、后端lib/repositories、Worker及scripts继续保留原位置；不另建业务服务层或国际化框架。
+- CSS和Dialog/Popover/Select/Toaster的Portal均保留smart-eye-scope；模块Tailwind扫描入口为`@source ".."`。页面专属样式使用CSS Modules。
 
-Next配置只合入实际需要的Proxy上传body限制；不照搬旧局域网开发来源。此次不创建新的通用认证包装框架。
+## 已完成的冗余清理
 
-此处只完成代码/依赖/脚本迁入，不单独运行typecheck、build或启动Worker做测试。验证统一放到阶段A全部迁入完成之后。
+| 范围 | 处理与保留边界 |
+| --- | --- |
+| 迁入排除 | 20个完整不可达源文件及7个文件中的不可达函数/类型，清单见附录；测试、seed、旧官网/SEO、缓存和构建产物不迁入 |
+| 无消费者模块文件 | 删除5个document封装：document-download、file-upload、form-field、generated-document-history、requirement-input；另删除未启用Header |
+| UI子组件 | 删除17个无内部/外部消费者的定义；6个仍有内部调用的helper只取消公共导出 |
+| 后续无用包装 | 删除旧WebsiteHeader、Avatar、I18n Context和只剩包装职责的Provider |
+| 样式 | 删除旧深色token、neon效果、dark类、未启用布局分支和无消费者规则；保留移动导航、Portal和有效交互 |
+| 图片 | 54个被替换且无引用的旧PNG已删除；另移除2个无引用SVG导出，最终保留59个Figma本地SVG |
 
-### 2. 迁入旧页面，仅做接线与必要布局适配
+文件删除依据是引用归零或分支未启用。页面正在使用的CSV、历史、上传、下载、候选审核、任务及数据库表没有随孤立代码删除。
 
-1. 当前 `[lang]/layout.tsx` 保留html/body、合法语言检查及共同基础；将官网Header/Footer/AOS和site-body外壳移到 `[lang]/(website)/layout.tsx`。
-2. 把官网 `(home)`、home、products、contact、cases目录移入 `(website)`；内容和已有CSS Modules保持原样，修正受移动影响的相对import。
-3. 源 `src/app/(website)/smart-eye/**` 迁入目标 `src/app/[lang]/(workspace)/smart-eye/**`，排除测试和AuthGate。迁入18个page及实际组件，批量更新旧目录import。
-4. 迁入13个实际UI文件、可达hooks、ErrorBoundary/业务Provider。Toaster仅挂业务layout，不复制旧根layout/SEO。
-5. 旧业务依赖64px顶栏：迁入旧WebsiteHeader中实际顶栏部分，保留原高度和交互，更新官网/业务链接；不迁旧WebsiteChrome/Footer。这是布局适配，首轮不重画页面。
-6. 业务CSS放在smart-eye目录，仅提取业务token和组件规则；保留目标globals。业务容器及Dialog/Popover/Select/Toaster等portal挂业务样式范围；不整份复制旧body/:root/全局base。
-7. 业务引用的图片复制到 `public/img`，保留原URL，官网 `/image` 不改。
-8. 路径用 `/{lang}/smart-eye/login`、`/{lang}/smart-eye/app/*`；保留入口跳到app/quotation。内部链接、侧栏高亮、登录/退出/401的回跳同步适配lang，next仍只允许合法站内业务路径。
-9. 原 `src/app/smart-eye` 占位页/layout替换为旧入口兼容跳转，覆盖深层路径，保留query；默认语言用SITE_DEFAULT_LOCALE。旧裸业务路径按实际使用兼容，不抢占官网/products。
-10. 官网header/footer及Smart Eye卡片接入带语言入口；语言切换保留业务query。
+## 新设计与界面双语
 
-此处完成页面、路由、UI、图片和样式接线，不逐页测试。文案可暂时保持旧中文，统一测试时验证功能；英文界面在阶段B完成。
+通过Figma MCP Go读取“官网 (Copy)”的新高保真组`527:225`，对应页面和编辑状态读取完整节点及截图；资产直接导出SVG，保留原几何尺寸，截图不用作页面背景。
 
-### 3. 补齐运行资源，结束代码迁入
+保留邮箱＋密码登录和独立注册；不新增手机登录或自动注册。没有独立画板的审核页和看板，经用户确认沿用现有布局/业务，统一新共享风格及双语。设计未画出的有效功能继续保留，包括投标模板、章节导航、表格编辑及账户退出。
 
-1. 迁入Python crawler源码/requirements/说明，准备独立运行环境；保留现有采集/打印，不补自动入库、分页或额外调度，不运行付费/定时采集。
-2. 补齐遗漏的import、配置JSON、SQL、图片、CLI与运行说明；核对20个完整文件、测试、旧官网和seed已排除。
-3. 完成Web/Worker环境配置和生产打包所需资源。到此原第1–3步的迁入工作全部完成，再开始以下统一测试。
+菜单、按钮、字段、提示、固定状态、日期数字及任务进度适配zh/en。API参数/枚举值、组织身份、jobs payload、Worker提示词、客户数据和AI正文保持；报价、合同、投标预览、模板及下载继续保留中文。
 
-### 阶段A统一测试
-
-先运行 `npm run typecheck`、`npm run build`；在隔离验收库运行 `npm run db:migrate`，确认28表及schema至少22，不运行seed。启动Web和独立Worker，检查health/live、health/ready；ready不代替业务、存储和Worker验证。
-
-在隔离环境按下列顺序验收，优先做完整链路而非逐个点按钮：
-
-1. 登录 → 读取产品/客户/项目 → 编辑保存 → 刷新确认 → 客户/项目CSV导出；不同组织访问拒绝。
-2. 创建报价文档任务 → jobs进入queued → Worker执行 → succeeded → 历史列表 → 下载并检查文件。合同/标书/会议依次验收。
-3. AI发现/匹配/补全/深度研究与URL提取，确认结果、任务状态、候选情报审核及promote/reject；只使用经确认的验收样本。
-4. 上传/转换/录音转写验证实际存储、供应商配置和结果；查看失败状态/错误，不用mock结果宣称服务已可用。
-5. 验证会话失效刷新、并发刷新、临时服务失败、任务取消/失败/恢复及cleanup；保留现有行为。
-6. 在可用且经确认的外部服务条件下核验Python现有能力；没有条件时明确记为未验证，不把源码迁入说成自动采集/入库已可用。
-7. 使用上述生产构建，以 `npm run start` 和独立 `npm run worker:jobs` 验证SQL、JSON、图片及CLI在生产包中可用；同时回归官网zh/en和业务路由。
-
-**完成条件：** 旧可达功能验证完成，形成“旧功能迁移版本”；未验证第三方/Python部分明确列出。重复JWT/Origin/任务列表精简和业务功能删减留作独立变更，迁移阶段不混做。
-
-## 阶段B：合并第4–5步，新环境切换后释放旧环境
-
-### 4. 新设计与界面中英文
-
-1. 以阶段A迁移完成版本为对照，按页面调整样式，优先共享顶栏/侧栏、列表与表单，再处理复杂文档页面；保持原请求、校验和保存/下载逻辑，不逐页测试。同步将当前仅由Smart Eye使用的13个UI组件、业务Provider和ErrorBoundary收进Smart Eye模块，更新引用与Tailwind扫描路径，保留Portal样式范围；页面专属样式随设计更新整理，不在当前运行问题排查中重构。
-2. 复用现有I18n Context和 `src/lib/locales.ts` 类型，以URL语言初始化字典；固定文案分zh/en，不新增国际化框架，不通过localStorage覆盖URL语言。
-3. 翻译菜单、按钮、字段标签、验证、toast、加载、固定状态和日期数字显示；后端字段名/枚举原值、客户资料、AI正文、文档模板/文件保持原样。
-4. 业务API、jobs payload、Worker、AI提示词、数据库结构不因界面语言变化而增加language参数；语言切换不重新生成任务。
-5. 准备新环境部署配置，与页面/界面双语一起完成后进入切换和统一验收，不在第4步单独跑构建或页面测试。
-
-### 5. 连接原数据库/存储，切换与释放
-
-1. 按现有部署方式准备目标Web和独立Worker，使用同一现有逻辑数据库与文件存储；不复制第二套业务库，不重建PostgreSQL服务，不更换OSS bucket。
-2. 核验真实schema_version/表结构、文件路径与object key、域名/Origin、外部可读签名URL和部署权限。原库已经满足22时不因代码迁移自动跑DDL；确需增量时先备份并确认。
-3. 页面/双语及新环境配置全部完成后，统一运行typecheck/build并部署新应用。暂停旧系统新任务提交和独立采集调度，排空或记录运行任务，停止旧Worker，再切换Web入口与新Worker。首次只运行一个Worker，不顺便增加并发。
-4. 在新环境进行阶段B最终验收：zh/en首屏、链接/回跳/query、桌面/移动端/portal、官网、原账号/组织/历史数据/文件、一个新任务及下载、健康与Worker日志。双区域Web若启用，明确连接同一逻辑数据源并确认跨区连通。
-5. 最终验收通过后释放旧Web/Worker进程、旧应用容器和确认不再使用的应用资源，取消旧启动/调度配置，避免重启后旧Worker再次运行。旧机器只有确认不承载沿用数据库、文件存储或其他仍用服务时才可释放。源代码和必要恢复备份保留；不删除沿用的PostgreSQL、数据卷、OSS bucket或业务文件。
-6. 释放运行资源前保存旧应用版本和入口配置用于恢复。若最终验收失败，先停新Worker，再恢复旧应用/Worker与入口，核对运行/排队任务；切换后已有新写入时不直接用旧备份覆盖数据，旧环境此时不释放。
-
-**完成条件：** 新环境页面/界面双语和原业务通过最终验收，原数据/文件可用，旧应用运行资源已释放，仍在使用的数据存储保留；不存在未说明的未验证项。
-
-## 两阶段执行与测试边界
-
-| 阶段 | 内容 | 测试时机 |
+| 页面/范围 | Figma节点 | 实现 |
 | --- | --- | --- |
-| A（原1–3） | 后端lib/API、Worker/SQL、依赖/env、旧页面/路由/UI/图片/CSS、Python及运行资源 | 全部迁入完成后统一做类型/构建和业务回归，不在内部环节分别测试 |
-| B（原4–5） | 新设计、界面双语、部署新环境、连接原库/存储、切换入口与Worker、释放旧应用环境 | 全部改动完成后统一构建，部署切换后最终验收；通过再释放旧运行资源 |
+| 登录 | 577:2269（遮罩577:2270） | 640×577浅蓝卡片、56px字段及按钮；登录/注册切换、密码显示及认证提示双语 |
+| 总览 | 531:1637 | 白色内容区、浅蓝KPI；标题、计数与金额双语，保留原汇总算法 |
+| 产品库 | 577:2 | 三列500px卡片、搜索、标签和操作；保留新增/编辑、删除、AI匹配 |
+| 目标客户 | 577:2768 | 500px搜索、表格、列筛选及匹配状态；保留创建、批量匹配和导出 |
+| 客户详情 | 586:137、566、851 | 总览、策略卡和联系人；编辑状态参考586:1170、1634、2101、2320、2856、3463，保留保存及AI完善 |
+| 项目跟进 | 577:3092 | 两列项目卡片、选择/创建/删除/导出及详情入口 |
+| 项目详情 | 586:3831 | 左1000px/右530px信息区、时间节点、情报及招标详情、加入销售管线 |
+| 深度情报 | 577:3740 | 产品选择及分析结果区、白色决策链卡片；保留行业/区域条件、结果标签页及批量加入客户 |
+| 销售管线 | 577:3930 | 145px统计卡片及机会列表；保留筛选、编辑、阶段和金额计算 |
+| 报价单 | 531:1794 | 左574px表单、右918px预览，独立滚动；保留AI填充、明细/税额计算和下载 |
+| 合同 | 580:4148 | 同类表单/预览布局，保留合同金额及中文大写、AI填充和下载 |
+| 投标文件 | 580:4465 | 上传与空预览按新稿；分析后保留模板、章节、缺失信息及表格编辑、下载 |
+| 沟通梳理 | 580:4613 | 900px模式与输入卡片；保留音频转写、会议纪要/分析两模式及下载 |
+| 格式转换 | 580:4761 | 900px上传与目标格式卡片；保留原文件格式值、转换及下载 |
+| 系统设置 | 580:4898（画板误名“格式转换”，实际内容为设置） | 574px公司信息卡片，保留账户退出；字段、保存与退出提示双语 |
+| 候选情报审核 | 用户确认使用共享风格 | 保留采集、批量URL提取、候选审核及promote/reject |
+| 管线看板 | 用户确认使用共享风格 | 保留阶段列、机会卡片和阶段切换按钮，统计金额按语言显示 |
+| 公共顶栏/导航 | 531:1791、1774、1666；559:194–252及选中状态 | 复用官网SiteHeader，116px顶栏、244px侧栏、普通/选中图标；保留公共语言切换和移动导航 |
 
-不按文件、页面或原第1/2/4步分别跑测试。阶段统一验收失败时修复并复核相关项，不无条件重复全套检查。测试源码不迁入。不为迁移新增抽象层、重写工作代码或引入未用依赖。
+英文允许必要换行，小屏保留原交互并自适应。没有独立移动画板；桌面设计尺寸及静态解析通过不等于浏览器像素验收。
 
-## 必须保留的能力与已知边界
+## 验证记录及剩余事项
 
-- 18个页面、48个API、15类任务、28张数据库表；保留认证/刷新、组织隔离、限流/配额、Worker清理/恢复、local/OSS文件、文档历史/下载和现有CSV导出。排除孤立代码不删除数据库表或历史数据。
-- db:migrate、基线和增量SQL、Worker/env入口是运行工具，保留。seed及专属seed-logic、测试、旧官网/SEO、缓存和构建产物不迁入；真实环境文件和备份不加入源码。
-- Python有独立入口，源码保留。当前仅采集/提取/打印，没有自动提交ingest；分页及部分调度未实现，补功能单独安排。
-- 语音转写和文档转换已有实际讯飞实现，旧README的占位描述过时；是否可用通过实际供应商环境验收。
-- 源码要求schema至少22，旧部署说明写19；正式操作以前以实际库和源码为准。迁移本身不要求改表或导入seed。
-- Worker未发现心跳续锁；任务stale与LFASR默认超时均为30分钟，旧容器停机宽限15分钟。切换前排空或记录运行任务，避免旧/新Worker同时消费或清理原文件。
-- Cookie范围为/api与/api/auth；保持API认证，页面布局不假设能读取这些Cookie。业务CSS及portal隔离；上传限制和签名URL在阶段统一验收中验证。
-- docxtemplater、pdf-lib、html2canvas、jspdf、recharts、未用Radix和测试依赖不主动迁入；pdf-parse的传递依赖、业务CSS所需包、tsx等真实运行依赖保留。
+界面适配结束时的静态核对：18个页面入口、48个API保留；671个本地import及模块命名导出可解析，CSS Modules类名、CSS及TS/TSX语法正常。共享字典60个中英同名键，固定UI英文字典545个键，原英文界面中文字典47个键。
 
-## 排除清单
+对照修改前快照，API调用、FormData字段、状态setter、useApi/effect/memo等核心调用一致；报价、合同和投标预览文本/数据表达式保持。196个未纳入调整的原文件哈希一致，含后端、Worker、CLI和依赖；数量变化来自明确删除的旧PNG，不表示后端文件减少。
 
-以下20个完整文件通过TypeScript引用追踪和全文搜索复核：既不在Smart Eye/API/Worker入口闭包中，也不在包含旧官网、seed及模板维护工具的全部入口闭包中。结论针对当前仓库；迁入前复核引用，旧源码保留，不执行旧项目删除。
+剩余事项：用户手动核对业务保存、登录刷新、任务完成、文件读写/下载、移动端和Portal，并进行正式发布需要的类型/构建检查。官网home原有scenesInner类引用问题未在本轮处理。部署、空库初始化、SEO/GEO代码与搜索平台配置见部署文档。
+
+Python当前仍只有采集、提取、打印，没有自动ingest、完整分页及中低频调度。供应商环境、签名URL、上传限额和付费功能需用户按实际使用验收，不把源码迁入当作功能验收。
+
+以下重复逻辑未在本轮重构：Proxy与handler的JWT验证、API/Worker的任务类型清单、部分Origin检查。收敛前必须核实全部handler的401/500行为、组织边界及无Access Cookie的认证请求；不能为减少重复直接删除认证或真实任务handler。
+
+## 附录：迁入排除依据
+
+以下清单以当时来源版本为准，原行号仅作历史定位，不能当作当前目标文件行号。20个文件不在页面/API/Worker及相关维护工具的可达闭包中；本地来源代码保留。部分文件只剪裁明确不可达内容，运行功能、数据库表及历史行为没有因此删除。
 
 ### 可整体不迁入的20个文件
 
@@ -212,25 +188,3 @@ UI 文件按当前迁移范围不复制；后续新设计若确实使用它们�
 | `src/lib/jobs/worker.ts` | 第215行的 `__testOnly` 导出对象及对象内测试重置闭包 | 消费者只在测试；它引用的 maybeCleanupExpiredStoredFiles、maybeCleanupProviderQuotaLeases、maybeCleanupAuthSessions 等真实运行函数必须保留 |
 
 这里是迁入时的局部剪裁，不要求提前修改旧项目。省掉未使用 AuthGate 的 /me→refresh→/me 初始化，不是取消用户正在使用的自动刷新：`authenticated-fetch.ts` 中并发合并、有限重试、401回跳和临时故障区分仍保留。
-
-### 待业务跑通后处理的重复逻辑
-
-#### 重复JWT验证
-
-- `src/proxy.ts:205` 的受保护 API 分支通过 verifyToken 验证 Access Cookie。
-- `src/lib/api/auth.ts` 的 authenticateRequest/getAuthOrg 再验证同一 Cookie。
-- 可保留 handler 为认证边界，并省去 Proxy 重复 JWT；但必须先检查全部受保护 handler 的错误处理。
-- 反例：`api/ai/discover/route.ts:8` 的 getAuthOrg 在 try 外；`api/alerts/route.ts` 把捕获的认证错误统一返回500。直接删 Proxy 会改变未登录请求的结果。
-- 验收后才实施：缺少/伪造/过期 Cookie 返回401；合法请求不重复验 JWT；组织身份只来自可信认证；Origin/上传/组织范围等检查继续有效。
-
-#### 重复任务类型清单
-
-- `api/jobs/route.ts:13` 的 ALLOWED_JOB_TYPES、第30行 CREATABLE_JOB_TYPES，与 `lib/jobs/worker.ts:78` 的 SUPPORTED_JOB_TYPES 经 AST 比较完全相同，都是15项。
-- 可以只维护一份当前共同列表，由 API 和 Worker 消费；保留类型定义、15个handler、未知类型拒绝和当前创建策略。
-- 这是减少列表重复维护，不是去掉任务队列、Worker或其中任何任务功能。未来可创建与可执行范围分化时再明确区分。
-
-#### 部分重复Origin检查
-
-- Proxy 对带 Access Cookie 的 API 写请求做 Origin 检查；login/register/refresh/logout handler 自身也检查 Origin。
-- 只在满足 Proxy 条件时重叠。无 Access Cookie 的登录/注册、只有 Refresh Cookie 的刷新仍依赖 handler 检查，因此不能全删 handler 的 Origin。
-- 若收敛，可按明确已覆盖的认证路由划分检查责任；普通业务写请求保持有效检查。迁移初期保留原行为也可，优先级低于功能跑通。

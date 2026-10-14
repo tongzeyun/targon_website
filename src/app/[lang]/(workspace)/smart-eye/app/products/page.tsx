@@ -1,18 +1,20 @@
 ﻿"use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+import pageStyles from "@/app/[lang]/(workspace)/smart-eye/_styles/pages.module.css";
+
 import { useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/badge";
+import { Button } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/dialog";
+import { Input } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/input";
+import { Label } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/label";
+import { Textarea } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/textarea";
 import { JobStatus } from "@/app/[lang]/(workspace)/smart-eye/_components/jobs/job-status";
-import { useApi } from "@/lib/hooks/use-api";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { aiApi, productsApi } from "@/lib/api/client";
 import { parseJsonArr } from "@/lib/utils";
 import { toast } from "sonner";
-import Image from "next/image";
 
 interface ProductListItem {
   id: string;
@@ -52,6 +54,7 @@ function normalizeProduct(product: ProductListItem): NormalizedProduct {
 
 
 export default function ProductsPage() {
+  const uiText = useUiText();
   const [search, setSearch] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -112,7 +115,7 @@ export default function ProductsPage() {
 
   const handleSave = async () => {
     if (!form.name || !form.category) {
-      toast.error("产品名称和分类必填");
+      toast.error(uiText("产品名称和分类必填"));
       return;
     }
 
@@ -120,16 +123,16 @@ export default function ProductsPage() {
     try {
       if (editingId) {
         await productsApi.update(editingId, form);
-        toast.success("产品已更新");
+        toast.success(uiText("产品已更新"));
       } else {
         await productsApi.create({ ...form, specs: {}, competitorProducts: [], isActive: true });
-        toast.success("产品已添加");
+        toast.success(uiText("产品已添加"));
       }
       setShowAdd(false);
       resetForm();
       refetch();
     } catch (error) {
-      toast.error("保存失败: " + getErrorMessage(error));
+      toast.error(uiText("保存失败: ") + getErrorMessage(error));
     } finally {
       setSaving(false);
     }
@@ -150,13 +153,13 @@ export default function ProductsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("确认删除该产品？")) return;
+    if (!confirm(uiText("确认删除该产品？"))) return;
     try {
       await productsApi.delete(id);
-      toast.success("已删除");
+      toast.success(uiText("已删除"));
       refetch();
     } catch {
-      toast.error("删除失败");
+      toast.error(uiText("删除失败"));
     }
   };
 
@@ -164,12 +167,12 @@ export default function ProductsPage() {
     setMatchingId(productId);
     try {
       const { jobId } = await aiApi.match(productId);
-      if (!jobId) throw new Error("匹配任务未创建");
+      if (!jobId) throw new Error(uiText("匹配任务未创建"));
       setMatchJobId(jobId);
       setMatchProductId(productId);
-      toast.info("匹配任务已提交，正在后台处理");
+      toast.info(uiText("匹配任务已提交，正在后台处理"));
     } catch (error) {
-      toast.error("AI 匹配失败: " + getErrorMessage(error));
+      toast.error(uiText("AI 匹配失败: ") + getErrorMessage(error));
     } finally {
       setMatchingId(null);
     }
@@ -184,20 +187,20 @@ export default function ProductsPage() {
     setMatchJobId(null);
     setMatchProductId(null);
     if (result.status === "succeeded") {
-      toast.success(`AI 匹配完成，${result.resultJson?.matches ?? 0} 家客户已生成策略卡`);
+      toast.success(uiText("AI 匹配完成，{0} 家客户已生成策略卡", { 0: result.resultJson?.matches ?? 0 }));
       refetch();
     } else if (result.status === "failed") {
-      toast.error(result.errorMessage || "AI 匹配失败");
+      toast.error(result.errorMessage || uiText("AI 匹配失败"));
     }
   };
 
   return (
-    <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-slate-100 sm:px-6 lg:px-8 lg:pb-10 lg:pt-[110px]">
+    <section className={`${pageStyles.page} ${pageStyles.products}`}>
       <div className="max-w-[1665px]">
-        <div className="mb-7 flex flex-col items-stretch gap-5 sm:flex-row sm:items-start sm:justify-between lg:mb-9">
+        <div className="mb-[33px] flex flex-col items-stretch gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[32px]">产品库</h1>
-            <p className="mt-3 text-base leading-7 text-[#A6AEBD] sm:text-xl">管理你的可售产品，AI将基于此匹配目标客户</p>
+            <h1>{uiText("产品库")}</h1>
+            <p className="mt-3 text-base leading-7 text-[#52637a] sm:text-xl">{uiText("管理你的可售产品，AI将基于此匹配目标客户")}</p>
           </div>
 
           <Dialog
@@ -211,38 +214,37 @@ export default function ProductsPage() {
               className="btn-bg mt-1 inline-flex h-10 w-fit items-center rounded-[10px] px-5 text-sm font-semibold cursor-pointer"
               onClick={() => setShowAdd(true)}
             >
-              添加产品
-            </div>
+              {uiText("添加产品")}</div>
             <DialogContent
               className="smart-eye-dialog max-w-2xl"
               overlayClassName="bg-black/70 supports-backdrop-filter:backdrop-blur-sm"
             >
               <DialogHeader>
-                <DialogTitle>{editingId ? "编辑产品" : "添加新产品"}</DialogTitle>
+                <DialogTitle>{editingId ? uiText("编辑产品") : uiText("添加新产品")}</DialogTitle>
               </DialogHeader>
               <div className="smart-eye-dialog__body space-y-4">
                 <div className="smart-eye-dialog__columns grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>产品名称 *</Label>
+                    <Label>{uiText("产品名称 *")}</Label>
                     <Input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>产品型号</Label>
+                    <Label>{uiText("产品型号")}</Label>
                     <Input value={form.model} onChange={(event) => setForm({ ...form, model: event.target.value })} />
                   </div>
                 </div>
                 <div className="smart-eye-dialog__columns grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>产品分类 *</Label>
+                    <Label>{uiText("产品分类 *")}</Label>
                     <Input value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>价格区间</Label>
+                    <Label>{uiText("价格区间")}</Label>
                     <Input value={form.priceRange} onChange={(event) => setForm({ ...form, priceRange: event.target.value })} />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>目标行业</Label>
+                  <Label>{uiText("目标行业")}</Label>
                   <div className="flex flex-wrap gap-2">
                     {form.targetIndustries.map((tag) => (
                       <Badge key={tag} className="cursor-pointer" onClick={() => removeTag("targetIndustries", tag)}>
@@ -252,7 +254,7 @@ export default function ProductsPage() {
                   </div>
                   <Input
                     value={industryInput}
-                    placeholder="输入行业，回车添加"
+                    placeholder={uiText("输入行业，回车添加")}
                     onChange={(event) => setIndustryInput(event.target.value)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
@@ -264,7 +266,7 @@ export default function ProductsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>适用场景/工艺</Label>
+                  <Label>{uiText("适用场景/工艺")}</Label>
                   <div className="flex flex-wrap gap-2">
                     {form.applications.map((tag) => (
                       <Badge key={tag} className="cursor-pointer" onClick={() => removeTag("applications", tag)}>
@@ -274,7 +276,7 @@ export default function ProductsPage() {
                   </div>
                   <Input
                     value={appInput}
-                    placeholder="输入场景，回车添加"
+                    placeholder={uiText("输入场景，回车添加")}
                     onChange={(event) => setAppInput(event.target.value)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
@@ -286,105 +288,103 @@ export default function ProductsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>产品描述</Label>
+                  <Label>{uiText("产品描述")}</Label>
                   <Textarea value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} />
                 </div>
                 <Button className="smart-eye-dialog-action btn-bg w-full" onClick={handleSave} disabled={saving}>
-                  {saving ? "保存中..." : editingId ? "更新产品" : "保存产品"}
+                  {saving ? uiText("保存中...") : editingId ? uiText("更新产品") : uiText("保存产品")}
                 </Button>
               </div>
             </DialogContent>
           </Dialog>
         </div>
 
-        <div className="relative mb-8 max-w-[534px]">
-          <Image className="absolute left-4 top-1/2 -translate-y-1/2"  src="/img/search.png" alt="search" width={18} height={18} />
+        <div className="relative mb-8 max-w-[500px]">
+          <img className="absolute left-4 top-1/2 -translate-y-1/2" src="/img/smart-eye/search.svg" alt="" />
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="搜索产品名称、分类、型号..."
-            className="h-[44px] rounded-[9px] border border-transparent pl-14 text-base text-slate-100 placeholder:text-[#8D96A7]"
+            placeholder={uiText("搜索产品名称、分类、型号...")}
+            className="h-10 rounded-[9px] border border-transparent pl-14 text-[17px] text-foreground placeholder:text-muted-foreground"
             style={{
               background:
-                "linear-gradient(#070B14, #070B14) padding-box, linear-gradient(135deg, #6FB1FF 14.64%, #8E8DFF 51.41%, #B07DFF 85.36%) border-box",
+                "linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(180deg, #5b9bff 0%, #464660 100%) border-box",
             }}
           />
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2 2xl:grid-cols-3">
+        <div className="grid gap-[30px] lg:grid-cols-2 2xl:grid-cols-3">
           {filtered.map((product) => (
             <article
               key={product.id}
-              className={`min-w-0 rounded-[12px] border border-[#202839] bg-[#131821] px-5 py-6 transition hover:border-[#3B6EA8] sm:px-6 sm:py-8 ${
-                product.isActive === false ? "opacity-55" : ""
-              }`}
+              className={`min-w-0 rounded-[12px] border border-border bg-card px-5 py-6 transition hover:border-[#3b6ea8] sm:px-6 sm:py-8 ${product.isActive === false ? "opacity-55" : ""}`}
             >
-              <div className="mb-8 flex items-start justify-between gap-4">
+              <div className="mb-5 flex items-start justify-between gap-4">
                 <div className="flex min-w-0 items-start gap-5">
                   <span className="w-[40px] h-[40px] flex items-center justify-center bg-[#5B9BFF24] border border-[#5B9BFF73] rounded-[10px]">
-                    <Image src="/img/product.png" alt="product" width={20} height={20} />
+                    <img src="/img/smart-eye/product.svg" alt="" />
                   </span>
                   <div className="min-w-0">
-                    <h2 className="truncate text-2xl font-bold leading-tight text-[#F1F5FA]">{product.name}</h2>
-                    <p className="mt-2 text-xl text-[#747D91]">{product.model}</p>
+                    <h2 className="truncate text-2xl font-bold leading-tight text-foreground">{product.name}</h2>
+                    <p className="mt-1 text-[17px] text-muted-foreground">{product.model}</p>
                   </div>
                 </div>
                 <span
                   className={
                     product.isActive === false
-                      ? "rounded-full bg-[#050914] px-4 py-1 text-sm text-[#A6AEBD]"
-                      : "rounded-full border border-[#396AA8] bg-[#173259]/70 px-4 py-1 text-sm text-[#8AB7FF]"
+                      ? "rounded-full bg-input px-4 py-1 text-sm text-[#52637a]"
+                      : "rounded-full border border-[#b8c3d0] bg-[#5b9bff]/15 px-4 py-1 text-sm text-[#5b9bff]"
                   }
                 >
-                  {product.isActive === false ? "停售" : "在售"}
+                  {product.isActive === false ? uiText("停售") : uiText("在售")}
                 </span>
               </div>
 
-              <p className="mb-6 min-h-[56px] text-lg leading-7 text-[#A6AEBD]">
-                {product.description || "暂无产品描述"}
+              <p className="mb-4 min-h-[52px] text-lg leading-7 text-[#52637a]">
+                {product.description || uiText("暂无产品描述")}
               </p>
 
-              <div className="mb-4 flex flex-wrap gap-3">
+              <div className="mb-3 flex flex-wrap gap-3">
                 {product.targetIndustries.map((tag) => (
-                  <span key={tag} className="rounded bg-[#050914] px-4 py-1.5 text-xs text-[#A6AEBD]">
+                  <span key={tag} className="rounded bg-input px-4 py-1.5 text-xs text-[#52637a]">
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <div className="mb-5 flex flex-wrap gap-3">
+              <div className="mb-4 flex flex-wrap gap-3">
                 {product.applications.length > 0 ? (
                   product.applications.map((tag) => (
-                    <span key={tag} className="rounded-md border border-[#396AA8] px-4 py-1.5 text-sm text-[#A6AEBD]">
+                    <span key={tag} className="rounded-md border border-[#b8c3d0] px-4 py-1.5 text-sm text-[#52637a]">
                       {tag}
                     </span>
                   ))
                 ) : (
-                  <span className="rounded-md border border-[#396AA8] px-4 py-1.5 text-sm text-[#A6AEBD]">待补充</span>
+                  <span className="rounded-md border border-[#b8c3d0] px-4 py-1.5 text-sm text-[#52637a]">{uiText("待补充")}</span>
                 )}
               </div>
 
-              <div className="flex flex-col items-start gap-4 border-t border-[#202839] pt-5 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-xl font-bold text-[#F1F5FA]">{product.priceRange || "-"}</span>
+              <div className="flex flex-col items-start gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-xl font-bold text-foreground">{product.priceRange || "-"}</span>
                 <div className="flex items-center gap-6">
                   <button
                     type="button"
-                    title="AI匹配已有客户"
+                    title={uiText("AI匹配已有客户")}
                     className="flex size-8 items-center justify-center disabled:opacity-50"
                     onClick={() => handleAIMatch(product.id)}
                     disabled={!!matchJobId || matchingId === product.id || matchProductId === product.id}
                   >
                     {matchingId === product.id || matchProductId === product.id ? (
-                      <span className="size-5 animate-spin rounded-full border-2 border-[#8D83FF] border-t-transparent" />
+                      <span className="size-5 animate-spin rounded-full border-2 border-[#8d83ff] border-t-transparent" />
                     ) : (
-                      <Image src="/img/star.png" alt="ai" width={18} height={18} />
+                      <img src="/img/smart-eye/star.svg" alt="" />
                     )}
                   </button>
-                  <button type="button" title="编辑" className="flex size-8 items-center justify-center" onClick={() => handleEdit(product)}>
-                    <Image src="/img/edit.png" alt="edit" width={18} height={18} />
+                  <button type="button" title={uiText("编辑")} className="flex size-8 items-center justify-center" onClick={() => handleEdit(product)}>
+                    <img src="/img/smart-eye/edit.svg" alt="" />
                   </button>
-                  <button type="button" title="删除" className="flex size-8 items-center justify-center" onClick={() => handleDelete(product.id)}>
-                    <Image src="/img/delete.png" alt="delete" width={18} height={18} />
+                  <button type="button" title={uiText("删除")} className="flex size-8 items-center justify-center" onClick={() => handleDelete(product.id)}>
+                    <img src="/img/smart-eye/delete.svg" alt="" />
                   </button>
                 </div>
               </div>
@@ -393,29 +393,27 @@ export default function ProductsPage() {
         </div>
 
         {matchJobId ? (
-          <div className="mt-8 rounded-md border border-[#253048] bg-[#111722] p-3">
+          <div className="mt-8 rounded-md border border-border bg-card p-3">
             <JobStatus jobId={matchJobId} onDone={handleMatchDone} />
           </div>
         ) : null}
 
         {loading ? (
-          <div className="py-20 text-center text-[#8D96A7]">
-            正在加载产品...
-          </div>
+          <div className="py-20 text-center text-muted-foreground">
+            {uiText("正在加载产品...")}</div>
         ) : error ? (
-          <div className="py-20 text-center text-[#8D96A7]">
-            <p>产品加载失败：{error}</p>
+          <div className="py-20 text-center text-muted-foreground">
+            <p>{uiText("产品加载失败：")}{error}</p>
             <button
               type="button"
               onClick={refetch}
-              className="mt-4 rounded-[8px] border border-[#396AA8] px-4 py-2 text-sm text-[#8AB7FF] transition hover:border-[#5B9BFF]"
+              className="mt-4 rounded-[8px] border border-[#b8c3d0] px-4 py-2 text-sm text-[#5b9bff] transition hover:border-[#5b9bff]"
             >
-              重新加载
-            </button>
+              {uiText("重新加载")}</button>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="py-20 text-center text-[#8D96A7]">
-            <p>没有找到匹配的产品</p>
+          <div className="py-20 text-center text-muted-foreground">
+            <p>{uiText("没有找到匹配的产品")}</p>
           </div>
         ) : null}
       </div>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useI18n } from "@/lib/i18n";
+import { useLocale } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-locale";
 
 import Link from "next/link";
-import { useApi } from "@/lib/hooks/use-api";
+import { useApi } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-api";
 import { accountsApi, pipelineApi, projectsApi } from "@/lib/api/client";
-import Image from "next/image";
+import { formatPipelineAmount, getSmartEyeCopy } from "../../_lib/copy";
+import styles from "./dashboard.module.css";
 
 interface ProjectDashboardItem {
   status?: string;
@@ -28,7 +29,9 @@ function parseDealAmount(dealAmount?: string): number {
 
 
 export default function DashboardPage() {
-  const { lang } = useI18n();
+  const lang = useLocale();
+  const copy = getSmartEyeCopy(lang).dashboard;
+  const number = (value: number) => value.toLocaleString(lang === "zh" ? "zh-CN" : "en-US");
   const { data: projects, loading: projectsLoading } = useApi(() => projectsApi.list());
   const { data: accounts, loading: accountsLoading } = useApi(() => accountsApi.list());
   const { data: pipelines, loading: pipelinesLoading } = useApi(() => pipelineApi.list());
@@ -52,57 +55,58 @@ export default function DashboardPage() {
   const kpis = [
     {
       href: `/${lang}/smart-eye/app/accounts`,
-      icon: "/img/dashboard_0.png",
-      value: accountList.length,
-      label: "客户总数",
-      sub: `${matchedAccounts}家已匹配`,
+      icon: "/img/smart-eye/kpi-accounts.svg",
+      value: number(accountList.length),
+      label: copy.accounts,
+      sub: copy.matched.replace("{count}", number(matchedAccounts)),
     },
     {
       href: `/${lang}/smart-eye/app/projects`,
-      icon: "/img/dashboard_1.png",
-      value: activeProjects,
-      label: "活跃项目",
+      icon: "/img/smart-eye/kpi-projects.svg",
+      value: number(activeProjects),
+      label: copy.projects,
       sub: "",
     },
     {
       href: `/${lang}/smart-eye/app/pipeline`,
-      icon: "/img/dashboard_2.png",
-      value: `¥${Math.round(weightedPipeline)}万`,
-      label: "加权管线金额",
-      sub: `总${Math.round(totalPipeline)}万`,
+      icon: "/img/smart-eye/kpi-pipeline.svg",
+      value: formatPipelineAmount(weightedPipeline, lang),
+      label: copy.weighted,
+      sub: copy.total.replace("{amount}", lang === "zh" ? `${number(Math.round(totalPipeline))}万` : formatPipelineAmount(totalPipeline, lang)),
     },
     {
       href: `/${lang}/smart-eye/app/pipeline`,
-      icon: "/img/dashboard_3.png",
-      value: `¥${Math.round(wonAmount)}万`,
-      label: "已签约金额",
-      sub: `${wonPipelines.length}单成交`,
+      icon: "/img/smart-eye/kpi-won.svg",
+      value: formatPipelineAmount(wonAmount, lang),
+      label: copy.won,
+      sub: copy.deals.replace("{count}", number(wonPipelines.length)),
     },
   ];
 
   return (
-    <section className="min-h-[calc(100dvh-64px)] w-full min-w-0 max-w-full bg-[#070B14] px-4 pb-24 pt-24 text-slate-100 sm:px-6 lg:px-8 lg:pb-10 lg:pt-[110px]">
-      <div className="">
-        <div className="mb-8">
-          <h1 className="text-[28px] font-bold leading-tight text-white sm:text-[32px]">总览</h1>
-          <p className="mt-3 text-base text-[#A6AEBD] sm:text-xl">销售数据全景</p>
+    <section className={styles.page} aria-busy={loading} aria-label={loading ? copy.loading : copy.title}>
+      <div>
+        <div className={styles.heading}>
+          <h1 className={styles.title}>{copy.title}</h1>
+          <p className={styles.subtitle}>{copy.subtitle}</p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-          {kpis.map((kpi) => (
+        <div className={styles.grid}>
+          {kpis.map((kpi, index) => (
             <Link
               key={kpi.label}
               href={kpi.href}
-              className="min-h-[190px] rounded-[12px] border border-[#202839] bg-[#131821] px-5 py-6 transition hover:border-[#3B6EA8] sm:min-h-[216px] sm:px-6 sm:py-8"
+              className={styles.card}
             >
-              <div className="w-[40px] h-[40px] mb-6 flex items-center justify-center bg-[#5B9BFF24] border border-[#5B9BFF73] rounded-[10px]">
-                <Image src={kpi.icon} alt={''} width={18} height={18} />
+              <div className={styles.icon}>
+                <img src={kpi.icon} alt="" />
               </div>
-              <div className="text-[40px] font-bold leading-none tracking-tight text-[#F1F5FA]">
+              {index === 0 && <img className={styles.arrow} src="/img/smart-eye/kpi-arrow.svg" alt="" />}
+              <div className={styles.value}>
                 {loading ? "-" : kpi.value}
               </div>
-              <div className="mt-4 text-base font-semibold text-[#F1F5FA]">{kpi.label}</div>
-              {kpi.sub ? <div className="mt-2 text-sm text-[#8D96A7]">{loading ? "-" : kpi.sub}</div> : null}
+              <div className={styles.label}>{kpi.label}</div>
+              {kpi.sub ? <div className={styles.detail}>{loading ? "-" : kpi.sub}</div> : null}
             </Link>
           ))}
         </div>

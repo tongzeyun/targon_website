@@ -1,5 +1,7 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+
 import { useState } from "react";
 import { Radio } from "@base-ui/react/radio";
 import { RadioGroup } from "@base-ui/react/radio-group";
@@ -29,10 +31,11 @@ export function InfluenceRating({
   readOnly = false,
   className,
 }: InfluenceRatingProps) {
+  const uiText = useUiText();
   const normalizedValue = normalizeContactInfluenceLevel(value);
   const [previewValue, setPreviewValue] = useState<number | null>(null);
   const displayedValue = previewValue ?? normalizedValue;
-  const accessibleLabel = `影响力：${normalizedValue} 星，共 ${CONTACT_INFLUENCE_MAX} 星`;
+  const accessibleLabel = uiText("影响力：{0} 星，共 {1} 星", { 0: normalizedValue, 1: CONTACT_INFLUENCE_MAX });
 
   if (readOnly) {
     return (
@@ -42,14 +45,11 @@ export function InfluenceRating({
         className={cn("inline-flex items-center gap-1", className)}
       >
         {levels.map((level) => (
-          <StarIcon
-            key={level}
-            aria-hidden="true"
-            className={cn(
-              "size-5",
-              level <= normalizedValue ? "fill-[#F8C65C] text-[#F8C65C]" : "fill-transparent text-[#50596A]",
-            )}
-          />
+          level <= normalizedValue ? (
+            <img key={level} src="/img/smart-eye/influence-star.svg" alt="" />
+          ) : (
+            <StarIcon key={level} aria-hidden="true" className="size-4 fill-transparent text-muted-foreground" />
+          )
         ))}
       </span>
     );
@@ -57,7 +57,7 @@ export function InfluenceRating({
 
   return (
     <RadioGroup
-      aria-label="影响力"
+      aria-label={uiText("影响力")}
       value={normalizedValue}
       onValueChange={(nextValue) => onValueChange?.(normalizeContactInfluenceLevel(nextValue))}
       onMouseLeave={() => setPreviewValue(null)}
@@ -70,19 +70,17 @@ export function InfluenceRating({
           <Radio.Root
             key={level}
             value={level}
-            aria-label={`${level} 星`}
+            aria-label={uiText("{0} 星", { 0: level })}
             onMouseEnter={() => setPreviewValue(level)}
             onFocus={() => setPreviewValue(level)}
             onBlur={() => setPreviewValue(null)}
-            className="flex size-11 cursor-pointer items-center justify-center rounded-md outline-none transition focus-visible:ring-2 focus-visible:ring-[#6FB1FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#11161F]"
+            className="flex size-11 cursor-pointer items-center justify-center rounded-md outline-none transition focus-visible:ring-2 focus-visible:ring-[#6FB1FF] focus-visible:ring-offset-2 focus-visible:ring-offset-card"
           >
-            <StarIcon
-              aria-hidden="true"
-              className={cn(
-                "size-7 transition-colors",
-                selected ? "fill-[#F8C65C] text-[#F8C65C]" : "fill-transparent text-[#50596A]",
-              )}
-            />
+            {selected ? (
+              <img src="/img/smart-eye/influence-star.svg" alt="" />
+            ) : (
+              <StarIcon aria-hidden="true" className="size-4 fill-transparent text-muted-foreground transition-colors" />
+            )}
           </Radio.Root>
         );
       })}

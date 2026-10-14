@@ -1,8 +1,10 @@
 "use client";
 
+import { useUiText } from "@/app/[lang]/(workspace)/smart-eye/_hooks/use-ui-text";
+
 import { useEffect, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/app/[lang]/(workspace)/smart-eye/_components/ui/badge";
 import { ApiResponseError, createApiResponseError } from "@/lib/api/api-error";
 import {
   AuthRefreshUnavailableError,
@@ -62,6 +64,7 @@ async function fetchJob(jobId: string): Promise<JobPollResponse> {
 }
 
 export function JobStatus({ jobId, onDone }: JobStatusProps) {
+  const uiText = useUiText();
   const [job, setJob] = useState<JobData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const onDoneRef = useRef(onDone);
@@ -120,7 +123,7 @@ export function JobStatus({ jobId, onDone }: JobStatusProps) {
     return (
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Loader2 className="size-4 animate-spin" />
-        <span>加载任务状态…</span>
+        <span>{uiText("加载任务状态…")}</span>
       </div>
     );
   }
@@ -134,20 +137,20 @@ export function JobStatus({ jobId, onDone }: JobStatusProps) {
     <div className="space-y-1 text-sm">
       <div className="flex items-center gap-2">
         {isActive && <Loader2 className="size-4 shrink-0 animate-spin text-muted-foreground" />}
-        <Badge variant={variant}>{label}</Badge>
+        <Badge variant={variant}>{uiText(label)}</Badge>
         {status === "running" && typeof job?.progress === "number" && (
           <span className="text-muted-foreground">{job.progress}%</span>
         )}
       </div>
       {status === "running" && job?.currentStep && (
-        <p className="text-muted-foreground">{job.currentStep}</p>
+        <p className="text-muted-foreground">{uiText(job.currentStep)}</p>
       )}
       {status === "failed" && job?.errorMessage && (
-        <p className="text-destructive">{job.errorMessage}</p>
+        <p className="text-destructive">{uiText(job.errorMessage)}</p>
       )}
       {error && (
         <p className={cn("text-muted-foreground", !job && "text-destructive")}>
-          {error}
+          {uiText(error)}
         </p>
       )}
     </div>

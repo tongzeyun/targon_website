@@ -1,0 +1,117 @@
+/* Module-only design tokens; every portal root carries smart-eye-scope. */
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@source "..";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-heading: var(--smart-eye-font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * .6);
+  --radius-md: calc(var(--radius) * .8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+.smart-eye-scope {
+  --background: #fff;
+  --foreground: #14284a;
+  --card: #eef5fb;
+  --card-foreground: #14284a;
+  --popover: #eef5fb;
+  --popover-foreground: #14284a;
+  --primary: #5b9bff;
+  --primary-foreground: #fff;
+  --secondary: #e3eaf2;
+  --secondary-foreground: #52637a;
+  --muted: #e3eaf2;
+  --muted-foreground: #8795a8;
+  --accent: #5b9bff24;
+  --accent-foreground: #14284a;
+  --destructive: #ff6b6b;
+  --border: #d1dce9;
+  --input: #e3eaf2;
+  --ring: #5b9bff;
+  --radius: .625rem;
+  --scrollbar-track: transparent;
+  --scrollbar-gradient: linear-gradient(180deg, #5b9bff, #464660);
+  --scrollbar-gradient-hover: linear-gradient(180deg, #6fb1ff, #52637a);
+  --scrollbar-thumb-fallback: #5b9bff;
+  --smart-eye-font-sans: "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", Arial, sans-serif;
+  color: var(--foreground);
+  font-family: var(--smart-eye-font-sans);
+}
+
+@layer base {
+  :where(.smart-eye-scope, .smart-eye-scope *) { @apply border-border outline-ring/50; }
+}
+
+@layer components {
+  .smart-eye-scope .btn-bg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #5b9bff 0%, #464660 100%);
+    color: #fff;
+    transition: filter 160ms ease, transform 160ms ease;
+  }
+  .smart-eye-scope .btn-bg:hover { filter: brightness(1.08); }
+  .smart-eye-scope .btn-bg:active { transform: translateY(1px); }
+  .smart-eye-scope .btn-bg:focus-visible { outline: 2px solid #5b9bff; outline-offset: 3px; }
+}
+
+.smart-eye-scope .smart-eye-dialog {
+  max-height: min(90vh, 840px);
+  gap: 0;
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 20px 70px rgb(20 40 74 / 20%);
+  color: var(--foreground);
+}
+.smart-eye-scope .smart-eye-dialog [data-slot="dialog-header"] { padding-right: 40px; }
+.smart-eye-scope .smart-eye-dialog [data-slot="dialog-title"] { color: var(--foreground); font-size: 20px; font-weight: 600; line-height: 1.4; }
+.smart-eye-scope .smart-eye-dialog [data-slot="dialog-close"] { top: 16px; right: 16px; width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 9px; background: var(--input); color: #52637a; }
+.smart-eye-scope .smart-eye-dialog [data-slot="dialog-close"]:hover { border-color: #5b9bff; color: #14284a; }
+.smart-eye-scope .smart-eye-dialog [data-slot="dialog-close"]:focus-visible { outline: 2px solid #5b9bff; outline-offset: 2px; }
+.smart-eye-scope .smart-eye-dialog__body { padding-top: 20px; }
+.smart-eye-scope .smart-eye-dialog [data-slot="label"] { color: var(--foreground); font-size: 14px; font-weight: 500; line-height: 1.4; }
+.smart-eye-scope .smart-eye-dialog [data-slot="input"],
+.smart-eye-scope .smart-eye-dialog [data-slot="textarea"],
+.smart-eye-scope .smart-eye-dialog__select { width: 100%; border: 1px solid transparent; border-radius: 8px; background: var(--input); color: var(--foreground); transition: border-color 160ms ease, box-shadow 160ms ease; }
+.smart-eye-scope .smart-eye-dialog [data-slot="input"], .smart-eye-scope .smart-eye-dialog__select { height: 40px; padding: 0 12px; }
+.smart-eye-scope .smart-eye-dialog [data-slot="textarea"] { min-height: 96px; padding: 10px 12px; }
+.smart-eye-scope .smart-eye-dialog [data-slot="input"]::placeholder, .smart-eye-scope .smart-eye-dialog [data-slot="textarea"]::placeholder { color: var(--muted-foreground); opacity: 1; }
+.smart-eye-scope .smart-eye-dialog [data-slot="input"]:focus-visible,
+.smart-eye-scope .smart-eye-dialog [data-slot="textarea"]:focus-visible,
+.smart-eye-scope .smart-eye-dialog__select:focus-visible { border-color: #5b9bff; outline: none; box-shadow: 0 0 0 3px #5b9bff24; }
+.smart-eye-scope .smart-eye-dialog [data-slot="badge"] { border: 1px solid #5b9bff73; background: #5b9bff24; color: #52637a; }
+.smart-eye-scope .smart-eye-dialog-action { min-height: 42px; margin-top: 6px; border: 0; color: #fff; font-size: 14px; font-weight: 600; }
+.smart-eye-scope .smart-eye-dialog-action:disabled { opacity: .55; }
+@media (max-width: 640px) {
+  .smart-eye-scope .smart-eye-dialog { width: calc(100vw - 24px); max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); padding: 16px; }
+  .smart-eye-scope .smart-eye-dialog__columns { grid-template-columns: minmax(0, 1fr); }
+}

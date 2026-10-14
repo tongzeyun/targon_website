@@ -1,0 +1,39 @@
+.page { min-width: 0; min-height: calc(100dvh - 116px); padding: 103px 85px 48px 30px; background: #fff; color: #14284a; }
+.page :global(h1) { color: #14284a; font-size: 32px; font-weight: 700; line-height: 46px; }
+.page :global(h1 + p) { margin-top: 5px; color: #52637a; font-size: 20px; line-height: 29px; }
+.page :global(input:not([type="checkbox"]):not([type="radio"])), .page :global(textarea), .page :global(select) { color: #14284a; }
+.page :global(img) { flex-shrink: 0; max-width: none; }
+.page :global(button) { cursor: pointer; }
+.page :global(button:disabled) { cursor: not-allowed; }
+.products :global(article) { min-height: 340px; border-radius: 14px; padding: 33px 24px 24px; }
+.products :global(article h2) { font-size: 20px; line-height: 27px; }
+.products :global(article p) { font-size: 17px; line-height: 26px; }
+.accounts :global(table) { width: 100%; font-size: 18px; }
+.accounts :global(thead th) { height: 58px; font-size: 17px; font-weight: 500; }
+.accounts :global(tbody tr) { height: 60px; }
+.accounts :global(tbody td) { padding-block: 12px; }
+.projects :global(article) { min-height: 205px; border-radius: 14px; }
+.projects :global(article h2) { font-size: 20px; line-height: 27px; }
+.accountDetail :global(h1), .projectDetail :global(h1) { font-size: 20px; line-height: 27px; }
+.accountDetail :global(h2), .projectDetail :global(h2), .research :global(h2) { color: #14284a; font-size: 20px; line-height: 27px; }
+.meeting :global(h2), .convert :global(h2), .settings :global(h2) { color: #14284a; font-size: 18px; line-height: 26px; }
+.accountDetail :global(h3), .projectDetail :global(h3) { color: #14284a; }
+.research :global([data-decision-card]) { background: #fff; }
+.pipeline :global([data-stat-card]) { min-height: 145px; }
+.document { display: flex; flex-direction: column; overflow-x: clip; padding-bottom: 4px; }
+.document :global(h2) { color: #14284a; }
+.document :global(.quotation-preview), .document :global(.contract-preview), .document :global(.bid-preview) { color: #52637a; }
+.document :global(.quotation-preview h2), .document :global(.contract-preview h2), .document :global(.bid-preview h2) { font-size: 28px; }
+.meeting > :global(div:not(:first-child)), .convert > :global(div:not(:first-child)) { max-width: 900px; }
+.settings > :global(form), .settings > :global(div) { max-width: 574px; }
+.intelligence { max-width: 1140px; }
+.board { overflow-x: clip; }
+@media (min-width: 1280px) { .document { height: calc(100dvh - 116px); overflow: hidden; } }
+@media (max-width: 1500px) { .page { padding-right: 32px; } }
+@media (max-width: 767px) {
+  .page { min-height: auto; padding: 40px 20px; }
+  .page :global(h1) { font-size: 28px; line-height: 40px; }
+  .page :global(h1 + p) { font-size: 16px; line-height: 26px; }
+  .accountDetail :global(h1), .projectDetail :global(h1) { font-size: 20px; line-height: 28px; }
+  .products :global(article), .projects :global(article) { min-height: 0; padding: 24px 20px; }
+}

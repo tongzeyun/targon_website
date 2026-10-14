@@ -1,0 +1,31 @@
+.page { position: relative; display: grid; min-height: 100dvh; place-items: center; padding: 64px 24px; background: rgb(4 7 13 / 88%); color: #14284a; }
+.locale { position: absolute; top: 24px; right: 32px; color: #eef5fb; font-size: 14px; }
+.card { width: min(100%, 640px); min-height: 577px; border-radius: 14px; padding: 40px 24px 24px; background: #eef5fb; }
+.logo { display: flex; justify-content: center; margin-bottom: 40px; }
+.logo img { display: block; max-width: none; }
+.heading { margin-bottom: 40px; text-align: center; }
+.title { font-size: 32px; font-weight: 500; line-height: 43px; letter-spacing: -.55px; }
+.subtitle { margin-top: 6px; color: #8795a8; font-family: Inter, Arial, sans-serif; font-size: 26px; line-height: 34px; letter-spacing: -.55px; }
+.form { display: grid; gap: 30px; }
+.field { position: relative; display: block; }
+.fieldIcon { position: absolute; top: 50%; left: 12px; display: flex; transform: translateY(-50%); pointer-events: none; }
+.fieldIcon img { display: block; max-width: none; }
+.input { width: 100%; height: 56px; border: 1px solid transparent; border-radius: 10px; padding: 0 44px; background: #e3eaf2; color: #14284a; font-size: 20px; outline: none; }
+.input::placeholder { color: #8795a8; opacity: 1; }
+.input:focus-visible { border-color: #5b9bff; box-shadow: 0 0 0 3px rgb(91 155 255 / 15%); }
+.password { padding-right: 76px; }
+.visibility { position: absolute; top: 50%; right: 16px; transform: translateY(-50%); color: #52637a; font-size: 12px; }
+.submit { display: grid; min-height: 56px; place-items: center; border-radius: 10px; background: linear-gradient(180deg, #5b9bff 0%, #464660 100%); color: #fff; font-size: 20px; font-weight: 500; transition: filter 160ms ease; }
+.submit:hover { filter: brightness(1.08); }
+.submit:disabled { cursor: wait; opacity: .6; }
+.switch { margin-top: 31px; text-align: center; }
+.switch button { color: #8795a8; font-size: 14px; line-height: 18px; }
+.switch button:hover { color: #14284a; }
+@media (max-width: 640px) {
+  .page { padding-inline: 16px; }
+  .card { min-height: 0; padding: 32px 24px; }
+  .title { font-size: 26px; line-height: 36px; }
+  .subtitle { font-size: 18px; line-height: 26px; }
+  .heading { margin-bottom: 32px; }
+  .input { font-size: 16px; }
+}

@@ -5,6 +5,7 @@
 .nav { display: flex; align-items: center; gap: clamp(24px, 4.5vw, 88px); white-space: nowrap; }
 .nav a { display: inline-flex; align-items: center; gap: 3px; color: var(--site-color-nav); font-size: 18px; line-height: 32px; }
 .nav a:hover, .locale:hover { color: var(--site-color-white); }
+.nav a[aria-current="page"] { color: var(--site-color-white); font-weight: 500; }
 .nav a span { color: var(--site-color-muted); font-weight: 700; }
 .actions { display: flex; align-items: center; justify-content: flex-end; gap: 24px; }
 .locale { color: var(--site-color-nav); font-family: var(--site-font-latin); font-size: 14px; white-space: nowrap; }
