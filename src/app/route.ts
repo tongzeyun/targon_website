@@ -1,10 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export function GET(request: NextRequest) {
+export function GET() {
   const locale = process.env.SITE_DEFAULT_LOCALE === "en" ? "en" : "zh";
-  const response = NextResponse.redirect(new URL(`/${locale}`, request.url), 302);
+  const response = new NextResponse(null, {
+    status: 302,
+    headers: { Location: `/${locale}` },
+  });
   response.headers.set("Cache-Control", "private, no-store");
   return response;
 }

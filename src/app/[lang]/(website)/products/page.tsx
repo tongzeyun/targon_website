@@ -59,7 +59,17 @@ const copy = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  return { title: copy[lang].title, description: copy[lang].description, robots: { index: false, follow: false } };
+  return {
+    title: copy[lang].title,
+    description: copy[lang].description,
+    alternates: {
+      canonical: `/${lang}/products`,
+      languages: {
+        "zh-CN": "/zh/products",
+        en: "/en/products",
+      },
+    },
+  };
 }
 
 export default async function ProductsPage({ params }: Props) {

@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
+
 type Props = { params: Promise<{ lang: string }> };
 
 export default async function CasesPage({ params }: Props) {

@@ -4,9 +4,11 @@ import { getDefaultLocale } from "@/lib/smart-eye-paths";
 export const dynamic = "force-dynamic";
 
 export function GET(request: NextRequest) {
-  const url = request.nextUrl.clone();
-  url.pathname = `/${getDefaultLocale()}${url.pathname}`;
-  const response = NextResponse.redirect(url, 302);
+  const { pathname, search } = request.nextUrl;
+  const response = new NextResponse(null, {
+    status: 302,
+    headers: { Location: `/${getDefaultLocale()}${pathname}${search}` },
+  });
   response.headers.set("Cache-Control", "private, no-store");
   return response;
 }

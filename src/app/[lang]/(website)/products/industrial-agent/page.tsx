@@ -135,7 +135,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${content.title} | ${lang === "zh" ? "探氩科技" : "Targon"}`,
     description: content.description,
-    robots: { index: false, follow: false },
+    alternates: {
+      canonical: `/${lang}/products/industrial-agent`,
+      languages: {
+        "zh-CN": "/zh/products/industrial-agent",
+        en: "/en/products/industrial-agent",
+      },
+    },
   };
 }
 

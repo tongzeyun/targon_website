@@ -1,0 +1,87 @@
+name: targon-ai
+
+services:
+  db:
+    image: postgres:16-bookworm
+    restart: unless-stopped
+    env_file:
+      - ../env/db.env
+    volumes:
+      - /var/lib/targon-ai/postgres:/var/lib/postgresql/data
+    networks:
+      - database
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    stop_grace_period: 1m
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  web:
+    image: targon-ai-app:20261015-v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    restart: unless-stopped
+    env_file:
+      - ../env/app.env
+    ports:
+      - "127.0.0.1:3301:3000"
+    volumes:
+      - /var/lib/targon-ai/files:/app/.data/stored-files
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - application
+      - database
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    stop_grace_period: 2m
+    logging:
+      driver: local
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  worker:
+    image: targon-ai-app:20261015-v1
+    command: ["node", "--import", "tsx", "scripts/job-worker.ts"]
+    init: true
+    restart: unless-stopped
+    env_file:
+      - ../env/app.env
+    volumes:
+      - /var/lib/targon-ai/files:/app/.data/stored-files
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - application
+      - database
+    stop_grace_period: 35m
+    logging:
+      driver: local
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+networks:
+  application: {}
+  database:
+    internal: true

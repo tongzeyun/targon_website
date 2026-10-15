@@ -83,7 +83,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${content.title} | ${lang === "zh" ? "探氩科技" : "Targon"}`,
     description: content.description,
-    robots: { index: false, follow: false },
+    alternates: {
+      canonical: `/${lang}/products/edge-collector`,
+      languages: {
+        "zh-CN": "/zh/products/edge-collector",
+        en: "/en/products/edge-collector",
+      },
+    },
   };
 }
 

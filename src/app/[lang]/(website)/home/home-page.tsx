@@ -7,6 +7,13 @@ import styles from "./home.module.css";
 
 type Props = { params: Promise<{ lang: string }> };
 
+const softwarePaths = {
+  vacuum: "/products/vacuum-ai",
+  agent: "/products/industrial-agent",
+  brain: "/products/enterprise-brain",
+  smartEye: "/smart-eye",
+} as const;
+
 const chainStepIcons = [
   "/image/home-chain-needs.png", // 527:943
   "/image/home-chain-ai-assistant.png", // 527:946
@@ -43,7 +50,7 @@ const copy = {
     offeringIntro: "TARGON 面向真空与半导体产业，提供 AI 软件产品与工业硬件产品，将人工智能能力与真实设备及产业场景连接起来。",
     softwareTitle: "AI 软件产品",
     software: [
-      { name: "Vacuum AI", description: "真空产业智能化平台，模型计算、元件交易、二手流通、维修保养、认证服务。", type: "产业平台", action: "查看案例", image: "vacuum" },
+      { name: "Vacuum AI", description: "真空产业智能化平台，模型计算、元件交易、二手流通、维修保养、认证服务。", type: "产业平台", action: "了解产品", image: "vacuum" },
       { name: "Local Industrial Agent", description: "让每一台设备拥有自己的 AI Agent——设备理解、故障诊断、预测维护、工艺优化、多设备协作。", type: "工业AI", action: "了解产品", image: "agent" },
       { name: "Enterprise Brain", description: "让企业拥有真正能执行任务的 AI 中枢——文件理解、数据核对、知识管理、任务执行、流程协作。", type: "企业AI", action: "了解产品", image: "brain" },
       { name: "灵眸智售", description: "专为B2B销售打造的 AI 销售赋能平台\n市场情报 → 目标客户 → 采购决策链 → 项目跟进 → 报价 → 成交。", type: "销售AI", action: "进入灵眸智售", image: "smartEye" },
@@ -62,7 +69,7 @@ const copy = {
     scenes: [
       { name: "Vacuum AI", headline: "AI，正在真实场景中发生", description: "Vacuum AI——从真空计算到产业服务的平台实践", image: "/image/home-scene-vacuum-ai.png", imageAlt: "Vacuum AI 平台界面" },
       { name: "Local Industrial Agent", headline: "AI，正在工业现场发生", description: "Local Industrial Agent——面向真空与半导体设备的本地化工业 AI Agent", image: "/image/home-scene-industrial-agent.png", imageAlt: "Local Industrial Agent 平台界面" },
-      { name: "Enterprise Brain", headline: "AI，正在企业业务中发生", description: "Enterprise Brain——从企业知识到业务执行的 AI 智能中枢", image: "/image/home-scene-enterprise-brain.png", imageAlt: "Enterprise Brain 知识库界面" },
+      { name: "Enterprise Brain", headline: "AI，正在企业业务中发生", description: "Enterprise Brain——从企业知识到业务执行的 AI 智能中枢", image: "/image/home-scene-enterprise-brain.png", imageAlt: "Enterprise Brain 知识库界面", imagePosition: "center top" },
       { name: "灵眸智售", headline: "AI，正在销售现场发生", description: "灵眸智售——从市场洞察到客户成交的 AI 销售智能平台", image: "/image/home-scene-smart-eye.png", imageAlt: "灵眸智售报价单界面" },
     ],
     reasonsTitle: "为什么选择Targon？",
@@ -104,7 +111,7 @@ const copy = {
     offeringIntro: "TARGON provides AI software and industrial hardware for the vacuum and semiconductor industries, connecting AI capabilities with real equipment and industrial applications.",
     softwareTitle: "AI Software Products",
     software: [
-      { name: "Vacuum AI", description: "An intelligent platform for the vacuum industry: model calculations, component trading, secondhand equipment, maintenance, and certification services.", type: "Industry Platform", action: "View Cases", image: "vacuum" },
+      { name: "Vacuum AI", description: "An intelligent platform for the vacuum industry: model calculations, component trading, secondhand equipment, maintenance, and certification services.", type: "Industry Platform", action: "Explore Product", image: "vacuum" },
       { name: "Local Industrial Agent", description: "An AI Agent for equipment understanding, fault diagnosis, predictive maintenance, process optimization, and coordination across devices.", type: "Industrial AI", action: "Explore Product", image: "agent" },
       { name: "Enterprise Brain", description: "An AI hub for enterprise tasks: document understanding, data checking, knowledge management, task execution, and workflow collaboration.", type: "Enterprise AI", action: "Explore Product", image: "brain" },
       { name: "Smart Eye", description: "An AI sales platform for B2B teams, from market intelligence to customer deals.", type: "Sales AI", action: "Explore Smart Eye", image: "smartEye" },
@@ -123,7 +130,7 @@ const copy = {
     scenes: [
       { name: "Vacuum AI", headline: "AI at Work in Real Applications", description: "Vacuum AI brings real calculations and industry services together on one platform.", image: "/image/home-scene-vacuum-ai.png", imageAlt: "Vacuum AI platform interface" },
       { name: "Local Industrial Agent", headline: "AI at Work on the Factory Floor", description: "A local Industrial AI Agent for vacuum and semiconductor equipment.", image: "/image/home-scene-industrial-agent.png", imageAlt: "Local Industrial Agent platform interface" },
-      { name: "Enterprise Brain", headline: "AI at Work in Enterprise Operations", description: "An AI hub from enterprise knowledge to business execution.", image: "/image/home-scene-enterprise-brain.png", imageAlt: "Enterprise Brain knowledge base interface" },
+      { name: "Enterprise Brain", headline: "AI at Work in Enterprise Operations", description: "An AI hub from enterprise knowledge to business execution.", image: "/image/home-scene-enterprise-brain.png", imageAlt: "Enterprise Brain knowledge base interface", imagePosition: "center top" },
       { name: "Smart Eye", headline: "AI at Work in Sales", description: "An AI sales platform from market insight to customer deals.", image: "/image/home-scene-smart-eye.png", imageAlt: "Smart Eye quotation interface" },
     ],
     reasonsTitle: "Why Targon?",
@@ -154,7 +161,17 @@ const copy = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  return { title: copy[lang].title, description: copy[lang].description, robots: { index: false, follow: false } };
+  return {
+    title: copy[lang].title,
+    description: copy[lang].description,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: {
+        "zh-CN": "/zh",
+        en: "/en",
+      },
+    },
+  };
 }
 
 export default async function HomePage({ params }: Props) {
@@ -183,7 +200,7 @@ export default async function HomePage({ params }: Props) {
         <div className={styles.softwareGrid}>
           {content.software.map((product) => <article className={styles.softwareCard} data-product={product.image} key={product.name}>
             <div className={`site-bg-box ${styles.softwareImage}`} role="img" aria-label={product.name} />
-            <div className={styles.softwareCopy}><h4>{product.name}</h4><p>{product.description}</p><div className={styles.cardActions}><span className={styles.pill}>{product.type}</span>{product.image === "smartEye" ? <Link href={`/${lang}/smart-eye`}>{product.action}<span aria-hidden="true">→</span></Link> : <button type="button">{product.action}<span aria-hidden="true">→</span></button>}</div></div>
+            <div className={styles.softwareCopy}><h4>{product.name}</h4><p>{product.description}</p><div className={styles.cardActions}><span className={styles.pill}>{product.type}</span><Link href={`/${lang}${softwarePaths[product.image]}`} aria-label={`${product.action} · ${product.name}`}>{product.action}<span aria-hidden="true">→</span></Link></div></div>
           </article>)}
         </div>
       </section>
@@ -191,14 +208,14 @@ export default async function HomePage({ params }: Props) {
       <section className={`site-container ${styles.hardware}`} aria-labelledby="hardware-heading">
         <h2 id="hardware-heading" className={styles.sectionTitle} data-aos="fade">{content.hardwareTitle}</h2>
         <div className={styles.hardwarePanel}>
-          <div className={styles.hardwareCopy}><h3 data-aos="fade">{content.hardwareHeadline}</h3><p data-aos="fade">{content.hardwareIntro}</p><button className={styles.textButton} type="button">{content.hardwareAction}<span aria-hidden="true">→</span></button><div className={styles.tags}>{content.hardwareTags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
-          <div className={`site-bg-box ${styles.hardwareImage} ${styles.collectorImage}`} role="img" aria-label={content.collector}><span>{content.collector}</span></div>
-          <div className={`site-bg-box ${styles.hardwareImage} ${styles.outgassingImage}`} role="img" aria-label={content.outgassing}><span>{content.outgassing}</span></div>
+          <div className={styles.hardwareCopy}><h3 data-aos="fade">{content.hardwareHeadline}</h3><p data-aos="fade">{content.hardwareIntro}</p><Link className={styles.textButton} href={`/${lang}/products#hardware-heading`}>{content.hardwareAction}<span aria-hidden="true">→</span></Link><div className={styles.tags}>{content.hardwareTags.map((tag) => <span key={tag}>{tag}</span>)}</div></div>
+          <Link href={`/${lang}/products/edge-collector`} className={`site-bg-box ${styles.hardwareImage} ${styles.collectorImage}`} aria-label={content.collector}><span>{content.collector}</span></Link>
+          <Link href={`/${lang}/products/outgassing-platform`} className={`site-bg-box ${styles.hardwareImage} ${styles.outgassingImage}`} aria-label={content.outgassing}><span>{content.outgassing}</span></Link>
         </div>
       </section>
 
       <section className={`site-container ${styles.chain}`} aria-labelledby="chain-heading">
-        <div className={styles.chainCopy}><h2 id="chain-heading" data-aos="fade">{content.chainTitle}</h2><p data-aos="fade">{content.chainIntro}</p><button className={styles.textButton} type="button">{content.chainAction}<img src="/image/home-chain-link-arrow.png" alt="" width="40" height="40" /></button></div>
+        <div className={styles.chainCopy}><h2 id="chain-heading" data-aos="fade">{content.chainTitle}</h2><p data-aos="fade">{content.chainIntro}</p><Link className={styles.textButton} href={`/${lang}/products/vacuum-ai`}>{content.chainAction}<img src="/image/home-chain-link-arrow.png" alt="" width="40" height="40" /></Link></div>
         <ol className={styles.chainSteps}>
           {content.chainSteps.map((step, index) => (
             <li key={step}>

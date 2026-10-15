@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AosInit } from "@/components/aos-init";
 import { SiteFooter } from "@/components/site-footer/site-footer";
 import { SiteHeader } from "@/components/site-header/site-header";
 import { isLocale } from "@/lib/locales";
 import "aos/dist/aos.css";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://targon.cn"),
+  robots: { index: true, follow: true },
+};
 
 export default async function WebsiteLayout({ children, params }: {
   children: React.ReactNode;
